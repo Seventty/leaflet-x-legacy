@@ -11,6 +11,8 @@
     "paths": {
       "leaflet-x": [
         "dist/leaflet-x/leaflet-x",
+        "dist/leaflet-x",
+        "dist/leaflet-x/leaflet-x",
         "dist/leaflet-x"
       ],
       "leaflet-xlegacy": [

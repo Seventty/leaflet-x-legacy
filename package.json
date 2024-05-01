@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=production",
-    "prod-watch": "ng build --configuration=production --watch",
+    "build": "ng build leafletX --configuration=production",
+    "prod-watch": "ng build leaflet-x --configuration=production --watch",
     "publish": "npm publish ./dist/leaflet-x",
     "deploy": "npm run build && npm publish ./dist/leaflet-x-legacy",
     "watch": "ng build --watch --configuration development",

@@ -4,20 +4,20 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Code scaffolding
 
-Run `ng generate component component-name --project leafletX` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project leafletX`.
-> Note: Don't forget to add `--project leafletX` or else it will be added to the default project in your `angular.json` file. 
+Run `ng generate component component-name --project LeafletX` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project LeafletX`.
+> Note: Don't forget to add `--project LeafletX` or else it will be added to the default project in your `angular.json` file. 
 
 ## Build
 
-Run `ng build leafletX` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build LeafletX` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Publishing
 
-After building your library with `ng build leafletX`, go to the dist folder `cd dist/leaflet-x` and run `npm publish`.
+After building your library with `ng build LeafletX`, go to the dist folder `cd dist/leaflet-x` and run `npm publish`.
 
 ## Running unit tests
 
-Run `ng test leafletX` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test LeafletX` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Further help
 

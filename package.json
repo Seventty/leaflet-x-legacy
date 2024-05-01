@@ -1,10 +1,13 @@
 {
   "name": "leaflet-x-legacy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
+    "prod-watch": "ng build --configuration=production --watch",
+    "publish": "npm publish ./dist/leaflet-x",
+    "deploy": "npm run build && npm publish ./dist/leaflet-x-legacy",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -56,6 +59,7 @@
     "@types/leaflet": "^1.9.8",
     "@types/osmtogeojson": "^2.2.34",
     "@types/topojson-client": "^3.1.4",
+    "ng-packagr": "^12.1.1",
     "@types/uuid": "^9.0.8"
   }
 }

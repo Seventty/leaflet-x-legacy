@@ -110,6 +110,68 @@
           }
         }
       }
+    },
+    "leafletXLegacy": {
+      "projectType": "library",
+      "root": "projects/leaflet-xlegacy",
+      "sourceRoot": "projects/leaflet-xlegacy/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/leaflet-xlegacy/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/leaflet-xlegacy/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/leaflet-xlegacy/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/leaflet-xlegacy/src/test.ts",
+            "tsConfig": "projects/leaflet-xlegacy/tsconfig.spec.json",
+            "karmaConfig": "projects/leaflet-xlegacy/karma.conf.js"
+          }
+        }
+      }
+    },
+    "leafletX": {
+      "projectType": "library",
+      "root": "projects/leaflet-x",
+      "sourceRoot": "projects/leaflet-x/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/leaflet-x/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/leaflet-x/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/leaflet-x/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/leaflet-x/src/test.ts",
+            "tsConfig": "projects/leaflet-x/tsconfig.spec.json",
+            "karmaConfig": "projects/leaflet-x/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "leaflet-x-legacy"

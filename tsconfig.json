@@ -8,6 +8,16 @@
     "strict": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "leaflet-x": [
+        "dist/leaflet-x/leaflet-x",
+        "dist/leaflet-x"
+      ],
+      "leaflet-xlegacy": [
+        "dist/leaflet-xlegacy/leaflet-xlegacy",
+        "dist/leaflet-xlegacy"
+      ]
+    },
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

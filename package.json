@@ -1,5 +1,5 @@
 {
-  "name": "leaflet-x-legacy",
+  "name": "@seventty/leaflet-x-legacy",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",

@@ -14,4 +14,4 @@ import { SharedModule } from '../shared/shared.module';
 
   exports: [ LeafletXLegacyComponent ]
 })
-export class LeafletXLegacy { }
+export class LeafletXLegacyModule { }

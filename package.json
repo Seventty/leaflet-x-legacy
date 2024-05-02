@@ -1,13 +1,13 @@
 {
   "name": "@seventty/leaflet-x-legacy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build leafletX --configuration=production",
     "prod-watch": "ng build leaflet-x --configuration=production --watch",
     "publish": "npm publish ./dist/leaflet-x",
-    "deploy": "npm run build && npm publish ./dist/leaflet-x",
+    "deploy": "npm run build && npm publish ./dist/leaflet-x --access public",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

@@ -18,9 +18,7 @@
     "geojson2dsv",
     "wellknown",
     "@types/file-saver",
-    "@types/jasmine",
     "@types/leaflet",
-    "@types/node",
     "@types/osmtogeojson",
     "@types/topojson-client",
     "@types/uuid"

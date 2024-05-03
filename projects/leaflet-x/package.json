@@ -1,9 +1,7 @@
 {
   "name": "@seventty/leaflet-x-legacy",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "peerDependencies": {
-    "@angular/common": "^12.2.0",
-    "@angular/core": "^12.2.0",
     "@geoman-io/leaflet-geoman-free": "^2.16.0",
     "@tmcw/togeojson": "^5.8.1",
     "csv2geojson": "^5.1.2",
@@ -16,7 +14,6 @@
     "sweetalert2": "^11.10.5",
     "topojson-client": "^3.1.0",
     "topojson-server": "^3.0.1",
-    "tslib": "^2.3.0",
     "uuid": "^9.0.1",
     "wellknown": "^0.5.0",
     "@types/file-saver": "^2.0.7",
@@ -27,5 +24,6 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
-  }
+  },
+  "sideEffects": false
 }

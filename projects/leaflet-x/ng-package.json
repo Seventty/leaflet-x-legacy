@@ -3,7 +3,6 @@
   "dest": "../../dist/leaflet-x",
   "allowedNonPeerDependencies": [
     "@geoman-io/leaflet-geoman-free",
-    "@popperjs/core",
     "@tmcw/togeojson",
     "csv2geojson",
     "file-saver",

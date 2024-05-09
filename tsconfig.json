@@ -12,13 +12,7 @@
       "leaflet-x": [
         "dist/leaflet-x/leaflet-x",
         "dist/leaflet-x",
-        "dist/leaflet-x/leaflet-x",
-        "dist/leaflet-x"
       ],
-      "leaflet-xlegacy": [
-        "dist/leaflet-xlegacy/leaflet-xlegacy",
-        "dist/leaflet-xlegacy"
-      ]
     },
     "sourceMap": true,
     "declaration": false,
@@ -26,7 +20,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2017",
+    "target": "es2020",
     "module": "es2020",
     "lib": [
       "es2018",

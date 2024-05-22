@@ -24,5 +24,8 @@
   ],
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    "./package.json"
+  ]
 }

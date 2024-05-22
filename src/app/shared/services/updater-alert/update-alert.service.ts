@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as pack from 'package.json'
+import { version } from './../../utils/version'
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast/toast.service';
@@ -14,8 +14,7 @@ export class UpdateAlertService {
   constructor(private httpClientService: HttpClient, private toastrService: ToastService) { }
 
   checkVersion() {
-    const packageClone = { ...pack }
-    this.currentVersion = packageClone.version;
+    this.currentVersion = version;
     this.httpClientService.get(this.registryUrl).pipe(
       map((response: any) => response['dist-tags'].latest),
       catchError(() => {

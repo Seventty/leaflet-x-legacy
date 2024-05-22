@@ -31,7 +31,7 @@ export class MapComponent implements AfterViewInit {
   @ViewChild("fileExportModal") fileExportModal?: ModalComponent
 
   /* Decorators section */
-  @Input() defaultInitMapCoords: L.LatLngExpression = [ 39.8282, -98.5795 ] // Dominican Republic coords default lat 19.026319 | default lang -70.147792
+  @Input() defaultInitMapCoords: L.LatLngExpression = [39.8282, -98.5795] // Dominican Republic coords default lat 19.026319 | default lang -70.147792
   @Input() defaultZoomLevel: number = 5; // Dominican Republic zoom: 8
   @Input() prefix: string = 'Thank you for using <a href="https://www.npmjs.com/package/@seventty/leaflet-x-legacy">LeafletX</a>, give me a ⭐ in <a href="https://github.com/Seventty/leaflet-angular-base">Github</a>';
   @Input() watermarkImagePath: string = '';
@@ -172,6 +172,21 @@ export class MapComponent implements AfterViewInit {
           fillColor: this.mainColor,
           fillOpacity: 0.4,
         });
+
+      } else {
+        this.map.pm.addControls({
+          position: 'topright',
+          customControls: true,
+          drawMarker: false,
+          drawPolygon: false,
+          drawPolyline: false,
+          drawRectangle: false,
+          drawCircle: false,
+          drawCircleMarker: false,
+          cutPolygon: false,
+          editControls: false,
+          drawText: false,
+        })
       }
     }
   }
@@ -199,24 +214,28 @@ export class MapComponent implements AfterViewInit {
   * @returns {void}
   */
   private customToolbar() {
+    const importButton = {
+      text: "Importar archivo/s",
+      onClick: () => {
+        this.fileManagerModal?.open();
+      },
+    }
+
+    const exportButton = {
+      text: "Exportar archivo/s",
+      onClick: () => {
+        this.featureCollectionUpdate()
+        if (this.featureCollection.features.length === 0) {
+          this.toastService.errorToast("Mapa vacio", "No hay dibujos para exportar.");
+          return;
+        }
+        this.fileExportModal?.open();
+      },
+    }
+
     const customToolbarActions: any = [
-      {
-        text: "Importar archivo/s",
-        onClick: () => {
-          this.fileManagerModal?.open();
-        },
-      },
-      {
-        text: "Exportar archivo/s",
-        onClick: () => {
-          this.featureCollectionUpdate()
-          if (this.featureCollection.features.length === 0) {
-            this.toastService.errorToast("Mapa vacio", "No hay dibujos para exportar.");
-            return;
-          }
-          this.fileExportModal?.open();
-        },
-      },
+      ...(!this.readonly ? [importButton] : []),
+      exportButton,
       "cancel",
     ];
 
@@ -293,10 +312,10 @@ export class MapComponent implements AfterViewInit {
   */
   private renderFeatureCollectionToMap(featureCollection: GeoJsonResult) {
     if (this.map) {
-      if(featureCollection.features.length !== 0){
+      if (featureCollection.features.length !== 0) {
         const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
         const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
-        if(featureCollection.hasOwnProperty("featureCollectionPopup")){
+        if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
           geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
         }
         this.featureCollectionUpdate();

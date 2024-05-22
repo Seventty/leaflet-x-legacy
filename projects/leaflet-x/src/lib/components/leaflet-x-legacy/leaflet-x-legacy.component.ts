@@ -173,6 +173,21 @@ export class LeafletXLegacyComponent implements AfterViewInit {
           fillColor: this.mainColor,
           fillOpacity: 0.4,
         });
+
+      } else {
+        this.map.pm.addControls({
+          position: 'topright',
+          customControls: true,
+          drawMarker: false,
+          drawPolygon: false,
+          drawPolyline: false,
+          drawRectangle: false,
+          drawCircle: false,
+          drawCircleMarker: false,
+          cutPolygon: false,
+          editControls: false,
+          drawText: false,
+        })
       }
     }
   }
@@ -199,24 +214,28 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @returns {void}
   */
   private customToolbar() {
+    const importButton = {
+      text: "Importar archivo/s",
+      onClick: () => {
+        this.fileManagerModal?.open();
+      },
+    }
+
+    const exportButton = {
+      text: "Exportar archivo/s",
+      onClick: () => {
+        this.featureCollectionUpdate()
+        if (this.featureCollection.features.length === 0) {
+          this.toastService.errorToast("Mapa vacio", "No hay dibujos para exportar.");
+          return;
+        }
+        this.fileExportModal?.open();
+      },
+    }
+
     const customToolbarActions: any = [
-      {
-        text: "Importar archivo/s",
-        onClick: () => {
-          this.fileManagerModal?.open();
-        },
-      },
-      {
-        text: "Exportar archivo/s",
-        onClick: () => {
-          this.featureCollectionUpdate()
-          if (this.featureCollection.features.length === 0) {
-            this.toastService.errorToast("Mapa vacio", "No hay dibujos para exportar.");
-            return;
-          }
-          this.fileExportModal?.open();
-        },
-      },
+      ...(!this.readonly ? [importButton] : []),
+      exportButton,
       "cancel",
     ];
 
@@ -321,6 +340,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
         const layerGeoJSON = layer.toGeoJSON();
         geojson.features.push(layerGeoJSON);
       });
+
       this.featureCollection = geojson;
       this.featureCollectionOutput.emit(this.featureCollection);
     }

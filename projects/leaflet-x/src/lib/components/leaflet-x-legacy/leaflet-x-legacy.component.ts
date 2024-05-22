@@ -295,7 +295,10 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     if (this.map) {
       if(featureCollection.features.length !== 0){
         const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
-        L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+        const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+        if(featureCollection.hasOwnProperty("featureCollectionPopup")){
+          geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
+        }
         this.featureCollectionUpdate();
       }
     }

@@ -13,6 +13,7 @@ import { GeoJsonResult } from '../../shared/types/geoJsonResult.type';
 import { v4 as uuidv4 } from 'uuid';
 import { HexColorType } from '../../shared/types/hexColor.type';
 import { IStylizeDraw } from '../../shared/interfaces/IStylizeDraw';
+import { UpdateAlertService } from '../../shared/services/updater-alert/update-alert.service';
 
 @Component({
   selector: 'leaflet-x-legacy',
@@ -381,7 +382,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.map.scrollWheelZoom.disable();
   }
 
-  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef) { }
+  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -398,6 +399,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.drawInputFeatureCollectionIntoMap();
     this.mapEventsHandler();
     this.cdr.detectChanges();
+    this.updateService.checkVersion();
   }
 
   ngOnInit(): void {

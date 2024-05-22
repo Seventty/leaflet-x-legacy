@@ -46,6 +46,7 @@ export class ToastService {
     this.toastObject.title = title
     this.toastObject.icon = "info";
     this.toastObject.text = text;
+    this.toastObject.html = text;
     Swal.fire(this.toastObject)
   }
 
@@ -53,6 +54,7 @@ export class ToastService {
     this.toastObject.title = title
     this.toastObject.icon = "warning";
     this.toastObject.text = text;
+    this.toastObject.html = text;
     Swal.fire(this.toastObject)
   }
 

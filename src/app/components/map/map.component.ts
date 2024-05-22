@@ -12,6 +12,7 @@ import { GeoJsonResult } from 'src/app/shared/types/geoJsonResult.type';
 import { v4 as uuidv4 } from 'uuid';
 import { HexColorType } from 'src/app/shared/types/hexColor.type';
 import { IStylizeDraw } from 'src/app/shared/interfaces/IStylizeDraw';
+import { UpdateAlertService } from 'src/app/shared/services/updater-alert/update-alert.service';
 
 @Component({
   selector: 'app-map',
@@ -380,7 +381,7 @@ export class MapComponent implements AfterViewInit {
     this.map.scrollWheelZoom.disable();
   }
 
-  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef) { }
+  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -397,6 +398,8 @@ export class MapComponent implements AfterViewInit {
     this.drawInputFeatureCollectionIntoMap();
     this.mapEventsHandler();
     this.cdr.detectChanges();
+
+    this.updateService.checkVersion();
   }
 
   ngOnInit(): void {

@@ -38,6 +38,7 @@ export class MapComponent implements AfterViewInit {
   @Input() featureCollectionInput?: GeoJsonResult;
   @Input() readonly: boolean = false;
   @Input() mainColor: HexColorType = '#00b8e6';
+  @Input() portraitMode: boolean = false;
   @Output() featureCollectionOutput: EventEmitter<GeoJsonResult> = new EventEmitter<GeoJsonResult>()
 
   featureCollection: GeoJsonResult = {
@@ -121,7 +122,7 @@ export class MapComponent implements AfterViewInit {
     }
 
     if (this.map) {
-      const baseLayerSwitcherController: L.Control = L.control.layers(baseLayers).addTo(this.map);
+      if(!this.portraitMode) L.control.layers(baseLayers).addTo(this.map);
       const defaultBaseLayerProvider: string = localStorage.getItem('layerMapProvider') || "Default";
       const defaultBaseLayer = baseLayers[defaultBaseLayerProvider]
       if (defaultBaseLayer) {
@@ -372,13 +373,24 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
+  private portraitMapConfigurator(){
+    this.map.doubleClickZoom.disable();
+    this.map.touchZoom.disable();
+    this.map.dragging.disable();
+    this.map.scrollWheelZoom.disable();
+  }
+
   constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef) { }
 
   ngAfterViewInit(): void {
     this.initMap();
     this.setFeatureGroup();
-    this.geomanControllers();
-    this.customToolbar();
+    if(!this.portraitMode){
+      this.geomanControllers();
+      this.customToolbar();
+    } else {
+      this.portraitMapConfigurator();
+    }
     this.switchBaseLayer();
     this.watermarkConfigurator()
     this.getFeatureCollectionFromFile();

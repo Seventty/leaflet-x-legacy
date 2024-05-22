@@ -188,6 +188,8 @@ export class MapComponent implements AfterViewInit {
       color: drawColor,
       fillOpacity: 0.4
     }
+
+    this.iconMarker(drawColor);
     return colorConfigurator;
   }
 
@@ -291,8 +293,11 @@ export class MapComponent implements AfterViewInit {
   */
   private renderFeatureCollectionToMap(featureCollection: GeoJsonResult) {
     if (this.map) {
-      L.geoJSON(featureCollection, { style: this.stylizeDraw(this.mainColor) }).addTo(this.map);
-      this.featureCollectionUpdate();
+      if(featureCollection.features.length !== 0){
+        const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
+        L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+        this.featureCollectionUpdate();
+      }
     }
   }
 

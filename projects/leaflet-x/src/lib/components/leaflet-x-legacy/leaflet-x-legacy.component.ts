@@ -25,17 +25,17 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   public mapId: string = 'map';
   private map?: L.Map;
   private featureGroup?: L.FeatureGroup;
-  private defaultZoomLevel: number = 8;
   private defaultMaxZoom: number = 18
   private defaultMinZoom: number = 3
 
-  /* Viewchild manipulation section */
+  /* Viewchild section */
   @ViewChild("fileManagerModal") fileManagerModal?: ModalComponent
   @ViewChild("fileExportModal") fileExportModal?: ModalComponent
 
   /* Decorators section */
-  @Input() defaultLocation: L.LatLngExpression = [51.505, -0.09] // default lat 19.026319 | default lang -70.147792
-  @Input() prefix: string = 'Thank you for using <a href="https://www.npmjs.com/package/@seventty/leaflet-x">Leaflet-x-legacy</a>, give me a ⭐ in <a href="https://github.com/Seventty/leaflet-angular-base">Github</a>';
+  @Input() defaultInitMapCoords: L.LatLngExpression = [39.8282, -98.5795] // Dominican Republic coords default lat 19.026319 | default lang -70.147792
+  @Input() defaultZoomLevel: number = 5; // Dominican Republic zoom: 8
+  @Input() prefix: string = 'Thank you for using <a href="https://www.npmjs.com/package/@seventty/leaflet-x-legacy">LeafletX</a>, give me a ⭐ in <a href="https://github.com/Seventty/leaflet-angular-base">Github</a>';
   @Input() watermarkImagePath: string = '';
   @Input() featureCollectionInput?: GeoJsonResult;
   @Input() readonly: boolean = false;
@@ -91,7 +91,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   */
   private initMap(): void {
     this.map = L.map(this.mapId, {
-      center: this.defaultLocation,
+      center: this.defaultInitMapCoords,
       zoom: this.defaultZoomLevel,
       zoomControl: false,
     });
@@ -124,7 +124,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     }
 
     if (this.map) {
-      const baseLayerSwitcherController: L.Control = L.control.layers(baseLayers).addTo(this.map);
+      if(!this.portraitMode) L.control.layers(baseLayers).addTo(this.map);
       const defaultBaseLayerProvider: string = localStorage.getItem('layerMapProvider') || "Default";
       const defaultBaseLayer = baseLayers[defaultBaseLayerProvider]
       if (defaultBaseLayer) {
@@ -206,6 +206,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       color: drawColor,
       fillOpacity: 0.4
     }
+
     this.iconMarker(drawColor);
     return colorConfigurator;
   }
@@ -301,8 +302,11 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @returns {void}
   */
   private getFeatureCollectionFromFile() {
-    this.fileManagerService.getFileFeatureCollection().subscribe((res: any) => {
-      this.renderFeatureCollectionToMap(res)
+    this.fileManagerService.getFileFeatureCollection().subscribe((res: GeoJsonResult) => {
+      if(res.features.length > 0){
+        this.renderFeatureCollectionToMap(res);
+        this.toastService.successToast("Éxito", "Figuras cargadas al mapa con éxito.");
+      }
     })
   }
 
@@ -314,10 +318,10 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   */
   private renderFeatureCollectionToMap(featureCollection: GeoJsonResult) {
     if (this.map) {
-      if(featureCollection.features.length !== 0){
+      if (featureCollection.features.length !== 0) {
         const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
         const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
-        if(featureCollection.hasOwnProperty("featureCollectionPopup")){
+        if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
           geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
         }
         this.featureCollectionUpdate();
@@ -342,7 +346,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
         const layerGeoJSON = layer.toGeoJSON();
         geojson.features.push(layerGeoJSON);
       });
-
       this.featureCollection = geojson;
       this.featureCollectionOutput.emit(this.featureCollection);
     }
@@ -376,6 +379,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   }
 
   private portraitMapConfigurator(){
+    this.map.attributionControl.setPrefix("");
     this.map.doubleClickZoom.disable();
     this.map.touchZoom.disable();
     this.map.dragging.disable();
@@ -390,15 +394,16 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     if(!this.portraitMode){
       this.geomanControllers();
       this.customToolbar();
+      this.watermarkConfigurator();
     } else {
       this.portraitMapConfigurator();
     }
     this.switchBaseLayer();
-    this.watermarkConfigurator()
     this.getFeatureCollectionFromFile();
     this.drawInputFeatureCollectionIntoMap();
     this.mapEventsHandler();
     this.cdr.detectChanges();
+
     this.updateService.checkVersion();
   }
 

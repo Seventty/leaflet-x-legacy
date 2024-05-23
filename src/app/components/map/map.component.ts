@@ -301,8 +301,11 @@ export class MapComponent implements AfterViewInit {
   * @returns {void}
   */
   private getFeatureCollectionFromFile() {
-    this.fileManagerService.getFileFeatureCollection().subscribe((res: any) => {
-      this.renderFeatureCollectionToMap(res)
+    this.fileManagerService.getFileFeatureCollection().subscribe((res: GeoJsonResult) => {
+      if(res.features.length > 0){
+        this.renderFeatureCollectionToMap(res);
+        this.toastService.successToast("Éxito", "Figuras cargadas al mapa con éxito.");
+      }
     })
   }
 
@@ -375,6 +378,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   private portraitMapConfigurator(){
+    this.map.attributionControl.setPrefix("");
     this.map.doubleClickZoom.disable();
     this.map.touchZoom.disable();
     this.map.dragging.disable();
@@ -389,11 +393,11 @@ export class MapComponent implements AfterViewInit {
     if(!this.portraitMode){
       this.geomanControllers();
       this.customToolbar();
+      this.watermarkConfigurator();
     } else {
       this.portraitMapConfigurator();
     }
     this.switchBaseLayer();
-    this.watermarkConfigurator()
     this.getFeatureCollectionFromFile();
     this.drawInputFeatureCollectionIntoMap();
     this.mapEventsHandler();

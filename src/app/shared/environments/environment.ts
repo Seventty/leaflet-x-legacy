@@ -1,4 +1,5 @@
 export const environment = {
+  production: true,
   allowedMapFileTypes: [
     'json',
     'geojson',

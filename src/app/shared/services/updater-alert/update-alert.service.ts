@@ -3,7 +3,7 @@ import { version } from './../../utils/version'
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast/toast.service';
-import { environment } from 'src/environments/environment';
+import { environment } from 'projects/leaflet-x/src/lib/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -45,9 +45,6 @@ export class UpdateAlertService {
   }
 
   private isNewVersionAvailable(latestVersion: string): boolean {
-    /* if(latestVersion !== this.currentVersion){
-      localStorage.setItem("newVersionAvailable", "true");
-    } */
     return latestVersion !== this.currentVersion;
   }
 

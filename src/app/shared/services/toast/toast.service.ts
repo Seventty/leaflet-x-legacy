@@ -5,8 +5,7 @@ import Swal, { SweetAlertIcon, SweetAlertOptions } from 'sweetalert2';
   providedIn: 'root'
 })
 export class ToastService {
-  private toastText: string = '';
-  /* Icons availables: 'success' | 'error' | 'warning' | 'info' | 'question' */
+  /* private toastText: string = '';
   private toastIcon: SweetAlertIcon = 'success';
   private toastTitle: string = '';
 
@@ -56,6 +55,43 @@ export class ToastService {
     this.toastObject.text = text;
     this.toastObject.html = text;
     Swal.fire(this.toastObject)
+  } */
+
+  private defaultOptions: SweetAlertOptions = {
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    showCloseButton: true,
+    timer: 5000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
   }
+
+  private showToast(icon: SweetAlertIcon, title: string, text: string, customOptions: Partial<SweetAlertOptions> = {}): void{
+    const toastOptions: SweetAlertOptions = Object.assign({}, this.defaultOptions, customOptions, { icon, title, text });
+    Swal.fire(toastOptions);
+  }
+
+  public errorToast(title: string, text: string = '', customOptions: Partial<SweetAlertOptions> = {}): void {
+    this.showToast('error', title, text, customOptions);
+  }
+
+  public successToast(title: string, text: string = '', customOptions: Partial<SweetAlertOptions> = {}): void {
+    this.showToast('success', title, text, customOptions);
+  }
+
+  public infoToast(title: string, text: string = '', customOptions: Partial<SweetAlertOptions> = {}): void {
+    this.showToast('info', title, text, customOptions);
+  }
+
+  public warningToast(title: string, text: string = '', customOptions: Partial<SweetAlertOptions> = {}): void {
+    this.showToast('warning', title, text, customOptions);
+  }
+
+  constructor(){}
+
 
 }

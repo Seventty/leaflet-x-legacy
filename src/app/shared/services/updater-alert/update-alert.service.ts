@@ -3,6 +3,7 @@ import { version } from './../../utils/version'
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast/toast.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,30 @@ export class UpdateAlertService {
       })
     ).subscribe(latestVersion => {
       if (this.isNewVersionAvailable(latestVersion)) {
-        this.toastrService.infoToast("New version available!", `Map update available <pre>${this.currentVersion} -> <strong>${latestVersion}</strong></pre>`)
+        const lastShownVersion = localStorage.getItem("lastShownVersion");
+
+        const toastOptions = {
+          html: `Map update available <pre>${this.currentVersion} -> <strong>${latestVersion}</strong></pre>`,
+          timer: 0,
+          //showConfirmButton: true,
+          //confirmButtonText: 'Ver Changelog'
+        }
+
+        if (!environment.production && this.currentVersion !== lastShownVersion) {
+          this.toastrService.infoToast("New version available!", '', {
+            ...toastOptions
+          })
+        }
+
+        localStorage.setItem("lastShownVersion", this.currentVersion);
       }
     });
   }
 
   private isNewVersionAvailable(latestVersion: string): boolean {
+    /* if(latestVersion !== this.currentVersion){
+      localStorage.setItem("newVersionAvailable", "true");
+    } */
     return latestVersion !== this.currentVersion;
   }
 

@@ -1,29 +1,35 @@
 <div class="accordion" id="accordionExample">
   <div class="card">
+
     <div class="card-header" id="headingOne">
       <h2 class="mb-0">
-        <button class="btn btn-link" type="button" (click)="isCollapsed1 = !isCollapsed1">
+        <button class="btn btn-link" type="button" (click)="isLineFormCollapsed = !isLineFormCollapsed">
           Formulario de Líneas
         </button>
       </h2>
     </div>
 
-    <div [ngbCollapse]="isCollapsed1" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+    <div [ngbCollapse]="isLineFormCollapsed" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
       <div class="card-body">
-        <form [formGroup]="form">
+
+        <!-- <form [formGroup]="form">
           <div formArrayName="lines">
             <div *ngFor="let control of lines.controls; let i = index" class="d-flex align-items-baseline">
               <input [formControlName]="i" class="form-control mb-2" placeholder="Línea {{i + 1}}">
               <button type="button" class="btn btn-danger ml-2" (click)="removeInput(lines, i)">Eliminar</button>
             </div>
           </div>
-          <button type="button" class="btn btn-primary" (click)="addInput(lines)">Agregar Línea</button>
-        </form>
+        </form> -->
+
+        <UIButton color="primary" [block]="true" (click)="addLineForm">
+          Agregar producto
+        </UIButton>
       </div>
     </div>
+
   </div>
 
-  <div class="card">
+  <!-- <div class="card">
     <div class="card-header" id="headingTwo">
       <h2 class="mb-0">
         <button class="btn btn-link" type="button" (click)="isCollapsed2 = !isCollapsed2">
@@ -35,7 +41,7 @@
       <div class="card-body">
         <form [formGroup]="form">
           <div formArrayName="squares">
-            <div *ngFor="let control of squares.controls; let i = index" class="d-flex align-items-center">
+            <div *ngFor="let control of squares.controls; let i = index" class="d-flex align-items-baseline">
               <input [formControlName]="i" class="form-control mb-2" placeholder="Cuadrado {{i + 1}}">
               <button type="button" class="btn btn-danger ml-2" (click)="removeInput(squares, i)">Eliminar</button>
             </div>
@@ -58,7 +64,7 @@
       <div class="card-body">
         <form [formGroup]="form">
           <div formArrayName="points">
-            <div *ngFor="let control of points.controls; let i = index" class="d-flex align-items-center">
+            <div *ngFor="let control of points.controls; let i = index" class="d-flex align-items-baseline">
               <input [formControlName]="i" class="form-control mb-2" placeholder="Punto {{i + 1}}">
               <button type="button" class="btn btn-danger ml-2" (click)="removeInput(points, i)">Eliminar</button>
             </div>
@@ -81,7 +87,7 @@
       <div class="card-body">
         <form [formGroup]="form">
           <div formArrayName="polygons">
-            <div *ngFor="let control of polygons.controls; let i = index" class="d-flex align-items-center">
+            <div *ngFor="let control of polygons.controls; let i = index" class="d-flex align-items-baseline">
               <input [formControlName]="i" class="form-control mb-2" placeholder="Polígono {{i + 1}}">
               <button type="button" class="btn btn-danger ml-2" (click)="removeInput(polygons, i)">Eliminar</button>
             </div>
@@ -90,5 +96,17 @@
         </form>
       </div>
     </div>
-  </div>
+  </div> -->
+
+
 </div>
+<div class="button-container mt-2 d-flex justify-content-between">
+  <button type="button" class="btn btn-primary" (click)="checkForm()">Vista Previa</button>
+  <button type="button" class="btn btn-success">Cargar al mapa</button>
+</div>
+
+<UIModal [modalConfig]="previewModalConfig" [modalOption]="previewModalOption" #previewModal>
+  <div>
+
+  </div>
+</UIModal>

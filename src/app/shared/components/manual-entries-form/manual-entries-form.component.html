@@ -21,9 +21,17 @@
           </div>
         </form> -->
 
-        <UIButton color="primary" [block]="true" (click)="addLineForm">
-          Agregar producto
+        <UIButton color="primary" [block]="true" (click)="agregarLinea()">
+          Agregar Linea
         </UIButton>
+
+        <div class="m-2" *ngFor="let linea of lineas.controls; let i = index">
+          <UIButton color="secondary" [block]="true" (click)="toggleExpandLinea(i)">Linea {{ i + 1 }}</UIButton>
+          <div *ngIf="linea.get('expanded')?.value">
+            <!-- Sección colapsable -->
+            <p>Contenido de la Linea {{ i + 1 }}</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -101,7 +109,7 @@
 
 </div>
 <div class="button-container mt-2 d-flex justify-content-between">
-  <button type="button" class="btn btn-primary" (click)="checkForm()">Vista Previa</button>
+  <button type="button" class="btn btn-primary">Vista Previa</button>
   <button type="button" class="btn btn-success">Cargar al mapa</button>
 </div>
 

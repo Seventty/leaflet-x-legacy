@@ -22,30 +22,40 @@ export class ManualEntriesFormComponent implements OnInit {
     size: 'md',
   }
 
-  isLineFormCollapsed = true;
-  isCollapsed2 = true;
-  isCollapsed3 = true;
-  isCollapsed4 = true;
+  linesForm: FormGroup = new FormGroup({});
 
-  form: FormGroup;
+  isLineFormCollapsed = true;
+  /* isCollapsed2 = true;
+  isCollapsed3 = true;
+  isCollapsed4 = true; */
 
   constructor(private fb: FormBuilder) {
-
-  }
-
-  buildForm() {
-    this.form = this.fb.group({
-      lines: this.fb.array([]),
-      squares: this.fb.array([]),
-      points: this.fb.array([]),
-      polygons: this.fb.array([]),
+    this.linesForm = this.fb.group({
+      lineas: this.fb.array([])
     });
   }
 
-  addLineForm(){
-
+  get lineas() {
+    return this.linesForm.get('lineas') as FormArray;
   }
 
+  nuevaLinea(): FormGroup {
+    return this.fb.group({
+      expanded: false
+    });
+  }
+
+  agregarLinea() {
+    this.lineas.push(this.nuevaLinea());
+  }
+
+  toggleExpandLinea(index: number) {
+    const linea = this.lineas.at(index);
+    linea.get('expanded')?.setValue(!linea.get('expanded')?.value);
+  }
+
+
+  /*
   get lines() {
     return this.form.get('lines') as FormArray;
   }
@@ -70,16 +80,13 @@ export class ManualEntriesFormComponent implements OnInit {
     array.removeAt(index);
   }
 
+  */
+
   openPreviewModal() {
     this.previewModal.open();
   }
 
   ngOnInit() {
-    this.buildForm()
-  }
-
-  checkForm(){
-    console.log(this.lines)
   }
 
 }

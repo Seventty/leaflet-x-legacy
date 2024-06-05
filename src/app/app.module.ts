@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentsModule } from './components/components.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ComponentsModule } from './components/components.module';
   imports: [
     BrowserModule,
     NgbModule,
-    ComponentsModule
+    ComponentsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

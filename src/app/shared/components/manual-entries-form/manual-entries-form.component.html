@@ -5,34 +5,13 @@
       <h2 class="mb-0">
         <button class="btn btn-link" type="button" (click)="isLineFormCollapsed = !isLineFormCollapsed">
           Formulario de Líneas
+          <i [ngClass]="{'bi bi-caret-right-fill': isLineFormCollapsed, 'bi bi-caret-down-fill': !isLineFormCollapsed}"></i>
         </button>
       </h2>
     </div>
 
     <div [ngbCollapse]="isLineFormCollapsed" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-
-        <!-- <form [formGroup]="form">
-          <div formArrayName="lines">
-            <div *ngFor="let control of lines.controls; let i = index" class="d-flex align-items-baseline">
-              <input [formControlName]="i" class="form-control mb-2" placeholder="Línea {{i + 1}}">
-              <button type="button" class="btn btn-danger ml-2" (click)="removeInput(lines, i)">Eliminar</button>
-            </div>
-          </div>
-        </form> -->
-
-        <UIButton color="primary" [block]="true" (click)="agregarLinea()">
-          Agregar Linea
-        </UIButton>
-
-        <div class="m-2" *ngFor="let linea of lineas.controls; let i = index">
-          <UIButton color="secondary" [block]="true" (click)="toggleExpandLinea(i)">Linea {{ i + 1 }}</UIButton>
-          <div *ngIf="linea.get('expanded')?.value">
-            <!-- Sección colapsable -->
-            <p>Contenido de la Linea {{ i + 1 }}</p>
-          </div>
-        </div>
-      </div>
+      <lines-form-component></lines-form-component>
     </div>
 
   </div>
@@ -110,7 +89,7 @@
 </div>
 <div class="button-container mt-2 d-flex justify-content-between">
   <button type="button" class="btn btn-primary">Vista Previa</button>
-  <button type="button" class="btn btn-success">Cargar al mapa</button>
+  <UIButton color="success" [block]="false"  (click)="getLinesForm()">Cargar al mapa</UIButton>
 </div>
 
 <UIModal [modalConfig]="previewModalConfig" [modalOption]="previewModalOption" #previewModal>

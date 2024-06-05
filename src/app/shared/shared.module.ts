@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { ButtonComponent } from './components/button/button.component';
 import { IconComponent } from './components/icon/icon.component';
+import { LinesFormComponent } from './components/manual-entries-form/lines-form/lines-form.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { IconComponent } from './components/icon/icon.component';
     FileExportComponent,
     ManualEntriesFormComponent,
     ButtonComponent,
-    IconComponent
+    IconComponent,
+    LinesFormComponent
   ],
   exports: [
     ModalComponent,

@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { IModalConfig } from '../../modal/IModalConfig';
 import { IModalOption } from '../../modal/IModalOptions';
 import { ModalComponent } from '../../modal/modal.component';
+import { LinesFormComponent } from './lines-form/lines-form.component';
 
 @Component({
   selector: 'manual-entries-form',
@@ -11,6 +12,7 @@ import { ModalComponent } from '../../modal/modal.component';
 })
 export class ManualEntriesFormComponent implements OnInit {
   @ViewChild("previewModal") previewModal?: ModalComponent;
+  @ViewChild(LinesFormComponent) linesFormComponent: LinesFormComponent;
 
   previewModalConfig: IModalConfig = {
     modalTitle: 'Vista previa del mapa',
@@ -35,25 +37,9 @@ export class ManualEntriesFormComponent implements OnInit {
     });
   }
 
-  get lineas() {
-    return this.linesForm.get('lineas') as FormArray;
+  getLinesForm(){
+    console.log("Lines form", this.linesFormComponent.getLinesForm)
   }
-
-  nuevaLinea(): FormGroup {
-    return this.fb.group({
-      expanded: false
-    });
-  }
-
-  agregarLinea() {
-    this.lineas.push(this.nuevaLinea());
-  }
-
-  toggleExpandLinea(index: number) {
-    const linea = this.lineas.at(index);
-    linea.get('expanded')?.setValue(!linea.get('expanded')?.value);
-  }
-
 
   /*
   get lines() {

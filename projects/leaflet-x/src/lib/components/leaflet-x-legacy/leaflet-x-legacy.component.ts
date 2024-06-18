@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { HexColorType } from '../../shared/types/hexColor.type';
 import { IStylizeDraw } from '../../shared/interfaces/IStylizeDraw';
 import { UpdateAlertService } from '../../shared/services/updater-alert/update-alert.service';
+import { ILegendBar } from '../../shared/interfaces/ILegendBar';
 
 @Component({
   selector: 'leaflet-x-legacy',

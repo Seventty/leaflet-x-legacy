@@ -24,7 +24,7 @@ export class UpdateAlertService {
       })
     ).subscribe(latestVersion => {
       if (this.isNewVersionAvailable(latestVersion)) {
-        this.toastrService.infoToast("New version available!", `Map update available <pre>${this.currentVersion} -> <strong>${latestVersion}</strong></pre>`)
+        this.toastrService.infoToast("New version available!", `Map update available ${this.currentVersion} -> ${latestVersion}`)
       }
     });
   }

@@ -6,7 +6,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { FileExportComponent } from './components/file-export/file-export.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LegendBarComponent } from './components/legend-bar/legend-bar/legend-bar.component';
+import { LegendBarComponent } from './components/legend-bar/legend-bar.component';
 
 @NgModule({
   imports: [

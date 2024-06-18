@@ -6,23 +6,26 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { FileExportComponent } from './components/file-export/file-export.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LegendBarComponent } from './components/legend-bar/legend-bar/legend-bar.component';
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
     FileUploadModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   declarations: [
     ModalComponent,
     FileUploadComponent,
-    FileExportComponent
+    FileExportComponent,
+    LegendBarComponent
   ],
   exports: [
     ModalComponent,
     FileUploadComponent,
-    FileExportComponent
+    FileExportComponent,
+    LegendBarComponent
   ]
 })
 export class SharedModule { }

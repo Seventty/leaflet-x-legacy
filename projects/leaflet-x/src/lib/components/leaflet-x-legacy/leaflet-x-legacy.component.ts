@@ -41,6 +41,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   @Input() readonly: boolean = false;
   @Input() mainColor: HexColorType = '#00b8e6';
   @Input() portraitMode: boolean = false;
+  @Input() mapLegendBarData: Array<ILegendBar> = [];
   @Output() featureCollectionOutput: EventEmitter<GeoJsonResult> = new EventEmitter<GeoJsonResult>()
 
   featureCollection: GeoJsonResult = {

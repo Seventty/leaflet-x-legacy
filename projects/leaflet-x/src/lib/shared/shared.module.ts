@@ -4,6 +4,7 @@ import { ModalComponent } from './modal/modal.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { FileExportComponent } from './components/file-export/file-export.component';
+import { LegendBarComponent } from './components/legend-bar/legend-bar.component';
 
 @NgModule({
   imports: [
@@ -13,12 +14,14 @@ import { FileExportComponent } from './components/file-export/file-export.compon
   declarations: [
     ModalComponent,
     FileUploadComponent,
-    FileExportComponent
+    FileExportComponent,
+    LegendBarComponent
   ],
   exports: [
     ModalComponent,
     FileUploadComponent,
-    FileExportComponent
+    FileExportComponent,
+    LegendBarComponent
   ]
 })
 export class SharedModule { }

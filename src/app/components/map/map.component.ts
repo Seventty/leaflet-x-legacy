@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { HexColorType } from 'src/app/shared/types/hexColor.type';
 import { IStylizeDraw } from 'src/app/shared/interfaces/IStylizeDraw';
 import { UpdateAlertService } from 'src/app/shared/services/updater-alert/update-alert.service';
+import { ILegendBar } from 'src/app/shared/interfaces/ILegendBar';
 
 @Component({
   selector: 'app-map',
@@ -40,6 +41,7 @@ export class MapComponent implements AfterViewInit {
   @Input() readonly: boolean = false;
   @Input() mainColor: HexColorType = '#00b8e6';
   @Input() portraitMode: boolean = false;
+  @Input() mapLegendBarData: Array<ILegendBar> = [];
   @Output() featureCollectionOutput: EventEmitter<GeoJsonResult> = new EventEmitter<GeoJsonResult>()
 
   featureCollection: GeoJsonResult = {

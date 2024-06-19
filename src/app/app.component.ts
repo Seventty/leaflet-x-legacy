@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { GeoJsonResult } from './shared/types/geoJsonResult.type';
 import { ILegendBar } from './shared/interfaces/ILegendBar';
+import { GeoJsonResult } from './shared/types/geoJsonResult.type';
 
 @Component({
   selector: 'app-root',

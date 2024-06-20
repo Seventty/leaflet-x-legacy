@@ -1,6 +1,8 @@
 <div class="map-container">
   <div class="map-frame">
-    <legend-bar [legendBarData]="mapLegendBarData"></legend-bar>
+    <div *ngIf="mapLegendBarData.length && !portraitMode">
+      <legend-bar [legendBarData]="mapLegendBarData"></legend-bar>
+    </div>
     <div class="map" [id]="mapId"></div>
   </div>
 </div>

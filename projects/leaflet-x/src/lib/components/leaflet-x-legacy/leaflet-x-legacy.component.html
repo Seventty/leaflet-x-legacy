@@ -11,3 +11,7 @@
 <UIModal [modalConfig]="fileExportModalConfig" [modalOption]="fileExportModalOption" #fileExportModal>
   <UIFileExport [FeatureCollectionToExport]="featureCollection"></UIFileExport>
 </UIModal>
+
+<UIModal [modalConfig]="manualEntrieModalConfig" [modalOption]="manualEntrieModalOption" #manualEntrieModal>
+  <manual-entries-form></manual-entries-form>
+</UIModal>

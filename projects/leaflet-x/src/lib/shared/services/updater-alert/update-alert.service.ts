@@ -3,7 +3,7 @@ import { catchError, map } from 'rxjs/operators';
 import { version } from "./../../utils/version"
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast/toast.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

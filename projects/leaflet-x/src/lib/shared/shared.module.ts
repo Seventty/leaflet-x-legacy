@@ -7,10 +7,12 @@ import { FileExportComponent } from './components/file-export/file-export.compon
 import { HttpClientModule } from '@angular/common/http';
 import { ManualEntriesFormComponent } from './components/manual-entries-form/manual-entries-form.component';
 import { IconComponent } from './components/icon/icon.component';
-import { LinesFormComponent } from './components/manual-entries-form/lines-form/lines-form.component';
+import { LinesFormComponent } from './components/manual-entries-form/components/lines-form/lines-form.component';
 import { ButtonComponent } from './components/button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { PointFormComponent } from './components/manual-entries-form/components/point-form/point-form.component';
+import { PolygonFormComponent } from './components/manual-entries-form/components/polygon-form/polygon-form.component';
 
 @NgModule({
   imports: [
@@ -27,7 +29,9 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     ManualEntriesFormComponent,
     IconComponent,
     ButtonComponent,
-    LinesFormComponent
+    LinesFormComponent,
+    PointFormComponent,
+    PolygonFormComponent
   ],
   exports: [
     ModalComponent,

@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { IModalConfig } from '../../modal/IModalConfig';
 import { IModalOption } from '../../modal/IModalOptions';
 import { ModalComponent } from '../../modal/modal.component';
-import { LinesFormComponent } from './lines-form/lines-form.component';
+import { LinesFormComponent } from './components/lines-form/lines-form.component';
 
 @Component({
   selector: 'manual-entries-form',
@@ -27,6 +27,8 @@ export class ManualEntriesFormComponent implements OnInit {
   linesForm: FormGroup = new FormGroup({});
 
   isLineFormCollapsed = true;
+  isPointFormCollapsed = true;
+  isPolygonFormCollapsed = true;
   /* isCollapsed2 = true;
   isCollapsed3 = true;
   isCollapsed4 = true; */

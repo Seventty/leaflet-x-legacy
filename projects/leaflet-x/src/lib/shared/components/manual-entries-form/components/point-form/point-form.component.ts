@@ -20,11 +20,14 @@ export class PointFormComponent implements OnInit {
 
   addPoints() {
     this.points.push(this.newPoint());
-    console.log(this.points)
   }
 
   get points() {
     return this.pointsForm.get('points') as FormArray;
+  }
+
+  get getPointForm(){
+    return this.pointsForm;
   }
 
   newPoint(): FormGroup {

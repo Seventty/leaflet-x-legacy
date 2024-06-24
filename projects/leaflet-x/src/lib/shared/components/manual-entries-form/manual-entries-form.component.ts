@@ -30,53 +30,37 @@ export class ManualEntriesFormComponent implements OnInit {
   }
 
   linesForm: FormGroup = new FormGroup({});
+  pointForm: FormGroup = new FormGroup({});
+  squareForm: FormGroup = new FormGroup({});
 
   isLineFormCollapsed = true;
   isPointFormCollapsed = true;
   isPolygonFormCollapsed = true;
-  /* isCollapsed2 = true;
-  isCollapsed3 = true;
-  isCollapsed4 = true; */
 
   constructor(private fb: FormBuilder, private manualEntriesService: ManualEntriesService) {
     this.linesForm = this.fb.group({
       lineas: this.fb.array([])
     });
+
+    this.pointForm = this.fb.group({
+      points: this.fb.array([])
+    });
+
+    this.squareForm = this.fb.group({
+      squares: this.fb.array([])
+    });
   }
 
   sendForms(){
-    console.log(this.manualEntriesService.formToGeoJson(this.linesFormComponent.getLinesForm.value))
+    const lineGeojson = this.manualEntriesService.mapLineToGeojson(this.linesFormComponent.getLinesForm.value);
+    const pointGeojson = this.pointFormComponent.getPointForm.value;
+    const polygonGeojson = this.pointFormComponent.getPointForm.value;
+
     //this.manualEntriesService.formToGeoJson(this.linesFormComponent);
     //console.log("Formulario de puntos"), this.pointFormComponent
     //console.log("Formulario de poligonos", this.polygonFormComponent)
   }
 
-  /*
-  get lines() {
-    return this.form.get('lines') as FormArray;
-  }
-
-  get squares() {
-    return this.form.get('squares') as FormArray;
-  }
-
-  get points() {
-    return this.form.get('points') as FormArray;
-  }
-
-  get polygons() {
-    return this.form.get('polygons') as FormArray;
-  }
-
-  addInput(array: FormArray) {
-    array.push(this.fb.control(''));
-  }
-
-  removeInput(array: FormArray, index: number) {
-    array.removeAt(index);
-  }
-
-  */
 
   openPreviewModal() {
     this.previewModal.open();

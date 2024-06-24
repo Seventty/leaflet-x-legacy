@@ -22,7 +22,7 @@ export class FileManagerService {
     return this.$featureCollection.asObservable()
   }
 
-  private setFeatureCollection(geojsonResult: GeoJsonResult){
+  public setFeatureCollection(geojsonResult: GeoJsonResult){
     this.$featureCollection.next(geojsonResult)
   }
 

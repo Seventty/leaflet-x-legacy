@@ -50,5 +50,34 @@ export class ManualEntriesService {
     };
   }
 
+  mapPolygonToGeojson(polygonsCollection: any) {
+    const features = polygonsCollection.polygons.map(polygon => {
+      const coordinates = polygon.vertices.map(vertex => [
+        parseFloat(vertex.longitude),
+        parseFloat(vertex.latitude)
+      ]);
+
+      if (coordinates.length > 0 &&
+          (coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
+           coordinates[0][1] !== coordinates[coordinates.length - 1][1])) {
+        coordinates.push([...coordinates[0]]);
+      }
+
+      return {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Polygon',
+          coordinates: [coordinates]
+        }
+      };
+    });
+
+    return {
+      type: 'FeatureCollection',
+      features: features
+    };
+  }
+
 
 }

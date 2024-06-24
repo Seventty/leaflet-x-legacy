@@ -94,9 +94,7 @@ export class LinesFormComponent implements OnInit {
 
     return {
       type: 'FeatureCollection',
-      features,
-      featureCollectionColor: '#000000', // Ajusta esto si necesitas un valor diferente
-      featureCollectionPopup: 'Hello <b>world</b>'
+      features
     };
   }
 

@@ -13,5 +13,5 @@
 </UIModal>
 
 <UIModal [modalConfig]="manualEntrieModalConfig" [modalOption]="manualEntrieModalOption" #manualEntrieModal>
-  <manual-entries-form></manual-entries-form>
+  <manual-entries-form [modalReference]="manualEntrieModal"></manual-entries-form>
 </UIModal>

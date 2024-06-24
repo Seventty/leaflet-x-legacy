@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { IModalConfig } from '../../modal/IModalConfig';
 import { IModalOption } from '../../modal/IModalOptions';
@@ -7,6 +7,7 @@ import { LinesFormComponent } from './components/lines-form/lines-form.component
 import { ManualEntriesService } from './manual-entries.service';
 import { PointFormComponent } from './components/point-form/point-form.component';
 import { PolygonFormComponent } from './components/polygon-form/polygon-form.component';
+import { FileManagerService } from '../../services/file-manager/file-manager.service';
 
 @Component({
   selector: 'manual-entries-form',
@@ -18,6 +19,7 @@ export class ManualEntriesFormComponent implements OnInit {
   @ViewChild(LinesFormComponent) linesFormComponent: LinesFormComponent;
   @ViewChild(PointFormComponent) pointFormComponent: PointFormComponent;
   @ViewChild(PolygonFormComponent) polygonFormComponent: PolygonFormComponent;
+  @Input() modalReference?: ModalComponent
 
   previewModalConfig: IModalConfig = {
     modalTitle: 'Vista previa del mapa',
@@ -37,7 +39,7 @@ export class ManualEntriesFormComponent implements OnInit {
   isPointFormCollapsed = true;
   isPolygonFormCollapsed = true;
 
-  constructor(private fb: FormBuilder, private manualEntriesService: ManualEntriesService) {
+  constructor(private fb: FormBuilder, private manualEntriesService: ManualEntriesService, private fileManagerService: FileManagerService) {
     this.linesForm = this.fb.group({
       lineas: this.fb.array([])
     });
@@ -53,14 +55,29 @@ export class ManualEntriesFormComponent implements OnInit {
 
   sendForms(){
     const lineGeojson = this.manualEntriesService.mapLineToGeojson(this.linesFormComponent.getLinesForm.value);
-    const pointGeojson = this.pointFormComponent.getPointForm.value;
-    const polygonGeojson = this.pointFormComponent.getPointForm.value;
-
-    //this.manualEntriesService.formToGeoJson(this.linesFormComponent);
-    //console.log("Formulario de puntos"), this.pointFormComponent
-    //console.log("Formulario de poligonos", this.polygonFormComponent)
+    const pointGeojson = this.manualEntriesService.mapPointsToGeojson(this.pointFormComponent.getPointForm.value)
+    const polygonGeojson = this.manualEntriesService.mapPolygonToGeojson(this.polygonFormComponent.getPolygonForm.value)
+    const formsMergeFeatureCollection: any = this.mergeGeoJson(lineGeojson, pointGeojson, polygonGeojson);
+    this.fileManagerService.setFeatureCollection(formsMergeFeatureCollection);
+    this.closeModal()
   }
 
+  mergeGeoJson(lineFeatures: any, pointFeatures: any, polygonFeatures: any) {
+    const mergedFeatures = [
+      ...lineFeatures.features,
+      ...pointFeatures.features,
+      ...polygonFeatures.features
+    ];
+
+    return {
+      type: "FeatureCollection",
+      features: mergedFeatures
+    };
+  }
+
+  closeModal(){
+    this.modalReference.close()
+  }
 
   openPreviewModal() {
     this.previewModal.open();

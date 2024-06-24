@@ -33,7 +33,6 @@ export class LinesFormComponent implements OnInit {
     })
   }
 
-
   get lines() {
     return this.linesForm.get('lines') as FormArray;
   }
@@ -74,6 +73,31 @@ export class LinesFormComponent implements OnInit {
 
   get getLinesForm(){
     return this.linesForm;
+  }
+
+  convertToGeoJson() {
+    const features = this.lines.controls.map(line => {
+      const vertices = line.get('vertices') as FormArray;
+      const coordinates = vertices.controls.map(vertex => [
+        parseFloat(vertex.get('longitud')?.value),
+        parseFloat(vertex.get('latitud')?.value)
+      ]);
+      return {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'LineString',
+          coordinates: coordinates
+        }
+      };
+    });
+
+    return {
+      type: 'FeatureCollection',
+      features,
+      featureCollectionColor: '#000000', // Ajusta esto si necesitas un valor diferente
+      featureCollectionPopup: 'Hello <b>world</b>'
+    };
   }
 
 }

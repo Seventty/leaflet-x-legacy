@@ -1,7 +1,7 @@
 <div class="accordion" id="accordionExample">
   <div class="card">
 
-    <!-- <div class="card-header" id="headingOne">
+    <div class="card-header" id="headingOne">
       <h2 class="mb-0">
         <button class="btn btn-link" type="button" (click)="isLineFormCollapsed = !isLineFormCollapsed">
           Formulario de Líneas
@@ -9,7 +9,14 @@
             [ngClass]="{'bi bi-caret-right-fill': isLineFormCollapsed, 'bi bi-caret-down-fill': !isLineFormCollapsed}"></i>
         </button>
       </h2>
-    </div> -->
+    </div>
+
+    <div [ngbCollapse]="isLineFormCollapsed" class="collapse" aria-labelledby="headingOne"
+      data-parent="#accordionExample">
+      <lines-form-component></lines-form-component>
+    </div>
+
+
     <div class="card-header" id="headingOne">
       <h2 class="mb-0">
         <button class="btn btn-link" type="button" (click)="isPointFormCollapsed = !isPointFormCollapsed">
@@ -34,90 +41,16 @@
       </h2>
     </div>
 
-    <!-- <div [ngbCollapse]="isLineFormCollapsed" class="collapse" aria-labelledby="headingOne"
-      data-parent="#accordionExample">
-    </div> -->
-
     <div [ngbCollapse]="isPolygonFormCollapsed" class="collapse" aria-labelledby="headingTwo"
       data-parent="#accordionExample">
       <polygon-form></polygon-form>
     </div>
 
   </div>
-
-  <!-- <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h2 class="mb-0">
-        <button class="btn btn-link" type="button" (click)="isCollapsed2 = !isCollapsed2">
-          Formulario de Cuadrados
-        </button>
-      </h2>
-    </div>
-    <div [ngbCollapse]="isCollapsed2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        <form [formGroup]="form">
-          <div formArrayName="squares">
-            <div *ngFor="let control of squares.controls; let i = index" class="d-flex align-items-baseline">
-              <input [formControlName]="i" class="form-control mb-2" placeholder="Cuadrado {{i + 1}}">
-              <button type="button" class="btn btn-danger ml-2" (click)="removeInput(squares, i)">Eliminar</button>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary" (click)="addInput(squares)">Agregar Cuadrado</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h2 class="mb-0">
-        <button class="btn btn-link" type="button" (click)="isCollapsed3 = !isCollapsed3">
-          Formulario de Puntos
-        </button>
-      </h2>
-    </div>
-    <div [ngbCollapse]="isCollapsed3" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        <form [formGroup]="form">
-          <div formArrayName="points">
-            <div *ngFor="let control of points.controls; let i = index" class="d-flex align-items-baseline">
-              <input [formControlName]="i" class="form-control mb-2" placeholder="Punto {{i + 1}}">
-              <button type="button" class="btn btn-danger ml-2" (click)="removeInput(points, i)">Eliminar</button>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary" (click)="addInput(points)">Agregar Punto</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header" id="headingFour">
-      <h2 class="mb-0">
-        <button class="btn btn-link" type="button" (click)="isCollapsed4 = !isCollapsed4">
-          Formulario de Polígonos
-        </button>
-      </h2>
-    </div>
-    <div [ngbCollapse]="isCollapsed4" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-      <div class="card-body">
-        <form [formGroup]="form">
-          <div formArrayName="polygons">
-            <div *ngFor="let control of polygons.controls; let i = index" class="d-flex align-items-baseline">
-              <input [formControlName]="i" class="form-control mb-2" placeholder="Polígono {{i + 1}}">
-              <button type="button" class="btn btn-danger ml-2" (click)="removeInput(polygons, i)">Eliminar</button>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary" (click)="addInput(polygons)">Agregar Polígono</button>
-        </form>
-      </div>
-    </div>
-  </div> -->
-
 </div>
 <div class="button-container mt-2 d-flex justify-content-between">
   <button type="button" class="btn btn-primary">Vista Previa</button>
-  <UIButton color="success" [block]="false" (click)="getLinesForm()">Cargar al mapa</UIButton>
+  <UIButton color="success" [block]="false" (click)="sendForms()">Cargar al mapa</UIButton>
 </div>
 
 <UIModal [modalConfig]="previewModalConfig" [modalOption]="previewModalOption" #previewModal>

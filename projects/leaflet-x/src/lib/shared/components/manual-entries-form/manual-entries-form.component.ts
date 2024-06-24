@@ -4,6 +4,9 @@ import { IModalConfig } from '../../modal/IModalConfig';
 import { IModalOption } from '../../modal/IModalOptions';
 import { ModalComponent } from '../../modal/modal.component';
 import { LinesFormComponent } from './components/lines-form/lines-form.component';
+import { ManualEntriesService } from './manual-entries.service';
+import { PointFormComponent } from './components/point-form/point-form.component';
+import { PolygonFormComponent } from './components/polygon-form/polygon-form.component';
 
 @Component({
   selector: 'manual-entries-form',
@@ -13,6 +16,8 @@ import { LinesFormComponent } from './components/lines-form/lines-form.component
 export class ManualEntriesFormComponent implements OnInit {
   @ViewChild("previewModal") previewModal?: ModalComponent;
   @ViewChild(LinesFormComponent) linesFormComponent: LinesFormComponent;
+  @ViewChild(PointFormComponent) pointFormComponent: PointFormComponent;
+  @ViewChild(PolygonFormComponent) polygonFormComponent: PolygonFormComponent;
 
   previewModalConfig: IModalConfig = {
     modalTitle: 'Vista previa del mapa',
@@ -33,14 +38,17 @@ export class ManualEntriesFormComponent implements OnInit {
   isCollapsed3 = true;
   isCollapsed4 = true; */
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private manualEntriesService: ManualEntriesService) {
     this.linesForm = this.fb.group({
       lineas: this.fb.array([])
     });
   }
 
-  getLinesForm(){
-    console.log("Lines form", this.linesFormComponent.getLinesForm)
+  sendForms(){
+    console.log(this.manualEntriesService.formToGeoJson(this.linesFormComponent.getLinesForm.value))
+    //this.manualEntriesService.formToGeoJson(this.linesFormComponent);
+    //console.log("Formulario de puntos"), this.pointFormComponent
+    //console.log("Formulario de poligonos", this.polygonFormComponent)
   }
 
   /*

@@ -33,11 +33,11 @@
               <div class="m-2" *ngIf="vertice.get('expanded')?.value">
                 <div class="form-group">
                   <label for="longitud-{{i}}-{{j}}">Longitud</label>
-                  <input type="number" class="form-control" id="longitud-{{i}}-{{j}}" formControlName="longitud" />
+                  <input type="text" class="form-control" id="longitud-{{i}}-{{j}}" formControlName="longitud" />
                 </div>
                 <div class="form-group">
                   <label for="latitud-{{i}}-{{j}}">Latitud</label>
-                  <input type="number" class="form-control" id="latitud-{{i}}-{{j}}" formControlName="latitud" />
+                  <input type="text" class="form-control" id="latitud-{{i}}-{{j}}" formControlName="latitud" />
                 </div>
                 <UIButton color="danger" [block]="true" (click)="eliminarVertice(i, j)">Eliminar Vertice</UIButton>
               </div>

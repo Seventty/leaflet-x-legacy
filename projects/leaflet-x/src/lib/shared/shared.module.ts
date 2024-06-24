@@ -20,7 +20,7 @@ import { PolygonFormComponent } from './components/manual-entries-form/component
     FileUploadModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbCollapseModule
+    NgbCollapseModule,
   ],
   declarations: [
     ModalComponent,
@@ -31,7 +31,7 @@ import { PolygonFormComponent } from './components/manual-entries-form/component
     ButtonComponent,
     LinesFormComponent,
     PointFormComponent,
-    PolygonFormComponent
+    PolygonFormComponent,
   ],
   exports: [
     ModalComponent,

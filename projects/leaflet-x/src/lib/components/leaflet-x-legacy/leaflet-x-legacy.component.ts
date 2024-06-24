@@ -32,6 +32,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   /* Viewchild section */
   @ViewChild("fileManagerModal") fileManagerModal?: ModalComponent
   @ViewChild("fileExportModal") fileExportModal?: ModalComponent
+  @ViewChild("manualEntrieModal") manualEntrieModal?: ModalComponent
 
   /* Decorators section */
   @Input() defaultInitMapCoords: L.LatLngExpression = [39.8282, -98.5795] // Dominican Republic coords default lat 19.026319 | default lang -70.147792
@@ -82,6 +83,24 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @type {IModalOption}
   */
   fileExportModalOption: IModalOption = {
+    centered: true,
+    size: 'md',
+  }
+
+  /**
+  * Configuration for the manual entries modal.
+  * @type {IModalConfig}
+  */
+  manualEntrieModalConfig: IModalConfig = {
+    modalTitle: 'Entrada Manual',
+    dashboardHeader: true,
+  }
+
+  /**
+  * Options for manual entries the modal.
+  * @type {IModalOption}
+  */
+  manualEntrieModalOption: IModalOption = {
     centered: true,
     size: 'md',
   }
@@ -238,8 +257,15 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       },
     }
 
+    const manualEntrieButton = {
+      text: "Entrada manual",
+      onClick: () => {
+        this.manualEntrieModal?.open();
+      },
+    }
+
     const customToolbarActions: any = [
-      ...(!this.readonly ? [importButton] : []),
+      ...(!this.readonly ? [importButton, manualEntrieButton] : []),
       exportButton,
       "cancel",
     ];

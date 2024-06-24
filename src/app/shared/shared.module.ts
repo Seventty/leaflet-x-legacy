@@ -19,13 +19,15 @@ import { LegendBarComponent } from './components/legend-bar/legend-bar.component
     ModalComponent,
     FileUploadComponent,
     FileExportComponent,
-    LegendBarComponent
+    LegendBarComponent,
+    //ManualEntriesFormComponent
   ],
   exports: [
     ModalComponent,
     FileUploadComponent,
     FileExportComponent,
-    LegendBarComponent
+    LegendBarComponent,
+    //ManualEntriesFormComponent
   ]
 })
 export class SharedModule { }

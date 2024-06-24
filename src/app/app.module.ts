@@ -15,7 +15,7 @@ import { LeafletXLegacyModule } from 'projects/leaflet-x/src/public-api';
     BrowserModule,
     NgbModule,
     LeafletXLegacyModule
-    //ComponentsModule
+    //ComponentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

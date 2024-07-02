@@ -9,7 +9,6 @@
     "leaflet",
     "ng2-file-upload",
     "ngx-toastr",
-    "sweetalert2",
     "topojson-client",
     "topojson-server",
     "shp-write",

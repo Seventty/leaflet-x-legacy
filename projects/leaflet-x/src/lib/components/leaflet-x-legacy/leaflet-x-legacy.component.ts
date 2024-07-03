@@ -39,7 +39,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   @Input() defaultZoomLevel: number = 5; // Dominican Republic zoom: 8
   @Input() prefix: string = 'Thank you for using <a href="https://www.npmjs.com/package/@seventty/leaflet-x-legacy">LeafletX</a>, give me a ⭐ in <a href="https://github.com/Seventty/leaflet-angular-base">Github</a>';
   @Input() watermarkImagePath: string = '';
-  @Input() featureCollectionInput?: GeoJsonResult;
+  @Input() featureCollectionInput?: GeoJsonResult | Array<GeoJsonResult>;
   @Input() readonly: boolean = false;
   @Input() mainColor: HexColorType = '#00b8e6';
   @Input() portraitMode: boolean = false;
@@ -344,15 +344,29 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @param {GeoJsonResult} featureCollection - Feature collection to render.
   * @returns {void}
   */
-  private renderFeatureCollectionToMap(featureCollection: GeoJsonResult) {
+  private renderFeatureCollectionToMap(featureCollection: GeoJsonResult | Array<GeoJsonResult>) {
     if (this.map) {
-      if (featureCollection.features.length !== 0) {
-        const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
-        const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
-        if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
-          geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
+      if(Array.isArray(featureCollection)){
+        console.log("Es una coleccion de featureCollecion");
+        featureCollection.forEach(collection => {
+          if(collection.features.length !== 0){
+            const featureCollectionColor = collection.hasOwnProperty("featureCollectionColor") ? collection.featureCollectionColor : this.mainColor
+            const geojsonToMap = L.geoJSON(collection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+            if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
+              geojsonToMap.bindPopup(collection.featureCollectionPopup);
+            }
+            this.featureCollectionUpdate();
+          }
+        });
+      }else{
+        if (featureCollection.features.length !== 0) {
+          const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
+          const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+          if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
+            geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
+          }
+          this.featureCollectionUpdate();
         }
-        this.featureCollectionUpdate();
       }
     }
   }

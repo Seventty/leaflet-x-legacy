@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ILegendBar } from '../../interfaces/ILegendBar';
+import { ILegendBar } from '../../../interfaces/ILegendBar';
 
 @Component({
   selector: 'legend-bar',

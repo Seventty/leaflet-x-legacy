@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { environment } from "./../../environments/environment"
+import { environment } from "../../../environments/environment"
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload'
 import { map, tap } from 'rxjs/operators'
 import Swal from 'sweetalert2'
-import { ToastService } from '../../services/toast/toast.service'
-import { FileManagerService } from '../../services/file-manager/file-manager.service'
-import { ModalComponent } from '../../modal/modal.component'
+import { ToastService } from '../../../services/toast/toast.service'
+import { FileManagerService } from '../../../services/file-manager/file-manager.service'
+import { ModalComponent } from '../../../modal/modal.component'
 
 
 @Component({

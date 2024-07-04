@@ -102,7 +102,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   */
   manualEntrieModalOption: IModalOption = {
     centered: true,
-    size: 'md',
+    size: 'xl',
   }
 
   /**

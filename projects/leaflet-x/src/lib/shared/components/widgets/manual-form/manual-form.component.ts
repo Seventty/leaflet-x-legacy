@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-manual-form',
+  selector: 'manual-form',
   templateUrl: './manual-form.component.html',
   styleUrls: ['./manual-form.component.sass']
 })

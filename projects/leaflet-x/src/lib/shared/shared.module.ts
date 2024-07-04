@@ -10,6 +10,9 @@ import { ButtonComponent } from './components/elements/button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.component';
+import { ManualFormComponent } from './components/widgets/manual-form/manual-form.component';
+import { RouterModule, Routes } from '@angular/router';
+import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.routing';
 
 @NgModule({
   imports: [
@@ -18,6 +21,8 @@ import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.c
     HttpClientModule,
     ReactiveFormsModule,
     NgbCollapseModule,
+    RouterModule.forRoot([]),
+    ManualFormRoutes
   ],
   declarations: [
     ModalComponent,
@@ -25,7 +30,8 @@ import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.c
     FileExportComponent,
     IconComponent,
     ButtonComponent,
-    LegendBarComponent
+    LegendBarComponent,
+    ManualFormComponent
   ],
   exports: [
     ModalComponent,
@@ -33,7 +39,8 @@ import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.c
     FileExportComponent,
     IconComponent,
     ButtonComponent,
-    LegendBarComponent
+    LegendBarComponent,
+    ManualFormComponent
   ]
 })
 export class SharedModule { }

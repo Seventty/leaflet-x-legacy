@@ -15,6 +15,7 @@ import { HexColorType } from '../../shared/types/hexColor.type';
 import { IStylizeDraw } from '../../shared/interfaces/IStylizeDraw';
 import { UpdateAlertService } from '../../shared/services/updater-alert/update-alert.service';
 import { ILegendBar } from '../../shared/interfaces/ILegendBar';
+import { LeafletXLegacyService } from './leaflet-x-legacy.service';
 
 @Component({
   selector: 'leaflet-x-legacy',
@@ -351,23 +352,26 @@ export class LeafletXLegacyComponent implements AfterViewInit {
         featureCollection.forEach(collection => {
           if(collection.features.length !== 0){
             const featureCollectionColor = collection.hasOwnProperty("featureCollectionColor") ? collection.featureCollectionColor : this.mainColor
-            const geojsonToMap = L.geoJSON(collection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+            const geojsonToMap = L.geoJSON(collection, { style: this.stylizeDraw(featureCollectionColor) });
             if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
               geojsonToMap.bindPopup(collection.featureCollectionPopup);
             }
+            this.leafletXLegacyService.addLayer(geojsonToMap);
             this.featureCollectionUpdate();
           }
         });
       }else{
         if (featureCollection.features.length !== 0) {
           const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
-          const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+          const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) });
           if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
             geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
           }
+          this.leafletXLegacyService.addLayer(geojsonToMap);
           this.featureCollectionUpdate();
         }
       }
+      this.map.addLayer(this.leafletXLegacyService.getClusterGroup());
     }
   }
 
@@ -428,7 +432,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.map.scrollWheelZoom.disable();
   }
 
-  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService) { }
+  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService, private leafletXLegacyService: LeafletXLegacyService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -451,5 +455,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.mapIdGenerator();
+    console.log(this.leafletXLegacyService.getClusterGroup())
   }
 }

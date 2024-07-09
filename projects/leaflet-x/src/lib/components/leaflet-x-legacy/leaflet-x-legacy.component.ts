@@ -147,7 +147,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     }
 
     if (this.map) {
-      if(!this.portraitMode) L.control.layers(baseLayers).addTo(this.map);
+      if (!this.portraitMode) L.control.layers(baseLayers).addTo(this.map);
       const defaultBaseLayerProvider: string = localStorage.getItem('layerMapProvider') || "Default";
       const defaultBaseLayer = baseLayers[defaultBaseLayerProvider]
       if (defaultBaseLayer) {
@@ -333,7 +333,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   */
   private getFeatureCollectionFromFile() {
     this.fileManagerService.getFileFeatureCollection().subscribe((res: GeoJsonResult) => {
-      if(res.features.length > 0){
+      if (res.features.length > 0) {
         this.renderFeatureCollectionToMap(res);
         this.toastService.successToast("Éxito", "Figuras cargadas al mapa con éxito.");
       }
@@ -347,13 +347,17 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @returns {void}
   */
   private renderFeatureCollectionToMap(featureCollection: GeoJsonResult | Array<GeoJsonResult>) {
-    if (this.map) {
-      if(Array.isArray(featureCollection)){
+    /* if (this.map) {
+      if (Array.isArray(featureCollection)) {
         console.log("Es una coleccion de featureCollecion");
         featureCollection.forEach(collection => {
-          if(collection.features.length !== 0){
+          if (collection.features.length !== 0) {
             const featureCollectionColor = collection.hasOwnProperty("featureCollectionColor") ? collection.featureCollectionColor : this.mainColor
-            const geojsonToMap = L.geoJSON(collection, { style: this.stylizeDraw(featureCollectionColor) });
+            const geojsonToMap = L.geoJSON(collection, { style: this.stylizeDraw(featureCollectionColor), onEachFeature: (feature, layer) => {
+              if (collection.hasOwnProperty("featureCollectionPopup")) {
+                layer.bindPopup(collection.featureCollectionPopup);
+              }
+            } });
             if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
               geojsonToMap.bindPopup(collection.featureCollectionPopup);
             }
@@ -361,10 +365,14 @@ export class LeafletXLegacyComponent implements AfterViewInit {
             this.featureCollectionUpdate();
           }
         });
-      }else{
+      } else {
         if (featureCollection.features.length !== 0) {
           const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
-          const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) });
+          const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor), onEachFeature: (feature, layer) => {
+            if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
+              layer.bindPopup(featureCollection.featureCollectionPopup);
+            }
+          } });
           if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
             geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
           }
@@ -373,7 +381,40 @@ export class LeafletXLegacyComponent implements AfterViewInit {
         }
       }
       this.map.addLayer(this.leafletXLegacyService.getClusterGroup);
+    } */
+
+    if (!this.map) {
+      return;
     }
+
+    const processFeatureCollection = (collection: GeoJsonResult) => {
+      if (collection.features.length === 0) {
+        return;
+      }
+
+      const featureCollectionColor = collection.hasOwnProperty("featureCollectionColor") ? collection.featureCollectionColor : this.mainColor;
+      const geojsonToMap = L.geoJSON(collection, {
+        style: this.stylizeDraw(featureCollectionColor), onEachFeature: (feature, layer) => {
+          if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
+            layer.bindPopup(collection.featureCollectionPopup);
+          }
+        }
+      });
+
+      if (collection.hasOwnProperty("featureCollectionPopup")) {
+        geojsonToMap.bindPopup(collection.featureCollectionPopup);
+      }
+      this.leafletXLegacyService.addLayer(geojsonToMap);
+      this.featureCollectionUpdate();
+    };
+
+    if (Array.isArray(featureCollection)) {
+      featureCollection.forEach(processFeatureCollection)
+    } else {
+      processFeatureCollection(featureCollection);
+    }
+
+    this.map.addLayer(this.leafletXLegacyService.getClusterGroup);
   }
 
   /**
@@ -425,7 +466,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     }
   }
 
-  private portraitMapConfigurator(){
+  private portraitMapConfigurator() {
     this.map.attributionControl.setPrefix("");
     this.map.doubleClickZoom.disable();
     this.map.touchZoom.disable();
@@ -438,7 +479,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initMap();
     this.setFeatureGroup();
-    if(!this.portraitMode){
+    if (!this.portraitMode) {
       this.geomanControllers();
       this.customToolbar();
       this.watermarkConfigurator();
@@ -450,12 +491,10 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.drawInputFeatureCollectionIntoMap();
     this.mapEventsHandler();
     this.cdr.detectChanges();
-
     this.updateService.checkVersion();
   }
 
   ngOnInit(): void {
     this.mapIdGenerator();
-
   }
 }

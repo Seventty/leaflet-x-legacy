@@ -347,42 +347,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @returns {void}
   */
   private renderFeatureCollectionToMap(featureCollection: GeoJsonResult | Array<GeoJsonResult>) {
-    /* if (this.map) {
-      if (Array.isArray(featureCollection)) {
-        console.log("Es una coleccion de featureCollecion");
-        featureCollection.forEach(collection => {
-          if (collection.features.length !== 0) {
-            const featureCollectionColor = collection.hasOwnProperty("featureCollectionColor") ? collection.featureCollectionColor : this.mainColor
-            const geojsonToMap = L.geoJSON(collection, { style: this.stylizeDraw(featureCollectionColor), onEachFeature: (feature, layer) => {
-              if (collection.hasOwnProperty("featureCollectionPopup")) {
-                layer.bindPopup(collection.featureCollectionPopup);
-              }
-            } });
-            if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
-              geojsonToMap.bindPopup(collection.featureCollectionPopup);
-            }
-            this.leafletXLegacyService.addLayer(geojsonToMap);
-            this.featureCollectionUpdate();
-          }
-        });
-      } else {
-        if (featureCollection.features.length !== 0) {
-          const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
-          const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor), onEachFeature: (feature, layer) => {
-            if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
-              layer.bindPopup(featureCollection.featureCollectionPopup);
-            }
-          } });
-          if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
-            geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
-          }
-          this.leafletXLegacyService.addLayer(geojsonToMap);
-          this.featureCollectionUpdate();
-        }
-      }
-      this.map.addLayer(this.leafletXLegacyService.getClusterGroup);
-    } */
-
     if (!this.map) {
       return;
     }

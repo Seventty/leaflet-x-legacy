@@ -13,7 +13,8 @@ export class LeafletXLegacyService {
     this.markerClusterGroup = L.markerClusterGroup({
       disableClusteringAtZoom: 13,
       chunkedLoading: true,
-      chunkProgress: this.updateProgressBar.bind(this)
+      chunkDelay: 50,
+      chunkProgress: this.updateProgressBar.bind(this),
     });
   }
 

@@ -417,14 +417,11 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.mapId = uuidv4();
   }
 
-  /* public getMapGeoJson() {
-    this.exportGeoJson();
-  } */
-
   private mapEventsHandler() {
     // Handle events to update the FeatureCollection
     if (this.map) {
       this.map.on('pm:create pm:edit pm:remove pm:cut pm:rotateend pm:globaldragmodetoggled pm:globaleditmodetoggled', (e) => {
+        this.map.dragging.enable();
         this.featureCollectionUpdate()
       });
     }

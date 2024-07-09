@@ -16,6 +16,7 @@ import { IStylizeDraw } from '../../shared/interfaces/IStylizeDraw';
 import { UpdateAlertService } from '../../shared/services/updater-alert/update-alert.service';
 import { ILegendBar } from '../../shared/interfaces/ILegendBar';
 import { LeafletXLegacyService } from './leaflet-x-legacy.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'leaflet-x-legacy',
@@ -371,7 +372,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
           this.featureCollectionUpdate();
         }
       }
-      this.map.addLayer(this.leafletXLegacyService.getClusterGroup());
+      this.map.addLayer(this.leafletXLegacyService.getClusterGroup);
     }
   }
 
@@ -432,7 +433,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.map.scrollWheelZoom.disable();
   }
 
-  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService, private leafletXLegacyService: LeafletXLegacyService) { }
+  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService, private leafletXLegacyService: LeafletXLegacyService, private ngxSpinnerService: NgxSpinnerService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -455,6 +456,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.mapIdGenerator();
-    console.log(this.leafletXLegacyService.getClusterGroup())
+
   }
 }

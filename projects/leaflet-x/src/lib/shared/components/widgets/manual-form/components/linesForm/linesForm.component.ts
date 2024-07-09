@@ -25,8 +25,13 @@ export class LinesFormComponent implements OnInit {
     panel.isCollapsed = !panel.isCollapsed;
   }
 
-  toggleVerticeForm(panel: any) {
-    panel.isVerticeFormCollapsed = !panel.isVerticeFormCollapsed;
+  toggleVertice(panel: any, verticeIndex: number) {
+    panel.vertices.forEach((v, index) => {
+      if (index !== verticeIndex) {
+        v.isCollapsed = true;
+      }
+    });
+    panel.vertices[verticeIndex].isCollapsed = !panel.vertices[verticeIndex].isCollapsed;
   }
 
   addNewLine() {
@@ -39,6 +44,14 @@ export class LinesFormComponent implements OnInit {
     this.panelsLine.push(newLine);
   }
 
+  addVertice(panel: any) {
+    const newVertice = {
+      longitud: '',
+      latitud: '',
+      isCollapsed: true
+    };
+    panel.vertices.push(newVertice);
+  }
 
 
   deleteLine(index: number) {
@@ -71,13 +84,25 @@ export class LinesFormComponent implements OnInit {
     });
   }
 
-  addVertice(panel: any) {
-    const newVertex = `Vertice ${panel.vertices.length + 1} - ${panel.title}`;
-    panel.vertices.push(newVertex);
-
-    // Actualizar el contenido del panel
-    panel.content = panel.vertices.join(', ');
+  deleteVertice(panel: any, verticeIndex: number) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Quieres eliminar el vértice ${verticeIndex + 1} del panel ${panel.title}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        panel.vertices.splice(verticeIndex, 1);
+        Swal.fire(
+          'Eliminado',
+          'El vértice ha sido eliminado correctamente.',
+          'success'
+        );
+      }
+    });
   }
-
 
 }

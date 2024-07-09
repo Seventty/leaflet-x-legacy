@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IconComponent } from './components/elements/icon/icon.component';
 import { ButtonComponent } from './components/elements/button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { NgbCollapseModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.component';
 import { ManualFormComponent } from './components/widgets/manual-form/manual-form.component';
@@ -22,6 +23,7 @@ import { LinesFormComponent } from './components/widgets/manual-form/components/
     HttpClientModule,
     ReactiveFormsModule,
     NgbCollapseModule,
+    FormsModule,
     NgbAccordionModule,
     RouterModule.forRoot([]),
     ManualFormRoutes

@@ -15,6 +15,9 @@ import { ManualFormComponent } from './components/widgets/manual-form/manual-for
 import { RouterModule, Routes } from '@angular/router';
 import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.routing';
 import { LinesFormComponent } from './components/widgets/manual-form/components/linesForm/linesForm.component';
+import { PointFormComponent } from './components/widgets/manual-form/components/point-form/point-form.component';
+import { PolygonFormComponent } from './components/widgets/manual-form/components/polygon-form/polygon-form.component';
+import { VerticeFormComponent } from './components/widgets/manual-form/components/vertice-form/vertice-form.component';
 
 @NgModule({
   imports: [
@@ -36,7 +39,10 @@ import { LinesFormComponent } from './components/widgets/manual-form/components/
     ButtonComponent,
     LegendBarComponent,
     ManualFormComponent,
-    LinesFormComponent
+    LinesFormComponent,
+    PointFormComponent,
+    PolygonFormComponent,
+    VerticeFormComponent
   ],
   exports: [
     ModalComponent,
@@ -47,7 +53,10 @@ import { LinesFormComponent } from './components/widgets/manual-form/components/
     LegendBarComponent,
     ManualFormComponent,
     NgbCollapseModule,
-    LinesFormComponent
+    LinesFormComponent,
+    PointFormComponent,
+    PolygonFormComponent,
+    VerticeFormComponent
   ]
 })
 export class SharedModule { }

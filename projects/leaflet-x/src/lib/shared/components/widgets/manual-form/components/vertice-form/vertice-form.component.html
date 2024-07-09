@@ -1,0 +1,21 @@
+<div class="form-group d-flex">
+  <div class="flex-grow-1 mr-2">
+    <label for="longitud{{panelIndex}}{{verticeIndex}}" class="col-form-label">Longitud:</label>
+    <div>
+      <input type="text" class="form-control" id="longitud{{panelIndex}}{{verticeIndex}}"
+             [(ngModel)]="vertice.longitud" (ngModelChange)="onVerticeChange()">
+    </div>
+  </div>
+  <div class="flex-grow-1 mr-2">
+    <label for="latitud{{panelIndex}}{{verticeIndex}}" class="col-form-label">Latitud:</label>
+    <div>
+      <input type="text" class="form-control" id="latitud{{panelIndex}}{{verticeIndex}}"
+             [(ngModel)]="vertice.latitud" (ngModelChange)="onVerticeChange()">
+    </div>
+  </div>
+  <div class="align-self-end">
+    <a class="btn btn-outline-delete" role="button" mdbRipple (click)="onDelete()">
+      <i class="bi bi-trash3"></i>
+    </a>
+  </div>
+</div>

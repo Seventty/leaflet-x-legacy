@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 export class LinesFormComponent implements OnInit {
 
   panelsLine: any[] = [];
-  isVerticeFormCollapsed = false;
+  allVertices: any[] = [];
 
   constructor() { }
 
@@ -25,20 +25,10 @@ export class LinesFormComponent implements OnInit {
     panel.isCollapsed = !panel.isCollapsed;
   }
 
-  toggleVertice(panel: any, verticeIndex: number) {
-    panel.vertices.forEach((v, index) => {
-      if (index !== verticeIndex) {
-        v.isCollapsed = true;
-      }
-    });
-    panel.vertices[verticeIndex].isCollapsed = !panel.vertices[verticeIndex].isCollapsed;
-  }
-
   addNewLine() {
     const newLine = {
       title: `Linea ${this.panelsLine.length + 1}`,
-      content: '', // Inicialmente vacío
-      vertices: [], // Arreglo para mantener los vértices
+      vertices: [],
       isCollapsed: true
     };
     this.panelsLine.push(newLine);
@@ -47,12 +37,11 @@ export class LinesFormComponent implements OnInit {
   addVertice(panel: any) {
     const newVertice = {
       longitud: '',
-      latitud: '',
-      isCollapsed: true
+      latitud: ''
     };
     panel.vertices.push(newVertice);
+    this.allVertices.push(newVertice);
   }
-
 
   deleteLine(index: number) {
     const panel = this.panelsLine[index];
@@ -95,7 +84,10 @@ export class LinesFormComponent implements OnInit {
       confirmButtonText: 'Sí, eliminarlo'
     }).then((result) => {
       if (result.isConfirmed) {
+        const vertice = panel.vertices[verticeIndex];
+        this.allVertices = this.allVertices.filter(v => v !== vertice);
         panel.vertices.splice(verticeIndex, 1);
+        console.log('All vertices after deletion:', this.allVertices);
         Swal.fire(
           'Eliminado',
           'El vértice ha sido eliminado correctamente.',
@@ -103,6 +95,12 @@ export class LinesFormComponent implements OnInit {
         );
       }
     });
+  }
+
+  handleVerticeChange(panelIndex: number, verticeIndex: number, vertice: any) {
+    console.log(`Panel ${panelIndex + 1}, Vertice ${verticeIndex + 1}:`, vertice);
+    this.panelsLine[panelIndex].vertices[verticeIndex] = vertice;
+    console.log('All vertices:', this.allVertices);
   }
 
 }

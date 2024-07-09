@@ -8,11 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { IconComponent } from './components/elements/icon/icon.component';
 import { ButtonComponent } from './components/elements/button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.component';
 import { ManualFormComponent } from './components/widgets/manual-form/manual-form.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.routing';
+import { LinesFormComponent } from './components/widgets/manual-form/components/linesForm/linesForm.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.r
     HttpClientModule,
     ReactiveFormsModule,
     NgbCollapseModule,
+    NgbAccordionModule,
     RouterModule.forRoot([]),
     ManualFormRoutes
   ],
@@ -31,7 +33,8 @@ import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.r
     IconComponent,
     ButtonComponent,
     LegendBarComponent,
-    ManualFormComponent
+    ManualFormComponent,
+    LinesFormComponent
   ],
   exports: [
     ModalComponent,
@@ -40,7 +43,9 @@ import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.r
     IconComponent,
     ButtonComponent,
     LegendBarComponent,
-    ManualFormComponent
+    ManualFormComponent,
+    NgbCollapseModule,
+    LinesFormComponent
   ]
 })
 export class SharedModule { }

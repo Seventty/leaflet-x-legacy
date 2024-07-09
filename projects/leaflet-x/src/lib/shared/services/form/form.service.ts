@@ -237,7 +237,9 @@ export class FormService {
       this.featurePolygonToFormGroup(featureColletion);
     }
 
-    this.formGroupToGeoJsonResult();
+    this.form.valueChanges.subscribe((e) => {
+      this.formGroupToGeoJsonResult();
+    });
   }
 
   public removePointAt(index: number, indexControl: number = null): void {

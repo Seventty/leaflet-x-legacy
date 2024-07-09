@@ -1,39 +1,38 @@
 <main>
 
-  <a class="btn text-white d-flex align-self-center align-items-center justify-content-center w-100"
+  <a (click)="addNewLine()" class="btn text-white d-flex align-self-center align-items-center justify-content-center w-100"
     style="background-color: #004ea2; line-height: 0;" role="button" mdbRipple>
     <i class="bi bi-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
     Agregar nueva linea
   </a>
 
   <div class="accordion" id="accordionExample">
-    <div class="row py-2 mt-2">
-      <div class="col-12 d-flex justify-content-between" id="headingOne">
-        <h2 class="col-6 m-0 p-0 d-flex align-items-start">
+    <div class="py-2 mt-2" *ngFor="let panel of panelsLine; let i = index">
+      <div class="d-flex" id="heading{{i}}">
+        <h2 class="m-0 p-0 flex-grow-1 d-flex align-items-start mr-2">
           <button class="btn btn-outline-primary px-5 w-100" mdbRipple type="button"
-            (click)="isLineFormCollapsed = !isLineFormCollapsed">
-            Linea 1
+            (click)="togglePanel(panel)">
+            {{ panel.title }}
             <i class="ml-1" style="font-size: 1rem; line-height: 1;"
-              [ngClass]="{'bi bi-caret-right-fill': isLineFormCollapsed, 'bi bi-caret-down-fill': !isLineFormCollapsed}"></i>
+              [ngClass]="{'bi bi-caret-right-fill': panel.isCollapsed, 'bi bi-caret-down-fill': !panel.isCollapsed}"></i>
           </button>
         </h2>
-        <a class="col-5 btn btn-outline-custom d-flex align-self-center align-items-center justify-content-center"
+        <a (click)="addVertice(panel)" class="btn btn-outline-custom d-flex align-self-center align-items-center justify-content-center mr-2"
           style="line-height: 0;" role="button" mdbRipple>
           <i class="bi bi-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
           Agregar vertice
         </a>
-        <a class="btn btn-outline-delete" role="button" mdbRipple>
+        <a class="btn btn-outline-delete" role="button" mdbRipple (click)="deleteLine(i)">
           <i class="bi bi-trash3"></i>
         </a>
       </div>
 
-      <div [ngbCollapse]="isLineFormCollapsed" class="col-12 collapse" aria-labelledby="headingOne"
+      <div [ngbCollapse]="panel.isCollapsed" class="collapse" id="collapse{{i}}"
         data-parent="#accordionExample">
-        soy linea Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam doloribus labore quo corrupti nesciunt obcaecati, consequatur qui repudiandae. O l k l l l l l l l l l l l ?
+        {{ panel.content }}
       </div>
     </div>
   </div>
-
 
   <div class="button-container mt-2 d-flex justify-content-between">
     <button type="button" class="btn btn-primary">Vista Previa</button>
@@ -41,3 +40,42 @@
   </div>
 
 </main>
+
+
+<div class="accordion" id="accordionExample">
+  <div class="py-2 mt-2">
+    <div class="d-flex" id="headingOne">
+
+      <button class="btn btn-outline-custom-v d-flex align-self-center align-items-center justify-content-center w-100" mdbRipple type="button"
+        (click)="isVerticeFormCollapsed = !isVerticeFormCollapsed">
+        Vertice 1
+        <i class="ml-1" style="font-size: 1rem; line-height: 1;"
+          [ngClass]="{'bi bi-caret-right-fill': isVerticeFormCollapsed, 'bi bi-caret-down-fill': !isVerticeFormCollapsed}"></i>
+      </button>
+
+    </div>
+
+    <div [ngbCollapse]="isVerticeFormCollapsed" class="collapse" aria-labelledby="headingOne"
+      data-parent="#accordionExample">
+      <div class="form-group row">
+        <div class="col-sm-5">
+          <label for="longitud" class="col-form-label">Longitud:</label>
+          <div>
+            <input type="text" class="form-control" id="longitud">
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <label for="latitud" class="col-form-label">Latitud:</label>
+          <div class="">
+            <input type="text" class="form-control" id="latitud">
+          </div>
+        </div>
+        <div class="col-sm-2 align-self-end">
+          <a class="btn btn-outline-delete" role="button" mdbRipple>
+            <i class="bi bi-trash3"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

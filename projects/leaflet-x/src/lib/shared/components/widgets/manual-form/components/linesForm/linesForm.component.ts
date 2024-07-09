@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormService } from 'projects/leaflet-x/src/lib/shared/services/form/form.service';
 
 @Component({
   selector: 'app-linesForm',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LinesFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private formService: FormService) { }
 
   ngOnInit() {
+    //TEST
+    this.formService.valueChange.subscribe(c => {
+      console.log(c);
+    })
   }
 
 }

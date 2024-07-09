@@ -13,6 +13,7 @@ import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.c
 import { ManualFormComponent } from './components/widgets/manual-form/manual-form.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.routing';
+import { FormService } from './services/form/form.service';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.r
     ReactiveFormsModule,
     NgbCollapseModule,
     RouterModule.forRoot([]),
-    ManualFormRoutes
+    ManualFormRoutes,
   ],
   declarations: [
     ModalComponent,
@@ -31,7 +32,7 @@ import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.r
     IconComponent,
     ButtonComponent,
     LegendBarComponent,
-    ManualFormComponent
+    ManualFormComponent,
   ],
   exports: [
     ModalComponent,
@@ -40,7 +41,8 @@ import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.r
     IconComponent,
     ButtonComponent,
     LegendBarComponent,
-    ManualFormComponent
-  ]
+    ManualFormComponent,
+  ],
+  providers: [FormService],
 })
-export class SharedModule { }
+export class SharedModule {}

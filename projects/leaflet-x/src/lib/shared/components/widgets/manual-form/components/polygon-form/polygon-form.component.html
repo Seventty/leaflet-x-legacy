@@ -1,8 +1,49 @@
 <main>
-  polygon-form works!
+
+  <a (click)="addNewPolygon()" class="btn text-white d-flex align-self-center align-items-center justify-content-center w-100"
+    style="background-color: #004ea2; line-height: 0;" role="button" mdbRipple>
+    <i class="bi bi-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
+    Agregar nuevo polígono
+  </a>
+
+  <div class="accordion" id="accordionExample">
+    <div class="py-2 mt-2" *ngFor="let panel of panelsPolygon; let i = index">
+      <div class="d-flex" id="heading{{i}}">
+        <h2 class="m-0 p-0 flex-grow-1 d-flex align-items-start mr-2">
+          <button class="btn btn-outline-primary px-5 w-100" mdbRipple type="button"
+            (click)="togglePanel(panel)">
+            {{ panel.title }}
+            <i class="ml-1" style="font-size: 1rem; line-height: 1;"
+              [ngClass]="{'bi bi-caret-right-fill': panel.isCollapsed, 'bi bi-caret-down-fill': !panel.isCollapsed}"></i>
+          </button>
+        </h2>
+        <a class="btn btn-outline-custom d-flex align-self-center align-items-center justify-content-center mr-2"
+          style="line-height: 0;" role="button" mdbRipple (click)="addVertice(panel)">
+          <i class="bi bi-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
+          Agregar vertice
+        </a>
+        <a class="btn btn-outline-delete" role="button" (click)="deletePolygon(i)" mdbRipple>
+          <i class="bi bi-trash3"></i>
+        </a>
+      </div>
+
+      <div [ngbCollapse]="panel.isCollapsed" class="collapse" id="collapse{{i}}"
+        data-parent="#accordionExample">
+        <app-vertice-form *ngFor="let vertice of panel.vertices; let j = index"
+        [vertice]="vertice"
+        [verticeIndex]="j"
+        [panelIndex]="i"
+        (delete)="deleteVertice(panel, $event)"
+        (verticeChange)="handleVerticeChange(i, $event.index, $event.vertice)">
+      </app-vertice-form>
+      </div>
+    </div>
+  </div>
+
 
   <div class="button-container mt-2 d-flex justify-content-between">
     <button type="button" class="btn btn-primary">Vista Previa</button>
     <button type="button" class="btn btn-success">Cargar al mapa</button>
   </div>
+
 </main>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,7 +10,7 @@ import Swal from 'sweetalert2';
 export class PointFormComponent implements OnInit {
   points = [];
 
-  constructor() { }
+  constructor(public toastService:ToastService) { }
 
   ngOnInit() {
   }
@@ -33,11 +34,12 @@ export class PointFormComponent implements OnInit {
       if (result.isConfirmed) {
         this.points.splice(index, 1);
         console.log('Points after deletion:', this.points);
-        Swal.fire(
-          'Eliminado',
-          'El vértice ha sido eliminado correctamente.',
-          'success'
-        );
+        // Swal.fire(
+        //   'Eliminado',
+        //   'El vértice ha sido eliminado correctamente.',
+        //   'success'
+        // );
+        this.toastService.warningToast('¡Eliminado!', 'El vértice ha sido eliminado correctamente.')
       }
     });
   }

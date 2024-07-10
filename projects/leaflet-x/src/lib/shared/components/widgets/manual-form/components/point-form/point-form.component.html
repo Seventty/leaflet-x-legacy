@@ -1,3 +1,21 @@
-<p>
-  point-form works!
-</p>
+<main>
+  <a (click)="addNewPoint()" class="btn text-white d-flex align-self-center align-items-center justify-content-center w-100"
+    style="background-color: #004ea2; line-height: 0;" role="button" mdbRipple>
+    <i class="bi bi-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
+    Agregar nuevo punto
+  </a>
+
+  <div *ngFor="let point of points; let i = index">
+    <app-vertice-form
+      [vertice]="point"
+      [verticeIndex]="i"
+      (delete)="deletePoint($event)"
+      (verticeChange)="handlePointChange(i, $event.vertice)">
+    </app-vertice-form>
+  </div>
+
+  <div class="button-container mt-2 d-flex justify-content-between">
+    <button type="button" class="btn btn-primary">Vista Previa</button>
+    <button type="button" class="btn btn-success">Cargar al mapa</button>
+  </div>
+</main>

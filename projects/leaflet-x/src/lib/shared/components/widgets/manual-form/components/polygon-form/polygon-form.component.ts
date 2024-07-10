@@ -38,11 +38,11 @@ export class PolygonFormComponent implements OnInit {
 
   deletePolygon(index: number) {
 
-    let message = `¿Quieres eliminar el polígono "polígono${index}"?`;
+    let message = `¿Quieres eliminar el polígono "polígono${index + 1}"?`;
 
     // Verificar si existen vértices
     if (this.formPoligonos.at(index).controls.length > 0) {
-      message = `¿Quieres eliminar el polígono "polígono ${index}" con sus ${this.formPoligonos.at(index).controls.length} vértices?`;
+      message = `¿Quieres eliminar el polígono "polígono ${index + 1}" con sus ${this.formPoligonos.at(index).controls.length} vértices?`;
     }
 
     Swal.fire({
@@ -65,7 +65,7 @@ export class PolygonFormComponent implements OnInit {
   deleteVertice(index: number, verticeIndex: number) {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: `¿Quieres eliminar el vértice ${verticeIndex + 1} del polígono ${index}?`,
+      text: `¿Quieres eliminar el vértice ${verticeIndex + 1} del polígono ${index + 1}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

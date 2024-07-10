@@ -302,10 +302,13 @@ export class FormService {
    * @example removePolygonAt(1,2) //Se removerá el vértice en la posición 2 del polígono en la posicion 1
    * @example removePolygonAt(2) //Se removerá el polígono en la posición 2
    */
-  public removePolygonAt(indexPolygon: number, indexPoint: number = 0): void {
+  public removePolygonAt(indexPolygon: number, indexPoint: number = null): void {
     if (indexPoint === null) {
       this.Polygon.removeAt(indexPolygon);
+      console.log(">>>>>>>>>>>>>>>>>>>>");
+      return;
     }
+    console.log("===========");
 
     let array = this.Polygon.at(indexPolygon) as FormArray;
     array.removeAt(indexPoint);

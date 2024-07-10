@@ -10,13 +10,14 @@ import { FeatureGroup } from 'leaflet';
   providedIn: 'root',
 })
 export class FormService {
+  /**Formulario principal */
   protected form: FormGroup;
   private subject = new BehaviorSubject<GeoJsonResult>(null);
+  /**Emite los cambios realizado en el formulario*/
   public valueChange: Observable<GeoJsonResult> = this.subject.asObservable();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
-  //#region get
   public get Points(): FormArray {
     return this.form.get('point') as FormArray;
   }
@@ -28,25 +29,35 @@ export class FormService {
   public get Polygon(): FormArray {
     return this.form.get('polygon') as FormArray;
   }
-  //#endregion
 
+  /**Agrega un nuevo punto al `formArray` de  `Points`*/
   public addLineString(): void {
     this.LineString.push(this.formArrayBuild());
   }
 
+  /**Agrega un nuevo polígono al `formArray` de  `Polygon`*/
   public addPolygon(): void {
     this.Polygon.push(this.formArrayBuild());
   }
 
+  /**Agrega una nueva linea al `formArray` de  `LineString`*/
   public addPoint(): void {
     this.Points.push(this.formBuild());
   }
 
+  /** Agrega un nuevo vértice al `formArray` en `index`.
+   *
+   * @param index Posición de la línea a agregar un nuevo vértice.
+   */
   public addPointInLineString(index: number): void {
     let array = this.LineString.controls[index] as FormArray;
     array.push(this.formBuild());
   }
 
+  /** Agrega un nuevo vértice al `formArray` en `index`.
+   *
+   * @param index Posición del polígono a agregar un nuevo vértice.
+   */
   public addPointInPolygon(index: number): void {
     let array = this.Polygon.controls[index] as FormArray;
     array.push(this.formBuild());
@@ -122,7 +133,6 @@ export class FormService {
         let array: FormArray = this.formArrayBuild();
         let list: any[] = geometry.coordinates[0];
 
-
         list.forEach((point) => {
           array.push(this.coordinetesToFormGroup(point));
         });
@@ -139,6 +149,7 @@ export class FormService {
     });
   }
 
+  /**Mapea el `LineString: FormArray[]` a una lista de objectos Feature. */
   private lineStringtToFeature(): any[] {
     let array = [];
     this.LineString.controls //Obtener solo los formulario validos
@@ -160,6 +171,7 @@ export class FormService {
     return result;
   }
 
+  /**Mapea el `Points: FormArray[]` a una lista de objectos Feature. */
   private pointToFeature(): any[] {
     let points = [];
     this.Points.controls //Obtener solo los formulario validos
@@ -173,6 +185,7 @@ export class FormService {
     );
   }
 
+  /**Mapea el `Polygon: FormArray[]` a una lista de objectos Feature. */
   private polygonToFeature(): any[] {
     let array: Array<Point[]> = [];
 
@@ -218,7 +231,13 @@ export class FormService {
     };
   }
 
-  public updateForm(featureColletion: GeoJsonResult | Array<GeoJsonResult>): void {
+  /** Actualiza el formulario en base a `featureColletion`
+   * @param featureColletion Lista de `GeoJsonResult` o `Array<GeoJsonResult>`
+   * @returns
+   */
+  public updateForm(
+    featureColletion: GeoJsonResult | Array<GeoJsonResult>
+  ): void {
     if (!featureColletion) {
       return;
     }
@@ -242,13 +261,25 @@ export class FormService {
     });
   }
 
-  public removePointAt(index: number, indexControl: number = null): void {
-    if (indexControl === null) {
-      this.Points.removeAt(index);
-      return;
-    }
+  /** Remover punto.
+   *
+   * @param index Índice del punto a remover.
+   * @example removePointAt(2) //Se removerá el punto en la posicion 2
+   */
+  public removePointAt(index: number): void {
+    this.Points.removeAt(index);
   }
 
+  /** Remover linea o vértice de una linea.
+   *
+   * @param indexLineString Índice de la Linea a remover.
+   *  * especifica la linea remover.
+   * @param indexPoint  Índice del vértice a remover.
+   *  * especifica el vértice de la linea `indexLineString` a remover. En caso de `indexPoint` ser  `null` se removerá la linea.
+   *
+   * @example removeLineStringAt(1,2) //Se removerá el vértice en la posición 2 de la linea en la posicion 1
+   * @example removeLineStringAt(2) //Se removerá la linea en la posición 2
+   */
   public removeLineStringAt(
     indexLineString: number,
     indexPoint: number = null
@@ -262,6 +293,16 @@ export class FormService {
     array.removeAt(1);
   }
 
+  /** Remover polígono o vértice de un polígono.
+   *
+   * @param indexPolygon Índice del polígono a remover.
+   *  * especifica el polígono remover.
+   * @param indexPoint  Índice del vértice a remover.
+   *  * especifica el vértice del polígono `indexPolygon` a remover. En caso de `indexPoint` ser  `null` se removerá el polígono.
+   *
+   * @example removePolygonAt(1,2) //Se removerá el vértice en la posición 2 del polígono en la posicion 1
+   * @example removePolygonAt(2) //Se removerá el polígono en la posición 2
+   */
   public removePolygonAt(indexPolygon: number, indexPoint: number = 0): void {
     if (indexPoint === null) {
       this.Polygon.removeAt(indexPolygon);

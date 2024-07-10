@@ -288,9 +288,8 @@ export class FormService {
       this.LineString.removeAt(indexLineString);
       return;
     }
-
-    let array = this.LineString.controls[indexPoint] as FormArray;
-    array.removeAt(1);
+    let array = this.LineString.at(indexLineString) as FormArray;
+    array.removeAt(indexPoint);
   }
 
   /** Remover polígono o vértice de un polígono.
@@ -308,7 +307,7 @@ export class FormService {
       this.Polygon.removeAt(indexPolygon);
     }
 
-    let array = this.Polygon.controls[indexPolygon] as FormArray;
+    let array = this.Polygon.at(indexPolygon) as FormArray;
     array.removeAt(indexPoint);
   }
 }

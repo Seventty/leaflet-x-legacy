@@ -1,0 +1,19 @@
+<form [formGroup]="fromGroup" class="form-group d-flex">
+  <div class="flex-grow-1 mr-2">
+    <label for="longitud{{panelIndex}}{{verticeIndex}}" class="col-form-label">Longitud:</label>
+    <div>
+      <input type="text" class="form-control" formControlName="lat" placeholder="Latitud">
+    </div>
+  </div>
+  <div class="flex-grow-1 mr-2">
+    <label for="latitud{{panelIndex}}{{verticeIndex}}" class="col-form-label">Latitud:</label>
+    <div>
+      <input type="text" class="form-control" formControlName="long" placeholder="Longitud">
+    </div>
+  </div>
+  <div class="align-self-end">
+    <a title="eliminar" class="btn btn-outline-delete" role="button" mdbRipple (click)="onDelete()">
+      <i class="bi bi-trash3"></i>
+    </a>
+  </div>
+</form>

@@ -86,7 +86,9 @@ export class FormService {
       ...this.polygonToFeature()
     );
 
-    this.subject.next(geojson);
+    if(this.form.valid){
+      this.subject.next(geojson);
+    }
 
     return geojson;
   }

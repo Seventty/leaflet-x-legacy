@@ -133,6 +133,8 @@ export class FormService {
         let array: FormArray = this.formArrayBuild();
         let list: any[] = geometry.coordinates[0];
 
+        list.pop(); //Remover vertice de cierre.
+
         list.forEach((point) => {
           array.push(this.coordinetesToFormGroup(point));
         });

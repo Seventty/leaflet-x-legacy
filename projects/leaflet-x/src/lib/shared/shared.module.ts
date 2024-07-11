@@ -8,12 +8,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { IconComponent } from './components/elements/icon/icon.component';
 import { ButtonComponent } from './components/elements/button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { NgbCollapseModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.component';
 import { ManualFormComponent } from './components/widgets/manual-form/manual-form.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.routing';
 import { FormService } from './services/form/form.service';
+import { LinesFormComponent } from './components/widgets/manual-form/components/linesForm/linesForm.component';
+import { PointFormComponent } from './components/widgets/manual-form/components/point-form/point-form.component';
+import { PolygonFormComponent } from './components/widgets/manual-form/components/polygon-form/polygon-form.component';
+import { VerticeFormComponent } from './components/widgets/manual-form/components/vertice-form/vertice-form.component';
 
 @NgModule({
   imports: [
@@ -22,6 +27,8 @@ import { FormService } from './services/form/form.service';
     HttpClientModule,
     ReactiveFormsModule,
     NgbCollapseModule,
+    FormsModule,
+    NgbAccordionModule,
     RouterModule.forRoot([]),
     ManualFormRoutes,
   ],
@@ -33,6 +40,10 @@ import { FormService } from './services/form/form.service';
     ButtonComponent,
     LegendBarComponent,
     ManualFormComponent,
+    LinesFormComponent,
+    PointFormComponent,
+    PolygonFormComponent,
+    VerticeFormComponent
   ],
   exports: [
     ModalComponent,
@@ -42,6 +53,11 @@ import { FormService } from './services/form/form.service';
     ButtonComponent,
     LegendBarComponent,
     ManualFormComponent,
+    NgbCollapseModule,
+    LinesFormComponent,
+    PointFormComponent,
+    PolygonFormComponent,
+    VerticeFormComponent
   ],
   providers: [FormService],
 })

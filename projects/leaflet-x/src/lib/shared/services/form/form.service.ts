@@ -133,6 +133,8 @@ export class FormService {
         let array: FormArray = this.formArrayBuild();
         let list: any[] = geometry.coordinates[0];
 
+        list.pop(); //Remover vertice de cierre.
+
         list.forEach((point) => {
           array.push(this.coordinetesToFormGroup(point));
         });
@@ -288,9 +290,8 @@ export class FormService {
       this.LineString.removeAt(indexLineString);
       return;
     }
-
-    let array = this.LineString.controls[indexPoint] as FormArray;
-    array.removeAt(1);
+    let array = this.LineString.at(indexLineString) as FormArray;
+    array.removeAt(indexPoint);
   }
 
   /** Remover polígono o vértice de un polígono.
@@ -303,12 +304,15 @@ export class FormService {
    * @example removePolygonAt(1,2) //Se removerá el vértice en la posición 2 del polígono en la posicion 1
    * @example removePolygonAt(2) //Se removerá el polígono en la posición 2
    */
-  public removePolygonAt(indexPolygon: number, indexPoint: number = 0): void {
+  public removePolygonAt(indexPolygon: number, indexPoint: number = null): void {
     if (indexPoint === null) {
       this.Polygon.removeAt(indexPolygon);
+      console.log(">>>>>>>>>>>>>>>>>>>>");
+      return;
     }
+    console.log("===========");
 
-    let array = this.Polygon.controls[indexPolygon] as FormArray;
+    let array = this.Polygon.at(indexPolygon) as FormArray;
     array.removeAt(indexPoint);
   }
 }

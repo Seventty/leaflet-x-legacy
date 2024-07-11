@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-vertice-form',
@@ -13,6 +13,27 @@ export class VerticeFormComponent {
   @Input() panelIndex: number;
   @Output() delete = new EventEmitter<number>();
   @Output() verticeChange = new EventEmitter<{ index: number, vertice: any }>();
+
+  get latitudControl(): FormControl { // Cambio de tipo de retorno
+    return this.fromGroup.controls['lat'] as FormControl; // Typecasting
+  }
+
+  get longitudControl(): FormControl { // Cambio de tipo de retorno
+    return this.fromGroup.controls['long'] as FormControl; // Typecasting
+  }
+
+  constructor() { }
+
+  getErrorMessage(control: FormControl) {
+    if (control.hasError('required')) {
+      return 'es requerida.';
+    } else if (control.hasError('latOutOfRange')) {
+      return 'no válida.';
+    } else if (control.hasError('longOutOfRange')) {
+      return 'no válida.';
+    }
+    return ''; // No hay error o error desconocido
+  }
 
   onDelete() {
     this.delete.emit(this.verticeIndex);

@@ -1,17 +1,25 @@
 <form [formGroup]="fromGroup" class="form-group d-flex">
   <div class="flex-grow-1 mr-2">
-    <label for="longitud{{panelIndex}}{{verticeIndex}}" class="col-form-label">Longitud:</label>
+    <label for="longitud{{panelIndex}}{{verticeIndex}}" class="col-form-label" [ngClass]="{'error-colors': latitudControl.invalid && latitudControl.touched}">Latitud:</label>
     <div>
-      <input type="number" class="form-control" formControlName="lat" placeholder="Latitud">
+      <input type="number" class="form-control" formControlName="lat" placeholder="Latitud"
+           [ngClass]="{'is-invalid': latitudControl.invalid && latitudControl.touched}">
+          <div class="error-colors" *ngIf="latitudControl.invalid && latitudControl.touched">
+            <div>Latitud {{ getErrorMessage(latitudControl) }}</div>
+          </div>
     </div>
   </div>
   <div class="flex-grow-1 mr-2">
-    <label for="latitud{{panelIndex}}{{verticeIndex}}" class="col-form-label">Latitud:</label>
+    <label for="latitud{{panelIndex}}{{verticeIndex}}" class="col-form-label" [ngClass]="{'error-colors': longitudControl.invalid && longitudControl.touched}">Longitud:</label>
     <div>
-      <input type="number" class="form-control" formControlName="long" placeholder="Longitud">
+      <input type="number" class="form-control" formControlName="long" placeholder="Longitud"
+        [ngClass]="{'is-invalid': longitudControl.invalid && longitudControl.touched}">
+        <div class="error-colors" *ngIf="longitudControl.invalid && longitudControl.touched">
+          <div>Longitud {{ getErrorMessage(longitudControl) }}</div>
+        </div>
     </div>
   </div>
-  <div class="align-self-end">
+  <div class="align-self-end" [ngClass]="{'align-self-center mt-3': longitudControl.invalid && longitudControl.touched || latitudControl.invalid && latitudControl.touched }">
     <a title="eliminar" class="btn btn-outline-delete" role="button" mdbRipple (click)="onDelete()">
       <i class="bi bi-trash3"></i>
     </a>

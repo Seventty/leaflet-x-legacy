@@ -16,5 +16,5 @@
 </UIModal>
 
 <UIModal [modalConfig]="manualEntrieModalConfig" [modalOption]="manualEntrieModalOption" #manualEntrieModal>
-  <manual-form [featureCollection]="featureCollection" ></manual-form>
+  <manual-form [featureCollection]="featureCollection" (updateFeatureCollection)="manualEntriesUpdate($event)"></manual-form>
 </UIModal>

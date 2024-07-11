@@ -11,7 +11,7 @@ import { FormService } from '../../../services/form/form.service';
 export class ManualFormComponent implements OnInit, OnChanges {
   //#region Input, OutPut
   @Input() featureCollection: GeoJsonResult | Array<GeoJsonResult>;
-  @Output() Update: EventEmitter<GeoJsonResult> = new EventEmitter<GeoJsonResult>();
+  @Output() updateFeatureCollection: EventEmitter<GeoJsonResult> = new EventEmitter<GeoJsonResult>();
   //#endregion
   constructor(private FormService: FormService) {
 
@@ -26,7 +26,7 @@ export class ManualFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.FormService.valueChange.subscribe(c => {
       // console.log(c);
-      this.Update.emit(c)
+      this.updateFeatureCollection.emit(c)
     });
   }
 }

@@ -388,7 +388,15 @@ export class LeafletXLegacyComponent implements AfterViewInit {
         const layerGeoJSON = layer.toGeoJSON();
         geojson.features.push(layerGeoJSON);
       });
-      this.featureCollection = geojson;
+
+      if (!Array.isArray(this.featureCollectionInput)) {
+        this.featureCollection = {
+          ...geojson,
+          featureCollectionColor: this.featureCollectionInput.featureCollectionColor,
+          featureCollectionPopup: this.featureCollectionInput.featureCollectionPopup
+        }
+      }
+
       this.featureCollectionOutput.emit(this.featureCollection);
     }
   }
@@ -430,6 +438,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
 
   public manualEntriesUpdate(featureCollection: GeoJsonResult) {
     this.clearMap();
+    console.log("Lo que viene del output", featureCollection)
     this.renderFeatureCollectionToMap(featureCollection)
   }
 

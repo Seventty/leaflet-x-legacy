@@ -12,6 +12,8 @@ export class ManualFormComponent implements OnInit, OnChanges {
   //#region Input, OutPut
   @Input() featureCollection: GeoJsonResult | Array<GeoJsonResult>;
   @Output() updateFeatureCollection: EventEmitter<GeoJsonResult> = new EventEmitter<GeoJsonResult>();
+  @Input() featureCollectionExtendedProps: any;
+
   //#endregion
   constructor(private FormService: FormService) {
 
@@ -25,6 +27,7 @@ export class ManualFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.featureCollection) {
+      console.log("Lo que viene en el changes featureCollection", changes.featureCollection)
       this.FormService.updateForm(this.featureCollection as GeoJsonResult);
     }
   }

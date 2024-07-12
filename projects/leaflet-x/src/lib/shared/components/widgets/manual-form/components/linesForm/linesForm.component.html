@@ -3,7 +3,7 @@
   <a (click)="addNewLine()"
     class="btn btn btn-primary text-white d-flex align-self-center align-items-center justify-content-center w-100"
     role="button" mdbRipple>
-    <i class="bi bi-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
+    <i class="fa fa-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
     Agregar nueva linea
   </a>
 
@@ -17,9 +17,9 @@
               [ngClass]="{'bi bi-caret-right-fill': indexPanelOpen !== i, 'bi bi-caret-down-fill': indexPanelOpen === i}"></i>
           </button>
         </h2>
-        <a class="btn btn-outline-custom d-flex align-self-center align-items-center justify-content-center mr-2"
+        <a class="btn btn btn-outline-primary d-flex align-self-center align-items-center justify-content-center mr-2"
           role="button" mdbRipple (click)="addVertice(i)">
-          <i class="bi bi-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
+          <i class="fa fa-plus mr-1 align-self-center" style="font-size: 1.5rem; line-height: 1;"></i>
           Agregar vertice
         </a>
         <a title="elimianr-linea" class="btn btn-outline-delete" role="button" mdbRipple (click)="deleteLine(i)">

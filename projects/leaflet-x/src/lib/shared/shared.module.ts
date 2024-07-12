@@ -12,8 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { NgbCollapseModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { LegendBarComponent } from './components/widgets/legend-bar/legend-bar.component';
 import { ManualFormComponent } from './components/widgets/manual-form/manual-form.component';
-import { RouterModule, Routes } from '@angular/router';
-import { ManualFormRoutes } from './components/widgets/manual-form/manual-form.routing';
 import { FormService } from './services/form/form.service';
 import { LinesFormComponent } from './components/widgets/manual-form/components/linesForm/linesForm.component';
 import { PointFormComponent } from './components/widgets/manual-form/components/point-form/point-form.component';
@@ -29,8 +27,6 @@ import { VerticeFormComponent } from './components/widgets/manual-form/component
     NgbCollapseModule,
     FormsModule,
     NgbAccordionModule,
-    RouterModule.forRoot([]),
-    ManualFormRoutes,
   ],
   declarations: [
     ModalComponent,

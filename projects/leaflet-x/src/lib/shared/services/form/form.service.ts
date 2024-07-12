@@ -309,10 +309,8 @@ export class FormService {
   public removePolygonAt(indexPolygon: number, indexPoint: number = null): void {
     if (indexPoint === null) {
       this.Polygon.removeAt(indexPolygon);
-      console.log(">>>>>>>>>>>>>>>>>>>>");
       return;
     }
-    console.log("===========");
 
     let array = this.Polygon.at(indexPolygon) as FormArray;
     array.removeAt(indexPoint);

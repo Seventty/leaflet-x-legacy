@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ILegendBar } from './shared/interfaces/ILegendBar';
-import { GeoJsonResult } from './shared/types/geoJsonResult.type';
+import { ILegendBar } from 'projects/leaflet-x/src/lib/shared/interfaces/ILegendBar';
+import { GeoJsonResult } from 'projects/leaflet-x/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -66,8 +66,8 @@ export class AppComponent {
   defaultLocation: any = [19.026319, -70.147792];
   exampleLegendBarData: Array<ILegendBar> =  [
     {
-      "title": "Zonas productoras de agua",
-      "description": "Zonas productoras de agua en los bosques montano bajo y bosque muy humedo montano (bosques nublados). En estas zonas nacen la mayoría de los ríos debido a la condensación de las nubes en el suelo, por la altura sobre el nivel del mar.",
+      "title": "Zona de ejemplo",
+      "description": "Esta es una leyenda de ejemplo",
       "hexcolor": "#275ECD",
     }
   ]

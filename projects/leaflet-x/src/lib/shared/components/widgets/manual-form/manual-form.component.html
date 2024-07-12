@@ -1,21 +1,40 @@
 <div class="forms-container">
   <ul class="nav nav-tabs nav-justified" role="tablist">
     <li class="nav-item" role="presentation">
-      <a class="nav-link" routerLink="/points" routerLinkActive="active" aria-controls="justified-tabpanel-0"
-        aria-selected="true">Formulario Puntos</a>
+      <a class="nav-link"
+         [class.active]="selectedTab === 'tab1'"
+         aria-controls="justified-tabpanel-0"
+         aria-selected="selectedTab === 'tab1'"
+         (click)="selectTab('tab1')">Formulario Puntos</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link" routerLink="/lines" routerLinkActive="active" aria-controls="justified-tabpanel-1"
-        aria-selected="false">Formulario Lineas</a>
+      <a class="nav-link"
+         [class.active]="selectedTab === 'tab2'"
+         aria-controls="justified-tabpanel-1"
+         aria-selected="selectedTab === 'tab2'"
+         (click)="selectTab('tab2')">Formulario Lineas</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link" routerLink="/polygons" routerLinkActive="active" aria-controls="justified-tabpanel-2"
-        aria-selected="false">Formulario Poligonos</a>
+      <a class="nav-link"
+         [class.active]="selectedTab === 'tab3'"
+         aria-controls="justified-tabpanel-2"
+         aria-selected="selectedTab === 'tab3'"
+         (click)="selectTab('tab3')">Formulario Poligonos</a>
     </li>
   </ul>
 
-  <div class="tab-content pt-5" id="tab-content">
-    <router-outlet></router-outlet>
+  <div class="tab-content pt-5" id="tab-content" [ngSwitch]="selectedTab">
+    <div *ngSwitchCase="'tab1'">
+      <app-point-form></app-point-form>
+    </div>
+    <div *ngSwitchCase="'tab2'">
+      <app-linesForm></app-linesForm>
+    </div>
+    <div *ngSwitchCase="'tab3'">
+      <app-polygon-form></app-polygon-form>
+    </div>
+    <div *ngSwitchDefault>
+      <app-point-form></app-point-form>
+    </div>
   </div>
-
 </div>

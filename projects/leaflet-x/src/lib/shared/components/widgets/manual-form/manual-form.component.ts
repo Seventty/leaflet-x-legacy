@@ -17,6 +17,12 @@ export class ManualFormComponent implements OnInit, OnChanges {
 
   }
 
+  selectedTab: string = 'tab1';
+
+  selectTab(tab: string) {
+    this.selectedTab = tab;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.featureCollection) {
       this.FormService.updateForm(this.featureCollection as GeoJsonResult);

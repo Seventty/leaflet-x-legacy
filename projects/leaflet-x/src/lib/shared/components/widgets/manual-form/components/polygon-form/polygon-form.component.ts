@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormService } from 'projects/leaflet-x/src/lib/shared/services/form/form.service';
-import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { FormService } from "./../../../../../services/form/form.service"
+import { ToastService } from './../../../../../services/toast/toast.service';
 import Swal from 'sweetalert2';
 
 @Component({

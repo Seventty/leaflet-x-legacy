@@ -33,12 +33,12 @@ export class FormService {
 
   /**Agrega un nuevo punto al `formArray` de  `Points`*/
   public addLineString(): void {
-    this.LineString.push(this.formArrayBuild());
+    this.LineString.push(this.formArrayBuild([this.formBuild()]));
   }
 
   /**Agrega un nuevo polígono al `formArray` de  `Polygon`*/
   public addPolygon(): void {
-    this.Polygon.push(this.formArrayBuild());
+    this.Polygon.push(this.formArrayBuild([this.formBuild()]));
   }
 
   /**Agrega una nueva linea al `formArray` de  `LineString`*/
@@ -213,15 +213,16 @@ export class FormService {
 
     //Obtener solo los formulario validos
     this.Polygon.controls
-      .filter((x) => x.valid)
+      .filter((x: FormArray) => x.valid)
       .forEach((x) => {
         array.push(x.value);
       });
 
     //Cerrar polígono, todos los polígonos deben terminar con el mismo punto que inician.
     array.forEach((points) => {
-      let { lat, long } = points[0];
-      points.push({ lat, long });
+      if (!this.validClosePoint(points)) {
+        points.push(points[0]);
+      }
     });
 
     //Mapear los formgroup en un objecto de tipo Feature
@@ -235,6 +236,19 @@ export class FormService {
     });
 
     return result;
+  }
+
+  /**Valida  si el polígono inicio y termina en el mismo punto
+   * @param points Lista de puntos.
+   * @returns Verdadero cuando la latitud y longitud sin iguales al inicio y final
+   */
+  validClosePoint( points: Point[]){
+    if (points.length === 0) {
+      return false
+    }
+    let inicio = points[0];
+    let fin = points[points.length - 1];
+    return inicio.lat === fin.lat && inicio.long === fin.long;
   }
 
   /** Mapear las coordenas a un objecto de tipo Feature

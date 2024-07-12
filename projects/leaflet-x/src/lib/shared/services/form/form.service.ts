@@ -15,6 +15,7 @@ export class FormService {
   private subject = new BehaviorSubject<GeoJsonResult>(null);
   /**Emite los cambios realizado en el formulario*/
   public valueChange: Observable<GeoJsonResult> = this.subject.asObservable();
+  collection: GeoJsonResult | GeoJsonResult[];
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -80,6 +81,23 @@ export class FormService {
 
   private formGroupToGeoJsonResult(): GeoJsonResult {
     let geojson = { type: 'FeatureCollection', features: [] } as GeoJsonResult;
+
+    if (!Array.isArray(this.collection)) {
+      if (this.collection.featureCollectionColor) {
+        geojson.featureCollectionColor = this.collection?.featureCollectionColor;
+      }
+      if (this.collection.featureCollectionPopup) {
+        geojson.featureCollectionPopup = this.collection?.featureCollectionPopup;
+      }
+      if (this.collection.bbox) {
+        geojson.bbox = this.collection.bbox;
+      }
+
+      if (this.collection.type) {
+        geojson.type = this.collection.type;
+      }
+    }
+
     geojson.features.push(
       ...this.pointToFeature(),
       ...this.lineStringtToFeature(),
@@ -242,6 +260,9 @@ export class FormService {
   public updateForm(
     featureColletion: GeoJsonResult | Array<GeoJsonResult>
   ): void {
+
+    this.collection = featureColletion;
+
     if (!featureColletion) {
       return;
     }

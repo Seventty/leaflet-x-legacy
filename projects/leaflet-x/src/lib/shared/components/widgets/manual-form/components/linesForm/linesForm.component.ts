@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray } from '@angular/forms';
-import { FormService } from 'projects/leaflet-x/src/lib/shared/services/form/form.service';
+import { FormService } from "./../../../../../services/form/form.service"
 import Swal from 'sweetalert2';
 
 @Component({

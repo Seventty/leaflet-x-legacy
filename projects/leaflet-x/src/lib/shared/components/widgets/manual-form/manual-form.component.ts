@@ -34,7 +34,6 @@ export class ManualFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.FormService.valueChange.subscribe(c => {
-      // console.log(c);
       this.updateFeatureCollection.emit(c)
     });
   }

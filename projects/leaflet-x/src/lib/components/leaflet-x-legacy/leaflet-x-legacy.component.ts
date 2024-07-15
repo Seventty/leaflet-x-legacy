@@ -348,7 +348,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     if (this.map) {
 
       if (Array.isArray(featureCollection)) {
-        //console.log("Es una coleccion de featureCollecion");
         featureCollection.forEach(collection => {
           if (collection.features.length !== 0) {
             const featureCollectionColor = collection.hasOwnProperty("featureCollectionColor") ? collection.featureCollectionColor : this.mainColor
@@ -445,7 +444,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
 
   public manualEntriesUpdate(featureCollection: GeoJsonResult) {
     this.clearMap();
-    //console.log("Lo que viene del output", featureCollection)
     this.renderFeatureCollectionToMap(featureCollection)
   }
 

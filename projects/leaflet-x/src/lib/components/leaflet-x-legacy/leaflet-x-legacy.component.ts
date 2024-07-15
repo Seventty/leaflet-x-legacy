@@ -472,6 +472,9 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.drawInputFeatureCollectionIntoMap();
     this.mapEventsHandler();
     this.cdr.detectChanges();
+
+    // Uncomment this if you need
+    //this.updateService.checkVersion();
   }
 
   ngOnInit(): void {

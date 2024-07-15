@@ -265,10 +265,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     }
 
     const customToolbarActions: any = [
-      // ...(!this.readonly ? [importButton, manualEntrieButton] : []),
-      // exportButton,
-      // "cancel",
-      importButton, manualEntrieButton,
+      ...(!this.readonly ? [importButton, manualEntrieButton] : []),
       exportButton,
       "cancel",
     ];

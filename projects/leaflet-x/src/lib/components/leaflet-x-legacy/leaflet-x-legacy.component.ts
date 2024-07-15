@@ -421,10 +421,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.mapId = uuidv4();
   }
 
-  /* public getMapGeoJson() {
-    this.exportGeoJson();
-  } */
-
   private mapEventsHandler() {
     // Handle events to update the FeatureCollection
     if (this.map) {
@@ -476,8 +472,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.drawInputFeatureCollectionIntoMap();
     this.mapEventsHandler();
     this.cdr.detectChanges();
-
-    this.updateService.checkVersion();
   }
 
   ngOnInit(): void {

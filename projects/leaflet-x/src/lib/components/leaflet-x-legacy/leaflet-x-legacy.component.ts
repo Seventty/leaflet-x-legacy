@@ -346,12 +346,14 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   */
   private renderFeatureCollectionToMap(featureCollection: GeoJsonResult | Array<GeoJsonResult>) {
     if (this.map) {
+
       if (Array.isArray(featureCollection)) {
-        console.log("Es una coleccion de featureCollecion");
+        //console.log("Es una coleccion de featureCollecion");
         featureCollection.forEach(collection => {
           if (collection.features.length !== 0) {
             const featureCollectionColor = collection.hasOwnProperty("featureCollectionColor") ? collection.featureCollectionColor : this.mainColor
             const geojsonToMap = L.geoJSON(collection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+            this.SetBounds(geojsonToMap);
             if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
               geojsonToMap.bindPopup(collection.featureCollectionPopup);
             }
@@ -362,6 +364,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
         if (featureCollection.features.length !== 0) {
           const featureCollectionColor = featureCollection.hasOwnProperty("featureCollectionColor") ? featureCollection.featureCollectionColor : this.mainColor
           const geojsonToMap = L.geoJSON(featureCollection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
+          this.SetBounds(geojsonToMap);
           if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
             geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
           }
@@ -369,6 +372,10 @@ export class LeafletXLegacyComponent implements AfterViewInit {
         }
       }
     }
+  }
+
+  private SetBounds(geojsonToMap) {
+    this.map.fitBounds(geojsonToMap.getBounds());
   }
 
   /**
@@ -392,8 +399,8 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       if (!Array.isArray(this.featureCollectionInput)) {
         this.featureCollection = {
           ...geojson,
-          featureCollectionColor: this.featureCollectionInput.featureCollectionColor,
-          featureCollectionPopup: this.featureCollectionInput.featureCollectionPopup
+          featureCollectionColor: this.featureCollectionInput?.featureCollectionColor,
+          featureCollectionPopup: this.featureCollectionInput?.featureCollectionPopup
         }
       }
 
@@ -438,7 +445,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
 
   public manualEntriesUpdate(featureCollection: GeoJsonResult) {
     this.clearMap();
-    console.log("Lo que viene del output", featureCollection)
+    //console.log("Lo que viene del output", featureCollection)
     this.renderFeatureCollectionToMap(featureCollection)
   }
 

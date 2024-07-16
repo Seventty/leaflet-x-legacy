@@ -1,6 +1,6 @@
 {
   "name": "@seventty/leaflet-x-legacy",
-  "version": "1.18.3",
+  "version": "1.18.4",
   "dependencies": {
     "@geoman-io/leaflet-geoman-free": "^2.16.0",
     "@tmcw/togeojson": "^5.8.1",

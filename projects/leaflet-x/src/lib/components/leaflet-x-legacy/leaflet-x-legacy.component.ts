@@ -398,8 +398,8 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       if (!Array.isArray(this.featureCollectionInput)) {
         this.featureCollection = {
           ...geojson,
-          featureCollectionColor: this.featureCollectionInput?.featureCollectionColor,
-          featureCollectionPopup: this.featureCollectionInput?.featureCollectionPopup
+          featureCollectionColor: this.featureCollectionInput?.featureCollectionColor ?? this.mainColor,
+          featureCollectionPopup: this.featureCollectionInput?.featureCollectionPopup ?? ""
         }
       }
 

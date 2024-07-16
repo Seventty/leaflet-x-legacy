@@ -1,3 +1,16 @@
+<form [formGroup]="form">
 <div class="map-container">
+    <leaflet-x-legacy
+      formControlName="map"
+      [mapLegendBarData]="exampleLegendBarData"
+      watermarkImagePath="assets/leaflet-watermark.png"
+      [defaultZoomLevel]="8"
+      [defaultInitMapCoords]="defaultLocation"
+      [portraitMode]="false">
+    </leaflet-x-legacy>
+  </div>
+</form>
+
+<!-- <div class="map-container">
   <leaflet-x-legacy [featureCollectionInput]="geojsonPrueba" [mapLegendBarData]="exampleLegendBarData" watermarkImagePath="assets/leaflet-watermark.png" [defaultZoomLevel]="8" [defaultInitMapCoords]="defaultLocation" [portraitMode]="false" ></leaflet-x-legacy>
-</div>
+</div> -->

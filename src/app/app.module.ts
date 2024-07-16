@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LeafletXLegacyModule } from 'projects/leaflet-x/src/public-api';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,10 @@ import { LeafletXLegacyModule } from 'projects/leaflet-x/src/public-api';
   imports: [
     BrowserModule,
     NgbModule,
-    LeafletXLegacyModule
+    LeafletXLegacyModule,
+    ReactiveFormsModule,
+    FormsModule,
+    //ComponentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

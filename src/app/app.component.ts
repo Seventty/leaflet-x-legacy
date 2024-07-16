@@ -1,74 +1,30 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ILegendBar } from 'projects/leaflet-x/src/lib/shared/interfaces/ILegendBar';
 import { GeoJsonResult } from 'projects/leaflet-x/src/public-api';
+import { geoJSON } from './mock/geojson.mock';
+import { geoJsonPoint } from './mock/geojson-point.mock';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.sass'],
 })
 export class AppComponent {
-  title = 'leaflet-x-legacy';
-  geojsonPrueba: GeoJsonResult =
-    {"featureCollectionColor":'#ff0000',"featureCollectionPopup": "Hello <b>world</b>", "type":"FeatureCollection","features":[{
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          [
-            -69.96726635192073,
-            18.47913542059821
-          ],
-          [
-            -69.9691130410608,
-            18.465288446780647
-          ],
-          [
-            -69.97411001690583,
-            18.451601008987637
-          ],
-          [
-            -69.97946541573266,
-            18.44775292173894
-          ]
-        ],
-        "type": "LineString"
-      }
-    },
-     {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          [
-            -69.9370740257116,
-            18.44451792591599
-          ],
-          [
-            -69.92688396094141,
-            18.449389355905893
-          ],
-          [
-            -69.9208058381841,
-            18.45533058000619
-          ],
-          [
-            -69.90687702266847,
-            18.462958560317475
-          ]
-        ],
-        "type": "LineString"
-      }
-    },
-      {"type":"Feature","properties":{},"geometry":{"coordinates":[[[-69.88913353646005,18.48149640025997],[-69.88988323655252,18.480971004046324],[-69.88934404338265,18.48021443066976],[-69.88855002604272,18.48073982920215],[-69.88913353646005,18.48149640025997]]],"type":"Polygon"}},{"type":"Feature","properties":{},"geometry":{"coordinates":[[[-69.88561391963938,18.47727147994992],[-69.8865450210715,18.47714698966398],[-69.88648349454482,18.476933021774585],[-69.88656963168143,18.47692524111919],[-69.88653271576563,18.476765737602946],[-69.88693468907132,18.476637356615527],[-69.88679112717635,18.476221090330327],[-69.8866147511339,18.476123831706502],[-69.88563442848186,18.476411717072295],[-69.88557700372354,18.47654009822861],[-69.88563032671357,18.476676259954985],[-69.88542934006117,18.476754066607498],[-69.88561391963938,18.47727147994992]]],"type":"Polygon"}},{"type":"Feature","properties":{},"geometry":{"coordinates":[-69.88822417298121,18.477568112050776],"type":"Point"}},{"type":"Feature","properties":{},"geometry":{"coordinates":[-69.89848178060772,18.487897688711882],"type":"Point"}},{"type":"Feature","properties":{},"geometry":{"coordinates":[-69.91072877947806,18.479319120158053],"type":"Point"}},{"type":"Feature","properties":{},"geometry":{"coordinates":[-69.93248553299708,18.48257558608583],"type":"Point"}},{"type":"Feature","properties":{},"geometry":{"coordinates":[-69.92254747600447,18.466294485090202],"type":"Point"}},{"type":"Feature","properties":{},"geometry":{"coordinates":[[[-69.95992270505123,18.47366198830443],[-69.95992270505123,18.452666557728065],[-69.93372237298024,18.452666557728065],[-69.93372237298024,18.47366198830443],[-69.95992270505123,18.47366198830443]]],"type":"Polygon"}}]}
+  form: FormGroup = this.fb.group({ map: [geoJSON] });
+  constructor(private fb: FormBuilder) {
+    this.form.valueChanges.subscribe((c) => console.log('valueChange', c));
+  }
 
+  title = 'leaflet-x-legacy';
+  geojsonPrueba: GeoJsonResult = geoJSON;
 
   defaultLocation: any = [19.026319, -70.147792];
-  exampleLegendBarData: Array<ILegendBar> =  [
+  exampleLegendBarData: Array<ILegendBar> = [
     {
-      "title": "Zona de ejemplo",
-      "description": "Esta es una leyenda de ejemplo",
-      "hexcolor": "#275ECD",
-    }
-  ]
+      title: 'Zona de ejemplo',
+      description: 'Esta es una leyenda de ejemplo',
+      hexcolor: '#275ECD',
+    },
+  ];
 }

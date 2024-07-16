@@ -15,13 +15,21 @@ import { HexColorType } from '../../shared/types/hexColor.type';
 import { IStylizeDraw } from '../../shared/interfaces/IStylizeDraw';
 import { UpdateAlertService } from '../../shared/services/updater-alert/update-alert.service';
 import { ILegendBar } from '../../shared/interfaces/ILegendBar';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'leaflet-x-legacy',
   templateUrl: './leaflet-x-legacy.component.html',
   styleUrls: ['./leaflet-x-legacy.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: LeafletXLegacyComponent,
+      multi: true,
+    },
+  ],
 })
-export class LeafletXLegacyComponent implements AfterViewInit {
+export class LeafletXLegacyComponent implements AfterViewInit, ControlValueAccessor {
   /* Properties section */
   public mapId: string = 'map';
   private map?: L.Map;
@@ -404,6 +412,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       }
 
       this.featureCollectionOutput.emit(this.featureCollection);
+      this.onChangefn(this.featureCollection)
     }
   }
 
@@ -456,6 +465,30 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   }
 
   constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService) { }
+
+  //#region  reactive form
+  private onChangefn: Function = (_ ) => {};
+  private onTounchedfn: Function = (_ ) => {};
+
+  changeValue($event: any) {
+    this.onChangefn($event.target.value);
+  }
+
+  writeValue(obj: any): void {
+    this.featureCollectionInput = obj
+  }
+
+
+  registerOnChange(fn: any): void {
+    this.onChangefn = fn
+  }
+  registerOnTouched(fn: any): void {
+    this.onTounchedfn =fn;
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    this.readonly = isDisabled;
+  }
+  //#endregion
 
   ngAfterViewInit(): void {
     this.initMap();

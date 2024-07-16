@@ -274,7 +274,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       this.map.pm.Toolbar.createCustomControl({
         name: "import",
         title: "Cargar GeoJSON",
-        className: 'upload-map',
+        className: 'leaflet-x-updown-icon',
         actions: customToolbarActions
       });
     }

@@ -238,6 +238,17 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @returns {void}
   */
   private customToolbar() {
+    if (this.map) {
+      this.map.pm.Toolbar.createCustomControl({
+        name: "import",
+        title: "Cargar GeoJSON",
+        className: 'leaflet-x-updown-icon',
+        actions: this.upDownButtonHandler
+      });
+    }
+  }
+
+  get upDownButtonHandler(): (L.PM.ACTION_NAMES | L.PM.Action)[]{
     const importButton = {
       text: "Importar archivo/s",
       onClick: () => {
@@ -264,21 +275,16 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       },
     }
 
-    const customToolbarActions: any = [
+    const upDownButtonAction: any = [
       ...(!this.readonly ? [importButton, manualEntrieButton] : []),
       exportButton,
       "cancel",
     ];
 
-    if (this.map) {
-      this.map.pm.Toolbar.createCustomControl({
-        name: "import",
-        title: "Cargar GeoJSON",
-        className: 'leaflet-x-updown-icon',
-        actions: customToolbarActions
-      });
-    }
+    return upDownButtonAction;
   }
+
+
 
   /**
   * Creates a custom icon for marker.

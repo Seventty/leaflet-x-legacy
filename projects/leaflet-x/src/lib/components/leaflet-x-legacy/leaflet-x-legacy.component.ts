@@ -238,17 +238,9 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @returns {void}
   */
   private customToolbar() {
-    if (this.map) {
-      this.map.pm.Toolbar.createCustomControl({
-        name: "import",
-        title: "Cargar GeoJSON",
-        className: 'leaflet-x-updown-icon',
-        actions: this.upDownButtonHandler
-      });
-    }
-  }
-
-  get upDownButtonHandler(): (L.PM.ACTION_NAMES | L.PM.Action)[]{
+    /*
+    todo: Quitar estos botones y hacer una funcion nueva llamada updown y hacer otro boton pero llamado language
+    */
     const importButton = {
       text: "Importar archivo/s",
       onClick: () => {
@@ -283,7 +275,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
 
     return upDownButtonAction;
   }
-
 
 
   /**

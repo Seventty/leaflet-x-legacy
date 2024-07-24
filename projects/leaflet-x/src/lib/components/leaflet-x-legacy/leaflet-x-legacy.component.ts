@@ -349,8 +349,8 @@ export class LeafletXLegacyComponent implements AfterViewInit {
 
     const changeLanguageOption: L.PM.CustomControlOptions = {
       name: "language",
-      title: "Cargar GeoJSON",
-      className: 'leaflet-x-updown-icon',
+      title: "Cambiar lenguaje",
+      className: 'leaflet-x-language-icon',
       actions: [
         {
           "text": "Cambiar lenguaje",

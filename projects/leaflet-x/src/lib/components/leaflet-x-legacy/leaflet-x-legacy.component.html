@@ -4,8 +4,32 @@
       <legend-bar [legendBarData]="mapLegendBarData"></legend-bar>
     </div>
     <div class="map" [id]="mapId"></div>
+
+
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+      <div class="leaflet-sidebar-tabs">
+        <ul role="tablist">
+          <li><a href="#home" role="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#info" role="tab"><i class="fa fa-info"></i></a></li>
+        </ul>
+      </div>
+      <div class="leaflet-sidebar-content">
+        <div id="home" class="leaflet-sidebar-pane">
+          <h1 class="leaflet-sidebar-header">Home</h1>
+          <p>Home content goes here.</p>
+        </div>
+        <div id="info" class="leaflet-sidebar-pane">
+          <h1 class="leaflet-sidebar-header">Info</h1>
+          <p>Info content goes here.</p>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>
+
+
 
 <UIModal [modalConfig]="fileManagerModalConfig" [modalOption]="fileManagerModalOption" #fileManagerModal>
   <UIFileUpload [modalReference]="fileManagerModal"></UIFileUpload>

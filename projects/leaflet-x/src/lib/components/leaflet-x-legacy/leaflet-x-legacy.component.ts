@@ -16,6 +16,8 @@ import { IStylizeDraw } from '../../shared/interfaces/IStylizeDraw';
 import { UpdateAlertService } from '../../shared/services/updater-alert/update-alert.service';
 import { ILegendBar } from '../../shared/interfaces/ILegendBar';
 
+import "leaflet-sidebar-v2";
+
 @Component({
   selector: 'leaflet-x-legacy',
   templateUrl: './leaflet-x-legacy.component.html',
@@ -26,8 +28,9 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   public mapId: string = 'map';
   private map?: L.Map;
   private featureGroup?: L.FeatureGroup;
-  private defaultMaxZoom: number = 18
-  private defaultMinZoom: number = 3
+  private defaultMaxZoom: number = 18;
+  private defaultMinZoom: number = 3;
+  private mapSidebar: L.Control.Sidebar;
 
   /* Viewchild section */
   @ViewChild("fileManagerModal") fileManagerModal?: ModalComponent
@@ -260,7 +263,8 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     const manualEntrieButton = {
       text: "Entrada manual",
       onClick: () => {
-        this.manualEntrieModal?.open();
+        //this.manualEntrieModal?.open();
+        this.mapSidebar.open("sidebar");
       },
     }
 
@@ -322,6 +326,27 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   private watermarkConfigurator() {
     const watermark = new Watermark(this.watermarkImagePath, { position: 'bottomleft' });
     if (this.map) watermark.addTo(this.map);
+  }
+
+  private sidebar(){
+    const panelContent: L.Control.PanelOptions = {
+      id: 'userinfo',                     // UID, used to access the panel
+      tab: '<i class="fa fa-gear"></i>',  // content can be passed as HTML string,
+      title: 'Your Profile',              // an optional pane header
+      position: 'bottom'                  // optional vertical alignment, defaults to 'top'
+  };
+
+
+    this.mapSidebar = L.control.sidebar({
+      autopan: false,
+      closeButton: true,
+      container: 'sidebar',
+      position: 'left',
+
+    }).addTo(this.map);
+
+    this.mapSidebar.addPanel(panelContent);
+
   }
 
   /**
@@ -464,6 +489,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       this.geomanControllers();
       this.customToolbar();
       this.watermarkConfigurator();
+      this.sidebar();
     } else {
       this.portraitMapConfigurator();
     }

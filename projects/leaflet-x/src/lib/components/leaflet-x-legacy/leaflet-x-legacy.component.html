@@ -18,3 +18,7 @@
 <UIModal [modalConfig]="manualEntrieModalConfig" [modalOption]="manualEntrieModalOption" #manualEntrieModal>
   <manual-form [featureCollection]="featureCollection" (updateFeatureCollection)="manualEntriesUpdate($event)"></manual-form>
 </UIModal>
+
+<UIModal [modalConfig]="languageChangerModalConfig" [modalOption]="languageChangerModalOption" #languageChangerModal>
+  <language-changer></language-changer>
+</UIModal>

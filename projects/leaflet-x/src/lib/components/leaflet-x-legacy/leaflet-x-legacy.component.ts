@@ -15,6 +15,7 @@ import { HexColorType } from '../../shared/types/hexColor.type';
 import { IStylizeDraw } from '../../shared/interfaces/IStylizeDraw';
 import { UpdateAlertService } from '../../shared/services/updater-alert/update-alert.service';
 import { ILegendBar } from '../../shared/interfaces/ILegendBar';
+import { IToolbarCollection } from '../../shared/interfaces/IToolbarCollection';
 
 @Component({
   selector: 'leaflet-x-legacy',
@@ -33,6 +34,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   @ViewChild("fileManagerModal") fileManagerModal?: ModalComponent
   @ViewChild("fileExportModal") fileExportModal?: ModalComponent
   @ViewChild("manualEntrieModal") manualEntrieModal?: ModalComponent
+  @ViewChild("languageChangerModal") languageChangerModal?: ModalComponent
 
   /* Decorators section */
   @Input() defaultInitMapCoords: L.LatLngExpression = [39.8282, -98.5795] // Dominican Republic coords default lat 19.026319 | default lang -70.147792
@@ -101,6 +103,24 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @type {IModalOption}
   */
   manualEntrieModalOption: IModalOption = {
+    centered: true,
+    size: 'xl',
+  }
+
+  /**
+  * Configuration for the language changer modal.
+  * @type {IModalConfig}
+  */
+  languageChangerModalConfig: IModalConfig = {
+    modalTitle: 'Cambiar lenguaje',
+    dashboardHeader: true,
+  }
+
+  /**
+  * Options for language changer the modal.
+  * @type {IModalOption}
+  */
+  languageChangerModalOption: IModalOption = {
     centered: true,
     size: 'xl',
   }
@@ -273,7 +293,88 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       "cancel",
     ];
 
-    return upDownButtonAction;
+    if (this.map) {
+      this.map.pm.Toolbar.createCustomControl({
+        name: "import",
+        title: "Cargar GeoJSON",
+        className: 'leaflet-x-updown-icon',
+        actions: upDownButtonAction
+      });
+    }
+  }
+
+  private toolBarOptions(): Array<L.PM.CustomControlOptions> {
+    const upDownOption = (): L.PM.CustomControlOptions => {
+      const importButton = {
+        text: "Importar archivo/s",
+        onClick: () => {
+          this.fileManagerModal?.open();
+        },
+      }
+
+      const exportButton = {
+        text: "Exportar archivo/s",
+        onClick: () => {
+          this.featureCollectionUpdate()
+          if (this.featureCollection.features.length === 0) {
+            this.toastService.errorToast("Mapa vacio", "No hay dibujos para exportar.");
+            return;
+          }
+          this.fileExportModal?.open();
+        },
+      }
+
+      const manualEntrieButton = {
+        text: "Entrada manual",
+        onClick: () => {
+          this.manualEntrieModal?.open();
+        },
+      }
+
+      const upDownButtonAction: any = [
+        ...(!this.readonly ? [importButton, manualEntrieButton] : []),
+        exportButton,
+        "cancel",
+      ];
+
+      const options = {
+        name: "updown",
+        title: "Cargar GeoJSON",
+        className: 'leaflet-x-updown-icon',
+        actions: upDownButtonAction
+      }
+
+      return options;
+    }
+
+    const changeLanguageOption: L.PM.CustomControlOptions = {
+      name: "language",
+      title: "Cargar GeoJSON",
+      className: 'leaflet-x-updown-icon',
+      actions: [
+        {
+          "text": "Cambiar lenguaje",
+          onClick: () => {
+            this.languageChangerModal.open()
+          },
+        },
+        "cancel"
+      ]
+    }
+
+    const toolBarOptions: Array<L.PM.CustomControlOptions> = [
+      upDownOption(), changeLanguageOption
+    ]
+
+    return toolBarOptions;
+  }
+
+  private toolBarConstructor() {
+    if (this.map) {
+      this.toolBarOptions().forEach(option => {
+        this.map.pm.Toolbar.createCustomControl(option);
+      });
+    }
   }
 
 
@@ -459,7 +560,8 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     this.setFeatureGroup();
     if (!this.portraitMode) {
       this.geomanControllers();
-      this.customToolbar();
+      //this.customToolbar();
+      this.toolBarConstructor();
       this.watermarkConfigurator();
     } else {
       this.portraitMapConfigurator();

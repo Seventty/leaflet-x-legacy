@@ -17,6 +17,7 @@ import { LinesFormComponent } from './components/widgets/manual-form/components/
 import { PointFormComponent } from './components/widgets/manual-form/components/point-form/point-form.component';
 import { PolygonFormComponent } from './components/widgets/manual-form/components/polygon-form/polygon-form.component';
 import { VerticeFormComponent } from './components/widgets/manual-form/components/vertice-form/vertice-form.component';
+import { LanguageChangerComponent } from './components/widgets/language-changer/language-changer.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { VerticeFormComponent } from './components/widgets/manual-form/component
     LinesFormComponent,
     PointFormComponent,
     PolygonFormComponent,
-    VerticeFormComponent
+    VerticeFormComponent,
+    LanguageChangerComponent
   ],
   exports: [
     ModalComponent,
@@ -53,7 +55,8 @@ import { VerticeFormComponent } from './components/widgets/manual-form/component
     LinesFormComponent,
     PointFormComponent,
     PolygonFormComponent,
-    VerticeFormComponent
+    VerticeFormComponent,
+    LanguageChangerComponent
   ],
   providers: [FormService],
 })

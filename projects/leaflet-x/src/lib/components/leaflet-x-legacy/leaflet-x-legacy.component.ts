@@ -17,7 +17,7 @@ import { UpdateAlertService } from '../../shared/services/updater-alert/update-a
 import { ILegendBar } from '../../shared/interfaces/ILegendBar';
 
 import "leaflet-sidebar-v2";
-
+import { NgxSidebarControlComponent } from '@runette/ngx-leaflet-sidebar';
 @Component({
   selector: 'leaflet-x-legacy',
   templateUrl: './leaflet-x-legacy.component.html',
@@ -26,7 +26,7 @@ import "leaflet-sidebar-v2";
 export class LeafletXLegacyComponent implements AfterViewInit {
   /* Properties section */
   public mapId: string = 'map';
-  private map?: L.Map;
+  public map?: L.Map;
   private featureGroup?: L.FeatureGroup;
   private defaultMaxZoom: number = 18;
   private defaultMinZoom: number = 3;
@@ -36,6 +36,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   @ViewChild("fileManagerModal") fileManagerModal?: ModalComponent
   @ViewChild("fileExportModal") fileExportModal?: ModalComponent
   @ViewChild("manualEntrieModal") manualEntrieModal?: ModalComponent
+  @ViewChild(NgxSidebarControlComponent,{static: false}) sidebar: NgxSidebarControlComponent;
 
   /* Decorators section */
   @Input() defaultInitMapCoords: L.LatLngExpression = [39.8282, -98.5795] // Dominican Republic coords default lat 19.026319 | default lang -70.147792
@@ -107,6 +108,16 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     centered: true,
     size: 'xl',
   }
+
+  public sidebarOptions: L.SidebarOptions = {
+    position: 'right',
+    autopan: true,
+    closeButton: true,
+    container: 'sidebar',
+  }
+
+  showLegend: boolean = true;
+  legendUrl: any = '';
 
   /**
   * Initializes the map.
@@ -264,7 +275,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       text: "Entrada manual",
       onClick: () => {
         //this.manualEntrieModal?.open();
-        this.mapSidebar.open("sidebar");
       },
     }
 
@@ -326,27 +336,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   private watermarkConfigurator() {
     const watermark = new Watermark(this.watermarkImagePath, { position: 'bottomleft' });
     if (this.map) watermark.addTo(this.map);
-  }
-
-  private sidebar(){
-    const panelContent: L.Control.PanelOptions = {
-      id: 'userinfo',                     // UID, used to access the panel
-      tab: '<i class="fa fa-gear"></i>',  // content can be passed as HTML string,
-      title: 'Your Profile',              // an optional pane header
-      position: 'bottom'                  // optional vertical alignment, defaults to 'top'
-  };
-
-
-    this.mapSidebar = L.control.sidebar({
-      autopan: false,
-      closeButton: true,
-      container: 'sidebar',
-      position: 'left',
-
-    }).addTo(this.map);
-
-    this.mapSidebar.addPanel(panelContent);
-
   }
 
   /**
@@ -489,7 +478,6 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       this.geomanControllers();
       this.customToolbar();
       this.watermarkConfigurator();
-      this.sidebar();
     } else {
       this.portraitMapConfigurator();
     }

@@ -4,28 +4,39 @@
       <legend-bar [legendBarData]="mapLegendBarData"></legend-bar>
     </div>
     <div class="map" [id]="mapId"></div>
+  </div>
+</div>
 
+<leaflet-sidebar-control [map]="map" [options]="sidebarOptions"></leaflet-sidebar-control>
 
-    <div id="sidebar" class="leaflet-sidebar collapsed">
-      <div class="leaflet-sidebar-tabs">
-        <ul role="tablist">
-          <li><a href="#home" role="tab"><i class="fa fa-home"></i></a></li>
-          <li><a href="#info" role="tab"><i class="fa fa-info"></i></a></li>
-        </ul>
-      </div>
-      <div class="leaflet-sidebar-content">
-        <div id="home" class="leaflet-sidebar-pane">
-          <h1 class="leaflet-sidebar-header">Home</h1>
-          <p>Home content goes here.</p>
-        </div>
-        <div id="info" class="leaflet-sidebar-pane">
-          <h1 class="leaflet-sidebar-header">Info</h1>
-          <p>Info content goes here.</p>
-        </div>
-      </div>
+<div id="sidebar" class="leaflet-sidebar collapsed">
+  <!-- Nav tabs -->
+  <div class="leaflet-sidebar-tabs">
+    <ul role="tablist">
+      <li><a href="#leg" role="tab"><i class="material-icons" data-toggle="tooltip" title="Map Legend">map</i></a></li>
+    </ul>
+    <ul role="tablist">
+      <li><a href="#settings" role="tab"><i class="fa fa-gear" data-toggle="tooltip" title="Settings"></i></a></li>
+    </ul>
+  </div>
+
+  <!-- Tab panes -->
+  <div class="leaflet-sidebar-content">
+    <div class="leaflet-sidebar-pane" id="leg" style="height:90%;">
+      <h1 class="leaflet-sidebar-header">
+        <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
+        Map Legend
+      </h1>
+      <ng-template [ngIf]='showLegend'>
+        <iframe class="h-100" id="legend" [src]="legendUrl"></iframe>
+      </ng-template>
     </div>
-
-
+    <div class="leaflet-sidebar-pane" id="settings">
+      <h1 class="leaflet-sidebar-header">
+        <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
+        Settings
+      </h1>
+    </div>
   </div>
 </div>
 
@@ -40,5 +51,6 @@
 </UIModal>
 
 <UIModal [modalConfig]="manualEntrieModalConfig" [modalOption]="manualEntrieModalOption" #manualEntrieModal>
-  <manual-form [featureCollection]="featureCollection" (updateFeatureCollection)="manualEntriesUpdate($event)"></manual-form>
+  <manual-form [featureCollection]="featureCollection"
+    (updateFeatureCollection)="manualEntriesUpdate($event)"></manual-form>
 </UIModal>

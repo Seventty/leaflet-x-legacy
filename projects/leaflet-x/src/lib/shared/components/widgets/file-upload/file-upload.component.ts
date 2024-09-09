@@ -33,7 +33,6 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
   @Input() mimeType: Array<string> = environment.allowedMapMimeTypes;
   @Input() modalReference?: ModalComponent
 
-  //@Output() onFileAdded: EventEmitter<any> = new EventEmitter()
   multiple: boolean = false
   uploadedFiles!: Array<File>
   private onTouched: any = () => { }

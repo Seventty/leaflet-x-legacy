@@ -1,0 +1,10 @@
+<ng-template #modal>
+  <div *ngIf="modalConfig && modalConfig.modalTitle" class="modal-header">
+    <h5 [ngClass]="modalConfig.dashboardHeader ? 'dashboardTitle text-primary pt-2 font-weight-bold' : 'modal-title'">{{ modalConfig.modalTitle }}</h5>
+    <button type="button" class="btn-close" (click)="dismiss()">X
+    </button>
+  </div>
+  <div class="modal-body">
+    <ng-content></ng-content>
+  </div>
+</ng-template>

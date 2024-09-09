@@ -6,7 +6,7 @@ import { map, tap } from 'rxjs/operators'
 import Swal from 'sweetalert2'
 import { ToastService } from '../../../services/toast/toast.service'
 import { FileManagerService } from '../../../services/file-manager/file-manager.service'
-import { ModalComponent } from '../../../modal/modal.component'
+import { ModalComponent } from '../../elements/modal/modal.component'
 
 
 @Component({

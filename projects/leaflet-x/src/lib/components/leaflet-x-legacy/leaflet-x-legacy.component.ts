@@ -1,9 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import "@geoman-io/leaflet-geoman-free";
-import { ModalComponent } from '../../shared/modal/modal.component';
-import { IModalConfig } from '../../shared/modal/IModalConfig';
-import { IModalOption } from '../../shared/modal/IModalOptions';
 
 import { IBaseLayer } from '../../shared/interfaces/IBaseLayer';
 import { ToastService } from '../../shared/services/toast/toast.service';
@@ -15,6 +12,9 @@ import { HexColorType } from '../../shared/types/hexColor.type';
 import { IStylizeDraw } from '../../shared/interfaces/IStylizeDraw';
 import { UpdateAlertService } from '../../shared/services/updater-alert/update-alert.service';
 import { ILegendBar } from '../../shared/interfaces/ILegendBar';
+import { ModalComponent } from '../../shared/components/elements/modal/modal.component';
+import { IModalConfig } from '../../shared/components/elements/modal/IModalConfig';
+import { IModalOption } from '../../shared/components/elements/modal/IModalOptions';
 
 @Component({
   selector: 'leaflet-x-legacy',

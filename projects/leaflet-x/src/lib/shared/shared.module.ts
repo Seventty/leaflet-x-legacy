@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalComponent } from './modal/modal.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FileUploadComponent } from './components/widgets/file-upload/file-upload.component';
 import { FileExportComponent } from './components/widgets/file-export/file-export.component';
@@ -17,6 +16,7 @@ import { LinesFormComponent } from './components/widgets/manual-form/components/
 import { PointFormComponent } from './components/widgets/manual-form/components/point-form/point-form.component';
 import { PolygonFormComponent } from './components/widgets/manual-form/components/polygon-form/polygon-form.component';
 import { VerticeFormComponent } from './components/widgets/manual-form/components/vertice-form/vertice-form.component';
+import { ModalComponent } from './components/elements/modal/modal.component';
 
 @NgModule({
   imports: [

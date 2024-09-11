@@ -1,36 +1,51 @@
-<div class="py-5 mb-3 text-center font-medium-5 text-uppercase grey my-drop-zone"
-  [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" ng2FileDrop [uploader]="uploader" (fileOver)="fileOverBase($event)"
-  (onFileDrop)="addedFileToQueue()">
-  <span class="d-block">Arrastre un archivo o hacer click en el botón</span>
-  <button type="button" class="mt-1 btn btn-primary" (click)="handleFile(fileInput)"><i class="ft-search"></i> Buscar Archivo</button>
-  <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [hidden]="true" [multiple]="multiple"
-    [accept]="mimeType" (onFileSelected)="addedFileToQueue()">
-</div>
-<div *ngIf="uploader?.queue?.length !== 0">
-  <span><b>Cola de Archivos</b></span>
-  <p>Cantidad de Archivos: {{ uploader?.queue?.length }}</p>
+<div>
+  <div class="py-5 mb-3 text-center font-medium-5 text-uppercase grey my-drop-zone"
+    [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" ng2FileDrop [uploader]="uploader"
+    (fileOver)="fileOverBase($event)" (onFileDrop)="addedFileToQueue()">
+    <span class="d-block">Arrastre un archivo o hacer click en el botón</span>
+    <button type="button" class="mt-1 btn btn-primary" (click)="handleFile(fileInput)"><i class="ft-search"></i> Buscar
+      Archivo</button>
+    <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [hidden]="true" [multiple]="multiple"
+      [accept]="mimeType" (onFileSelected)="addedFileToQueue()">
+  </div>
+  <div *ngIf="uploader?.queue?.length !== 0">
+    <span><b>Cola de Archivos</b></span>
+    <p>Cantidad de Archivos: {{ uploader?.queue?.length }}</p>
 
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th width="50%">Nombre del Archivo</th>
-          <th class="text-center">Remover Archivo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of uploader?.queue">
-          <td class="text-bold-600">{{ item?.file?.name }}</td>
-          <td class="text-center">
-            <button type="button" class="btn btn-danger" (click)="removeFileFromQueue(item)">
-              <span class="fa fa-trash">Eliminar</span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="modal-footer justify-content-center">
-      <button type="button" class="btn btn-primary btn-lg btn-block" (click)="sendFiles()">Importar al mapa</button>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th width="50%">Nombre del Archivo</th>
+            <th class="text-center">Remover Archivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of uploader?.queue">
+            <td class="text-bold-600">{{ item?.file?.name }}</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-danger" (click)="removeFileFromQueue(item)">
+                <span class="fa fa-trash">Eliminar</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="sendFiles()">Importar al mapa</button>
+      </div>
     </div>
   </div>
+  <div class="d-flex flex-row-reverse">
+    <div class="fa fa-lg fa-info-circle text-primary" style="cursor: pointer;" (click)="openInfoModal()"></div>
+  </div>
 </div>
+
+
+<UIModal [modalConfig]="infoModalConfig" [modalOption]="infoModalOption" #infoModal>
+  <div class="d-flex flex-wrap">
+    <div class="p-1" *ngFor="let item of fileType">
+      <p class="info-pill d-inline-block pl-2 pr-2">{{item}}</p>
+    </div>
+  </div>
+</UIModal>

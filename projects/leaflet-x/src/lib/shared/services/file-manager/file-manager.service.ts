@@ -53,6 +53,9 @@ export class FileManagerService {
       case "geojson":
         this.setFeatureCollection(this.normalizeFeatureCollection(this.geoJsonHandler(content)) as GeoJsonResult)
         break;
+      case "shp":
+        //console.log("Vamos a agregar shp");
+        break;
       case "xml":
         //this.xmlHandler(content)
         break;
@@ -80,6 +83,7 @@ export class FileManagerService {
     if (file.type === 'text/csv' || fileExtension('.csv') || fileExtension('.tsv') || fileExtension('.dsv')) return 'dsv'
     if (fileExtension('.xml') || fileExtension('.osm')) return 'xml';
     if (fileExtension('.poly')) return 'poly';
+    if (fileExtension('.shp')) return 'shp';
 
     return '';
   }

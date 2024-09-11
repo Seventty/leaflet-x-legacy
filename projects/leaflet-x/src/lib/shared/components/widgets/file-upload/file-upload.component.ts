@@ -7,6 +7,8 @@ import Swal from 'sweetalert2'
 import { ToastService } from '../../../services/toast/toast.service'
 import { FileManagerService } from '../../../services/file-manager/file-manager.service'
 import { ModalComponent } from '../../elements/modal/modal.component'
+import { IModalConfig } from '../../elements/modal/IModalConfig'
+import { IModalOption } from '../../elements/modal/IModalOptions'
 
 
 @Component({
@@ -23,6 +25,8 @@ import { ModalComponent } from '../../elements/modal/modal.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileUploadComponent implements OnInit, ControlValueAccessor {
+
+  @ViewChild("infoModal") infoModal?: ModalComponent
 
   @Input() name: string = ''
   @Input() disabled = false
@@ -41,6 +45,16 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
   loading: boolean = false
   uploader?: any
   hasBaseDropZoneOver = false
+
+  infoModalConfig: IModalConfig = {
+    modalTitle: 'Lista de formatos soportados',
+    dashboardHeader: true,
+  }
+
+  infoModalOption: IModalOption = {
+    centered: true,
+    size: 'md',
+  }
 
   constructor(private toastService: ToastService, private fileManager: FileManagerService) { }
 
@@ -126,7 +140,10 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
   public sendFiles(){
     this.fileManager.sendFilesUploaded(this.uploadedFiles)
-    this.modalReference?.close()
+    //this.modalReference?.close()
   }
 
+  openInfoModal(){
+    this.infoModal.open();
+  }
 }

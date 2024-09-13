@@ -56,7 +56,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @type {IModalConfig}
   */
   fileManagerModalConfig: IModalConfig = {
-    modalTitle: 'Importar Archivo/s',
+    modalTitle: 'Importar archivo/s',
     dashboardHeader: true,
   }
 
@@ -74,7 +74,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @type {IModalConfig}
   */
   fileExportModalConfig: IModalConfig = {
-    modalTitle: 'Exportar Archivo',
+    modalTitle: 'Exportar archivo',
     dashboardHeader: true,
   }
 

@@ -458,10 +458,19 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   }
 
   constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService) {
-    document.addEventListener('dragenter', (event) => this.globalDragEnter(event));
+   // document.addEventListener('dragenter', (event) => this.globalDragEnter(event));
   }
 
-  globalDragEnter(event: DragEvent): void {
+  /**
+   * Handles the global drag enter event.
+   *
+   * This method prevents the default behavior and stops the propagation of the drag event.
+   * If dragging is already in progress, it returns immediately. Otherwise, it sets the
+   * `isDragging` flag to true and opens the file manager modal after a short delay.
+   *
+   * @param event - The drag event that triggered this handler.
+   */
+  /* globalDragEnter(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
 
@@ -473,7 +482,7 @@ export class LeafletXLegacyComponent implements AfterViewInit {
       this.fileManagerModal?.open();
       console.log('Arrastre iniciado');
     }, 100);
-  }
+  } */
 
   ngAfterViewInit(): void {
     this.initMap();

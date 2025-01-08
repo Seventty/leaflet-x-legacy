@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import "@geoman-io/leaflet-geoman-free";
 
@@ -26,8 +26,10 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   public mapId: string = 'map';
   private map?: L.Map;
   private featureGroup?: L.FeatureGroup;
-  private defaultMaxZoom: number = 18
-  private defaultMinZoom: number = 3
+  private defaultMaxZoom: number = 18;
+  private defaultMinZoom: number = 3;
+  private isDragging: boolean = false;
+  private dragTimeout: any;
 
   /* Viewchild section */
   @ViewChild("fileManagerModal") fileManagerModal?: ModalComponent
@@ -455,7 +457,23 @@ export class LeafletXLegacyComponent implements AfterViewInit {
     }
   }
 
-  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService) { }
+  constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService) {
+    document.addEventListener('dragenter', (event) => this.globalDragEnter(event));
+  }
+
+  globalDragEnter(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this.isDragging) return;
+
+    this.isDragging = true;
+
+    this.dragTimeout = setTimeout(() => {
+      this.fileManagerModal?.open();
+      console.log('Arrastre iniciado');
+    }, 100);
+  }
 
   ngAfterViewInit(): void {
     this.initMap();

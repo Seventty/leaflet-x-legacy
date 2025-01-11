@@ -1,9 +1,9 @@
 <ng-template #modal>
   <div *ngIf="modalConfig && modalConfig.modalTitle" class="modal-header">
-    <h5 [ngClass]="modalConfig.dashboardHeader ? 'dashboardTitle text-primary pt-2 font-weight-bold' : 'modal-title'">{{ modalConfig.modalTitle }}</h5>
-    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <h5 class="">{{ modalConfig.modalTitle }}</h5>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="dismiss()">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> -->
   </div>
   <div class="modal-body">
     <ng-content></ng-content>

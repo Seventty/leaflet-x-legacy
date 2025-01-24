@@ -31,6 +31,14 @@
       </svg>
     </div>
 
+    <div class="mt-3">
+      <span class="instruction-text">Arrastra los Documentos aquí o</span>
+      <span class="clickable-text" [style.color]="selectedOption === 'geoarchivos' ? '#00C3AD' : '#008AE5'"
+        (click)="handleFile(fileInput)" style="cursor: pointer; font-weight: bold;">
+        selecciona archivo
+      </span>
+    </div>
+
     <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [hidden]="true" [multiple]="multiple"
       [accept]="mimeType" (onFileSelected)="addedFileToQueue()" />
   </div>
@@ -40,8 +48,7 @@
     <small class="mb-0">Tamaño Máximo: {{ maxFileSize }} mb</small>
   </div>
 
-
-
+  <!-- Files uploaded panel -->
   <div *ngIf="uploader?.queue?.length !== 0">
     <span><b>Cola de archivos</b></span>
     <p>Cantidad de Archivos: {{ uploader?.queue?.length }}</p>

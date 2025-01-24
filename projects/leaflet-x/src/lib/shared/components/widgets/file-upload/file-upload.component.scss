@@ -1,11 +1,12 @@
 .my-drop-zone {
-  border: 2px dashed; /* Estilo del borde dashed */
-  border-radius: 1rem; /* Bordes redondeados */
-  padding: 2rem; /* Espaciado interno */
-  transition: border-color 0.3s ease; /* Transición suave para el color del borde */
+  border: 2px dashed;
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: border-color 0.3s ease;
 }
+
 .nv-file-over {
-  background-color: rgba(0, 0, 0, 0.05); /* Cambio visual al pasar el archivo */
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .info-pill {
@@ -63,4 +64,18 @@ button.btn:disabled {
 .toggle-btn:nth-child(2):hover,
 .toggle-btn:nth-child(2).active {
   color: #008AE5;
+}
+
+
+.instruction-text {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.clickable-text {
+  font-size: 0.875rem;
+}
+
+.clickable-text:hover {
+  text-decoration: underline;
 }

@@ -1,9 +1,9 @@
 <ng-template #modal>
-  <div *ngIf="modalConfig && modalConfig.modalTitle" class="modal-header">
+  <div *ngIf="modalConfig && modalConfig.modalTitle" class="modal-header" style="color: black;">
     <h5 class="">{{ modalConfig.modalTitle }}</h5>
-    <!-- <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <button type="button" class="close" aria-label="Close" (click)="dismiss()" style="font-weight: 400;">
       <span aria-hidden="true">&times;</span>
-    </button> -->
+    </button>
   </div>
   <div class="modal-body">
     <ng-content></ng-content>

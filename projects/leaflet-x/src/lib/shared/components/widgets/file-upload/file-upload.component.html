@@ -18,13 +18,23 @@
     [style.background-color]="selectedOption === 'geoarchivos' ? 'rgba(0, 195, 173, 0.02)' : 'rgba(0, 138, 229, 0.02)'"
     [style.border-radius]="'1rem'" ng2FileDrop [uploader]="uploader" (fileOver)="fileOverBase($event)"
     (onFileDrop)="addedFileToQueue()">
-    <span class="d-block">Arrastre un archivo o hacer click en el botón</span>
-    <button type="button" class="mt-1 btn btn-primary" (click)="handleFile(fileInput)">
-      <i class="ft-search"></i> Buscar archivo
-    </button>
+    <div>
+      <svg *ngIf="selectedOption === 'geoarchivos'" xmlns="http://www.w3.org/2000/svg" width="70" height="71"
+        fill="none">
+        <path fill="#f4f4f5" d="M.5.5h51v59H.5z" />
+        <ellipse cx="51.5" cy="53.5" fill="#00C3AD" rx="18" ry="17" />
+      </svg>
+      <svg *ngIf="selectedOption === 'shapefiles'" xmlns="http://www.w3.org/2000/svg" width="70" height="71"
+        fill="none">
+        <path fill="#f4f4f5" d="M.5.5h51v59H.5z" />
+        <ellipse cx="51.5" cy="53.5" fill="#008AE5" rx="18" ry="17" />
+      </svg>
+    </div>
+
     <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [hidden]="true" [multiple]="multiple"
       [accept]="mimeType" (onFileSelected)="addedFileToQueue()" />
   </div>
+
 
   <div class="d-flex justify-content-between align-items-center mb-2 text-muted">
     <small class="mb-0">Tamaño Máximo: {{ maxFileSize }} mb</small>

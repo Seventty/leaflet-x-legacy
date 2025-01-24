@@ -1,13 +1,37 @@
 <div>
-  <div class="py-5 mb-3 text-center font-medium-5 text-uppercase grey my-drop-zone"
-    [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" ng2FileDrop [uploader]="uploader"
-    (fileOver)="fileOverBase($event)" (onFileDrop)="addedFileToQueue()">
-    <span class="d-block">Arrastre un archivo o hacer click en el botón</span>
-    <button type="button" class="mt-1 btn btn-primary" (click)="handleFile(fileInput)"><i class="ft-search"></i> Buscar
-      archivo</button>
-    <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [hidden]="true" [multiple]="multiple"
-      [accept]="mimeType" (onFileSelected)="addedFileToQueue()">
+
+  <div class="d-flex justify-content-center mb-2">
+    <div class="toggle-container">
+      <button class="toggle-btn" [class.active]="selectedOption === 'geoarchivos'"
+        (click)="selectOption('geoarchivos')">
+        GeoArchivos
+      </button>
+      <button class="toggle-btn" [class.active]="selectedOption === 'shapefiles'" (click)="selectOption('shapefiles')">
+        ShapeFiles
+      </button>
+    </div>
   </div>
+
+  <div class="py-5 mb-2 text-center font-medium-5 text-uppercase grey my-drop-zone"
+    [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+    [style.border-color]="selectedOption === 'geoarchivos' ? '#00C3AD' : '#008AE5'"
+    [style.background-color]="selectedOption === 'geoarchivos' ? 'rgba(0, 195, 173, 0.02)' : 'rgba(0, 138, 229, 0.02)'"
+    [style.border-radius]="'1rem'" ng2FileDrop [uploader]="uploader" (fileOver)="fileOverBase($event)"
+    (onFileDrop)="addedFileToQueue()">
+    <span class="d-block">Arrastre un archivo o hacer click en el botón</span>
+    <button type="button" class="mt-1 btn btn-primary" (click)="handleFile(fileInput)">
+      <i class="ft-search"></i> Buscar archivo
+    </button>
+    <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [hidden]="true" [multiple]="multiple"
+      [accept]="mimeType" (onFileSelected)="addedFileToQueue()" />
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-2 text-muted">
+    <small class="mb-0">Tamaño Máximo: {{ maxFileSize }} mb</small>
+  </div>
+
+
+
   <div *ngIf="uploader?.queue?.length !== 0">
     <span><b>Cola de archivos</b></span>
     <p>Cantidad de Archivos: {{ uploader?.queue?.length }}</p>
@@ -31,17 +55,29 @@
           </tr>
         </tbody>
       </table>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="sendFiles()">Importar al mapa</button>
-      </div>
     </div>
   </div>
-  <div class="d-flex flex-row-reverse">
-    <div class="fa fa-lg fa-question-circle" style="cursor: pointer; color: white; text-shadow: 0 0 2px black, 0 0 5px black, 0 0 10px black;" (click)="openInfoModal()"></div>
+
+  <div class="d-flex align-items-center justify-content-between flex-row">
+    <div class="d-flex align-items-center">
+      <div class="far fa-question-circle"
+        style="cursor: pointer; font-size: 1.2rem; color: #818589; margin-right: 0.5rem;" (click)="openInfoModal()">
+      </div>
+      <p class="mb-0" style="color: #818589">Help Center</p>
+    </div>
+
+    <div class="d-flex">
+      <button type="button" class="btn btn-outline-secondary mr-2" (click)="modalReference.close()">
+        Cancelar
+      </button>
+      <button type="button" class="btn btn-primary" [disabled]="isQueueNotEmpty" (click)="sendFiles()">
+        Importar
+      </button>
+    </div>
   </div>
+
 </div>
 
-<!--
 <UIModal [modalConfig]="infoModalConfig" [modalOption]="infoModalOption" #infoModal>
   <div class="d-flex flex-wrap">
     <div class="p-1" *ngFor="let item of fileType">
@@ -49,4 +85,3 @@
     </div>
   </div>
 </UIModal>
- -->

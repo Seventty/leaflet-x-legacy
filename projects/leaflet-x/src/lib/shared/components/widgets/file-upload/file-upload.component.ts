@@ -44,7 +44,9 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
   loading: boolean = false
   uploader?: any
-  hasBaseDropZoneOver = false
+  hasBaseDropZoneOver: boolean = false
+  isQueueNotEmpty: boolean = true;
+  selectedOption: string = 'geoarchivos';
 
   infoModalConfig: IModalConfig = {
     modalTitle: 'Lista de formatos soportados',
@@ -112,6 +114,8 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
       this.onChanged(files)
       this.onTouched()
     }
+
+    this.isQueueNotEmpty = !(this.uploader?.queue?.length > 0);
   }
 
   async removeFileFromQueue(item: any) {
@@ -122,6 +126,8 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
       this.onChanged(files)
       this.onTouched()
     }
+
+    this.isQueueNotEmpty = !(this.uploader?.queue?.length > 0);
   }
 
   //control value accessor
@@ -146,4 +152,10 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
   openInfoModal(){
     this.infoModal.open();
   }
+
+  selectOption(option: string): void {
+    this.selectedOption = option;
+    console.log('Opción seleccionada:', this.selectedOption);
+  }
+
 }

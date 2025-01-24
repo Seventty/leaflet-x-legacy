@@ -1,13 +1,66 @@
 .my-drop-zone {
-  border: dotted 3px lightgray;
-  background-color: #f5f7fa !important;
+  border: 2px dashed; /* Estilo del borde dashed */
+  border-radius: 1rem; /* Bordes redondeados */
+  padding: 2rem; /* Espaciado interno */
+  transition: border-color 0.3s ease; /* Transición suave para el color del borde */
 }
 .nv-file-over {
-  border: dotted 3px green;
+  background-color: rgba(0, 0, 0, 0.05); /* Cambio visual al pasar el archivo */
 }
 
 .info-pill {
   border-radius: 5px;
   background-color: #007bff;
   color: white;
+}
+
+button.btn:disabled {
+  background-color: #f0f0f0;
+  color: #6c757d;
+  border-color: #d6d6d6;
+  cursor: not-allowed;
+}
+
+.toggle-container {
+  display: flex;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.toggle-btn {
+  flex: 1;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  color: #6c757d;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+  background-color: white;
+}
+
+.toggle-btn:nth-child(1) {
+  color: #6c757d;
+}
+
+.toggle-btn:nth-child(1):hover,
+.toggle-btn:nth-child(1).active {
+  color: #00C3AD;
+}
+
+.toggle-btn:nth-child(2) {
+  color: #6c757d;
+}
+
+.toggle-btn:nth-child(2):hover,
+.toggle-btn:nth-child(2).active {
+  color: #008AE5;
 }

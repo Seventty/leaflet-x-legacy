@@ -18,7 +18,8 @@
     [style.background-color]="selectedOption === 'geoarchivos' ? 'rgba(0, 195, 173, 0.02)' : 'rgba(0, 138, 229, 0.02)'"
     [style.border-radius]="'1rem'" ng2FileDrop [uploader]="uploader" (fileOver)="fileOverBase($event)"
     (onFileDrop)="addedFileToQueue()">
-    <div>
+
+    <div class="svg-container">
       <svg *ngIf="selectedOption === 'geoarchivos'" xmlns="http://www.w3.org/2000/svg" width="70" height="71"
         fill="none">
         <path fill="#f4f4f5" d="M.5.5h51v59H.5z" />

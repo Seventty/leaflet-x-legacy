@@ -73,6 +73,7 @@ button.btn:disabled {
 
 .clickable-text {
   font-size: 0.875rem;
+  transition: color 0.3s ease;
 }
 
 .clickable-text:hover {

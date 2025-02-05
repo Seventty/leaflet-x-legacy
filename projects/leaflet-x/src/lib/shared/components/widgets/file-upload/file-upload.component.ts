@@ -156,7 +156,6 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
   selectOption(option: string): void {
     this.selectedOption = option;
-    console.log(this.selectedOption)
   }
 
 }

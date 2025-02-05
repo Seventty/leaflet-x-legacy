@@ -17,6 +17,7 @@ import { PointFormComponent } from './components/widgets/manual-form/components/
 import { PolygonFormComponent } from './components/widgets/manual-form/components/polygon-form/polygon-form.component';
 import { VerticeFormComponent } from './components/widgets/manual-form/components/vertice-form/vertice-form.component';
 import { ModalComponent } from './components/elements/modal/modal.component';
+import { FileFormatComponent } from './components/elements/file-formats/fileFormat/fileFormat.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { ModalComponent } from './components/elements/modal/modal.component';
     LinesFormComponent,
     PointFormComponent,
     PolygonFormComponent,
-    VerticeFormComponent
+    VerticeFormComponent,
+    FileFormatComponent
   ],
   exports: [
     ModalComponent,

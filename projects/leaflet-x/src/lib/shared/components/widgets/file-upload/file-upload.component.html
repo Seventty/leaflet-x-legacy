@@ -86,7 +86,7 @@
       <div class="far fa-question-circle"
         style="cursor: pointer; font-size: 1.2rem; color: #818589; margin-right: 0.5rem;" (click)="openInfoModal()">
       </div>
-      <p class="mb-0" style="color: #818589">Help Center</p>
+      <p class="mb-0" style="color: #818589"></p>
     </div>
 
     <div class="d-flex">
@@ -102,9 +102,5 @@
 </div>
 
 <UIModal [modalConfig]="infoModalConfig" [modalOption]="infoModalOption" #infoModal>
-  <div class="d-flex flex-wrap">
-    <div class="p-1" *ngFor="let item of fileType">
-      <p class="d-inline-block pl-2 pr-2">{{item}}</p>
-    </div>
-  </div>
+  <fileFormat [optionSelected]="selectedOption"></fileFormat>
 </UIModal>

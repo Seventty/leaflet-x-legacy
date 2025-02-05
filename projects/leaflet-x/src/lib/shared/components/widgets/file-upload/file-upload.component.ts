@@ -47,6 +47,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
   hasBaseDropZoneOver: boolean = false
   isQueueNotEmpty: boolean = true;
   selectedOption: string = 'geoarchivos';
+  isGlowing: boolean = false;
 
   infoModalConfig: IModalConfig = {
     modalTitle: 'Lista de formatos soportados',
@@ -155,7 +156,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
   selectOption(option: string): void {
     this.selectedOption = option;
-    console.log('Opción seleccionada:', this.selectedOption);
+    console.log(this.selectedOption)
   }
 
 }

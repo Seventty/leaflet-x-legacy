@@ -32,7 +32,8 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
   @Input() disabled = false
 
   @Input() fileLimit: number = 5;
-  @Input() fileType: Array<string> = environment.allowedMapFileTypes;
+  @Input() geofilesType: Array<string> = environment.geofiles;
+  @Input() shapefilesType: Array<string> = environment.shapefiles;
   @Input() maxFileSize: number = environment.appMaxFileSize;
   @Input() mimeType: Array<string> = environment.allowedMapMimeTypes;
   @Input() modalReference?: ModalComponent
@@ -73,13 +74,13 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
     this.uploader.onWhenAddingFileFailed = (fileItem: any, filter: any) => {
       if (filter.name == "mimeType")
         console.log(`Uno o varios de los archivos que se están tratando de cargar no son permitidos,
-        Estos son los formatos permitidos: ${this.fileType.map(x => x)}`, 'Error')
+        Estos son los formatos permitidos: ${this.geofilesType.map(x => x)}`, 'Error')
 
       if (filter.name == "queueLimit")
-      this.toastService.errorToast("Limite de archivos", `Solo se permiten ${this.fileLimit} archivo${this.fileLimit > 1 ? 's' : ''}`)
+        this.toastService.errorToast("Limite de archivos", `Solo se permiten ${this.fileLimit} archivo${this.fileLimit > 1 ? 's' : ''}`)
 
       if (filter.name == "fileSize")
-      this.toastService.errorToast("Limite de tamaño", `El tamaño máximo por archivo es de ${this.maxFileSize}MB. Si necesita más espacio, escribirle al equipo de TI.`)
+        this.toastService.errorToast("Limite de tamaño", `El tamaño máximo por archivo es de ${this.maxFileSize}MB. Si necesita más espacio, escribirle al equipo de TI.`)
     }
 
     this.uploader.onAfterAddingFile = (item: any) => {
@@ -87,7 +88,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
       item.remove();
 
       if (this.uploader) {
-        if (environment.allowedMapFileTypes.includes(fileName || '')) {
+        if (environment.geofiles.includes(fileName || '')) {
           if (this.uploader.queue.filter((f: any) => f._file.name == item._file.name).length == 0) {
             this.uploader.queue.push(item);
           } else {
@@ -145,17 +146,36 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled
   }
 
-  public sendFiles(){
+  public sendFiles() {
     this.fileManager.sendFilesUploaded(this.uploadedFiles)
-    //this.modalReference?.close()
+    this.closeModal()
   }
 
-  openInfoModal(){
+  openInfoModal() {
     this.infoModal.open();
   }
 
   selectOption(option: string): void {
-    this.selectedOption = option;
+    if (this.selectedOption !== option) {
+      this.selectedOption = option;
+      this.clearFileQueue();
+    }
+  }
+
+  clearFileQueue(): void {
+    if (this.uploader) {
+      this.uploader.clearQueue();
+    }
+    this.uploadedFiles = [];
+    this.isQueueNotEmpty = true;
+    this.onChanged([]);
+    this.onTouched();
+  }
+
+  closeModal() {
+    this.modalReference?.close().then(() => {
+      this.clearFileQueue();
+    });
   }
 
 }

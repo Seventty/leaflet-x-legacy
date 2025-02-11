@@ -18,6 +18,7 @@ import { PolygonFormComponent } from './components/widgets/manual-form/component
 import { VerticeFormComponent } from './components/widgets/manual-form/components/vertice-form/vertice-form.component';
 import { ModalComponent } from './components/elements/modal/modal.component';
 import { FileFormatComponent } from './components/elements/file-formats/fileFormat/fileFormat.component';
+import { FileSizePipe } from './pipes/fileSize.pipe';
 
 @NgModule({
   imports: [
@@ -55,7 +56,7 @@ import { FileFormatComponent } from './components/elements/file-formats/fileForm
     LinesFormComponent,
     PointFormComponent,
     PolygonFormComponent,
-    VerticeFormComponent
+    VerticeFormComponent,
   ],
   providers: [FormService],
 })

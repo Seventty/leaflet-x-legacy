@@ -1,5 +1,5 @@
 export const environment = {
-  allowedMapFileTypes: [
+  geofiles: [
     'json',
     'geojson',
     'topojson',
@@ -16,6 +16,13 @@ export const environment = {
     '.dbf',
     '.cpg',
     '.shx', */
+  ],
+  shapefiles: [
+    'shp',
+    'shx',
+    'cpg',
+    'dbf',
+    'prj',
   ],
   allowedMapMimeTypes: [
     'application/gpkg',

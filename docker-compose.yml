@@ -4,4 +4,4 @@ services:
       context: .
     image: leaflet-x-legacy:local
     ports:
-      - "8080:80"
+      - "8080:85"

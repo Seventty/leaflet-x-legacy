@@ -1,0 +1,7 @@
+services:
+  leaflet-x-legacy:
+    build:
+      context: .
+    image: leaflet-x-legacy:local
+    ports:
+      - "8080:80"

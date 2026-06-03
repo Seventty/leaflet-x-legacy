@@ -1,10 +1,9 @@
-import { Injectable, Input, SimpleChanges } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { GeoJsonResult } from '../../types/geoJsonResult.type';
 import { LatitudValidator, LongitudeValidator } from './coordinates.validator';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { FormValue, Point } from '../../interfaces/form-value.interfaces';
-import { FeatureGroup } from 'leaflet';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Point } from '../../interfaces/form-value.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +12,14 @@ export class FormService {
   /**Formulario principal */
   protected form: FormGroup;
   private subject = new BehaviorSubject<GeoJsonResult>(null);
+  private formChangesSubscription?: Subscription;
   /**Emite los cambios realizado en el formulario*/
   public valueChange: Observable<GeoJsonResult> = this.subject.asObservable();
   collection: GeoJsonResult | GeoJsonResult[];
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+    this.mainFormBuild();
+  }
 
   public get Points(): FormArray {
     return this.form.get('point') as FormArray;
@@ -82,7 +84,7 @@ export class FormService {
   private formGroupToGeoJsonResult(): GeoJsonResult {
     let geojson = { type: 'FeatureCollection', features: [] } as GeoJsonResult;
 
-    if (!Array.isArray(this.collection)) {
+    if (this.collection && !Array.isArray(this.collection)) {
       if (this.collection.featureCollectionColor) {
         geojson.featureCollectionColor = this.collection?.featureCollectionColor;
       }
@@ -151,9 +153,7 @@ export class FormService {
         let { geometry } = line as any; //TODO: Consulta por rai por que le tipo Geometry no tiene la propiedad coordinates
 
         let array: FormArray = this.formArrayBuild();
-        let list: any[] = geometry.coordinates[0];
-
-        list.pop(); //Remover vertice de cierre.
+        let list: any[] = this.getPolygonCoordinatesWithoutClosingPoint(geometry.coordinates[0] || []);
 
         list.forEach((point) => {
           array.push(this.coordinetesToFormGroup(point));
@@ -161,6 +161,18 @@ export class FormService {
 
         this.Polygon.push(array);
       });
+  }
+
+  private getPolygonCoordinatesWithoutClosingPoint(coordinates: any[]): any[] {
+    if (coordinates.length <= 1) {
+      return coordinates.slice();
+    }
+
+    const firstPoint = coordinates[0];
+    const lastPoint = coordinates[coordinates.length - 1];
+    const isClosed = firstPoint[0] === lastPoint[0] && firstPoint[1] === lastPoint[1];
+
+    return isClosed ? coordinates.slice(0, -1) : coordinates.slice();
   }
 
   private mainFormBuild() {
@@ -276,12 +288,12 @@ export class FormService {
   ): void {
 
     this.collection = featureColletion;
+    this.formChangesSubscription?.unsubscribe();
+    this.mainFormBuild();
 
     if (!featureColletion) {
       return;
     }
-
-    this.mainFormBuild();
 
     if (Array.isArray(featureColletion)) {
       featureColletion.forEach((feature) => {
@@ -295,7 +307,7 @@ export class FormService {
       this.featurePolygonToFormGroup(featureColletion);
     }
 
-    this.form.valueChanges.subscribe((e) => {
+    this.formChangesSubscription = this.form.valueChanges.subscribe(() => {
       this.formGroupToGeoJsonResult();
     });
   }

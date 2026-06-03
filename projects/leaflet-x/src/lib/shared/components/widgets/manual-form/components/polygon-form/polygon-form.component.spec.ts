@@ -2,6 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { PolygonFormComponent } from './polygon-form.component';
 
@@ -11,7 +12,8 @@ describe('PolygonFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PolygonFormComponent ]
+      declarations: [ PolygonFormComponent ],
+      imports: [ReactiveFormsModule],
     })
     .compileComponents();
   }));

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { GeoJsonResult } from '../../../types/geoJsonResult.type';
 import { FormService } from '../../../services/form/form.service';
 
@@ -8,11 +8,12 @@ import { FormService } from '../../../services/form/form.service';
   templateUrl: './manual-form.component.html',
   styleUrls: ['./manual-form.component.sass'],
 })
-export class ManualFormComponent implements OnInit, OnChanges {
+export class ManualFormComponent implements OnInit, OnChanges, OnDestroy {
   //#region Input, OutPut
   @Input() featureCollection: GeoJsonResult | Array<GeoJsonResult>;
   @Output() updateFeatureCollection: EventEmitter<GeoJsonResult> = new EventEmitter<GeoJsonResult>();
   @Input() featureCollectionExtendedProps: any;
+  private valueChangeSubscription?: Subscription;
 
   //#endregion
   constructor(private FormService: FormService) {
@@ -33,8 +34,14 @@ export class ManualFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.FormService.valueChange.subscribe(c => {
-      this.updateFeatureCollection.emit(c)
+    this.valueChangeSubscription = this.FormService.valueChange.subscribe(c => {
+      if (c) {
+        this.updateFeatureCollection.emit(c)
+      }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.valueChangeSubscription?.unsubscribe();
   }
 }

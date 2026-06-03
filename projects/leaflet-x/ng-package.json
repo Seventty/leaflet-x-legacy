@@ -8,7 +8,6 @@
     "file-saver",
     "leaflet",
     "ng2-file-upload",
-    "ngx-toastr",
     "topojson-client",
     "topojson-server",
     "shp-write",
@@ -17,7 +16,6 @@
     "wellknown",
     "@types/file-saver",
     "@types/leaflet",
-    "@types/osmtogeojson",
     "@types/topojson-client",
     "@types/uuid"
   ],

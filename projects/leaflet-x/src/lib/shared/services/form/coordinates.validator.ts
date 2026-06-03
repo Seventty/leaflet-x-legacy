@@ -2,7 +2,7 @@ import { ValidatorFn, AbstractControl } from "@angular/forms";
 
 export function coordinatesValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const valid = /^-?\d+(.\d+)?,\s*-?\d+(.\d+)?$/.test(control.value);
+    const valid = /^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/.test(control.value);
     if (!valid) {
       return { invalidCoordinates: { value: control.value } };
     }
@@ -21,7 +21,7 @@ export function coordinatesValidator(): ValidatorFn {
 
 export function LatitudValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const valid = /^-?\d+(.\d+)?$/.test(control.value);
+    const valid = /^-?\d+(\.\d+)?$/.test(control.value);
     if (!valid) {
       return { invalidCoordinates: { value: control.value } };
     }
@@ -36,7 +36,7 @@ export function LatitudValidator(): ValidatorFn {
 
 export function LongitudeValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const valid = /^-?\d+(.\d+)?$/.test(control.value);
+    const valid = /^-?\d+(\.\d+)?$/.test(control.value);
     if (!valid) {
       return { invalidCoordinates: { value: control.value } };
     }

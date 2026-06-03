@@ -1,6 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import "@geoman-io/leaflet-geoman-free";
+import { Subscription } from 'rxjs';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { IModalConfig } from '../../shared/modal/IModalConfig';
 import { IModalOption } from '../../shared/modal/IModalOptions';
@@ -21,13 +22,14 @@ import { ILegendBar } from '../../shared/interfaces/ILegendBar';
   templateUrl: './leaflet-x-legacy.component.html',
   styleUrls: ['./leaflet-x-legacy.component.scss'],
 })
-export class LeafletXLegacyComponent implements AfterViewInit {
+export class LeafletXLegacyComponent implements AfterViewInit, OnDestroy {
   /* Properties section */
   public mapId: string = 'map';
   private map?: L.Map;
   private featureGroup?: L.FeatureGroup;
   private defaultMaxZoom: number = 18
   private defaultMinZoom: number = 3
+  private fileFeatureCollectionSubscription?: Subscription;
 
   /* Viewchild section */
   @ViewChild("fileManagerModal") fileManagerModal?: ModalComponent
@@ -330,8 +332,8 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   * @returns {void}
   */
   private getFeatureCollectionFromFile() {
-    this.fileManagerService.getFileFeatureCollection().subscribe((res: GeoJsonResult) => {
-      if (res.features.length > 0) {
+    this.fileFeatureCollectionSubscription = this.fileManagerService.getFileFeatureCollection().subscribe((res: GeoJsonResult) => {
+      if (res?.features?.length > 0) {
         this.renderFeatureCollectionToMap(res);
         this.toastService.successToast("Éxito", "Figuras cargadas al mapa con éxito.");
       }
@@ -353,10 +355,9 @@ export class LeafletXLegacyComponent implements AfterViewInit {
             const featureCollectionColor = collection.hasOwnProperty("featureCollectionColor") ? collection.featureCollectionColor : this.mainColor
             const geojsonToMap = L.geoJSON(collection, { style: this.stylizeDraw(featureCollectionColor) }).addTo(this.map);
             this.SetBounds(geojsonToMap);
-            if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
+            if (collection.hasOwnProperty("featureCollectionPopup")) {
               geojsonToMap.bindPopup(collection.featureCollectionPopup);
             }
-            this.featureCollectionUpdate();
           }
         });
       } else {
@@ -367,14 +368,35 @@ export class LeafletXLegacyComponent implements AfterViewInit {
           if (featureCollection.hasOwnProperty("featureCollectionPopup")) {
             geojsonToMap.bindPopup(featureCollection.featureCollectionPopup);
           }
-          this.featureCollectionUpdate();
         }
       }
+
+      this.featureCollection = this.toFeatureCollection(featureCollection);
+      this.featureCollectionOutput.emit(this.featureCollection);
     }
   }
 
-  private SetBounds(geojsonToMap) {
-    this.map.fitBounds(geojsonToMap.getBounds());
+  private SetBounds(geojsonToMap: L.GeoJSON) {
+    const bounds = geojsonToMap.getBounds();
+    if (bounds.isValid()) {
+      this.map?.fitBounds(bounds);
+    }
+  }
+
+  private toFeatureCollection(featureCollection: GeoJsonResult | Array<GeoJsonResult>): GeoJsonResult {
+    const collections = Array.isArray(featureCollection) ? featureCollection : [featureCollection];
+    const features = collections.reduce((acc, collection) => acc.concat(collection?.features ?? []), []);
+    const geojson: GeoJsonResult = {
+      type: 'FeatureCollection',
+      features
+    };
+
+    if (!Array.isArray(featureCollection)) {
+      geojson.featureCollectionColor = featureCollection.featureCollectionColor ?? this.mainColor;
+      geojson.featureCollectionPopup = featureCollection.featureCollectionPopup ?? "";
+    }
+
+    return geojson;
   }
 
   /**
@@ -395,12 +417,11 @@ export class LeafletXLegacyComponent implements AfterViewInit {
         geojson.features.push(layerGeoJSON);
       });
 
+      this.featureCollection = geojson;
+
       if (!Array.isArray(this.featureCollectionInput)) {
-        this.featureCollection = {
-          ...geojson,
-          featureCollectionColor: this.featureCollectionInput?.featureCollectionColor ?? this.mainColor,
-          featureCollectionPopup: this.featureCollectionInput?.featureCollectionPopup ?? ""
-        }
+        this.featureCollection.featureCollectionColor = this.featureCollectionInput?.featureCollectionColor ?? this.mainColor;
+        this.featureCollection.featureCollectionPopup = this.featureCollectionInput?.featureCollectionPopup ?? "";
       }
 
       this.featureCollectionOutput.emit(this.featureCollection);
@@ -431,11 +452,11 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   }
 
   private portraitMapConfigurator() {
-    this.map.attributionControl.setPrefix("");
-    this.map.doubleClickZoom.disable();
-    this.map.touchZoom.disable();
-    this.map.dragging.disable();
-    this.map.scrollWheelZoom.disable();
+    this.map?.attributionControl.setPrefix("");
+    this.map?.doubleClickZoom.disable();
+    this.map?.touchZoom.disable();
+    this.map?.dragging.disable();
+    this.map?.scrollWheelZoom.disable();
   }
 
   public manualEntriesUpdate(featureCollection: GeoJsonResult) {
@@ -444,15 +465,15 @@ export class LeafletXLegacyComponent implements AfterViewInit {
   }
 
   private clearMap(): void {
-    try {
-      this.map.eachLayer((layer) => {
-        if (!(layer instanceof L.TileLayer)) {
-          this.map.removeLayer(layer);
-        }
-      });
-    } catch (error) {
-
+    if (!this.map) {
+      return;
     }
+
+    this.map.eachLayer((layer) => {
+      if (!(layer instanceof L.TileLayer)) {
+        this.map?.removeLayer(layer);
+      }
+    });
   }
 
   constructor(private fileManagerService: FileManagerService, private toastService: ToastService, private cdr: ChangeDetectorRef, private updateService: UpdateAlertService) { }
@@ -479,5 +500,13 @@ export class LeafletXLegacyComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.mapIdGenerator();
+  }
+
+  ngOnDestroy(): void {
+    this.fileFeatureCollectionSubscription?.unsubscribe();
+    this.map?.off();
+    this.map?.remove();
+    this.map = undefined;
+    this.featureGroup = undefined;
   }
 }

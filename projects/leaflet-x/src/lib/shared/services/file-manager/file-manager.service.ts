@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import * as topojson from "topojson-client";
 import * as toGeoJson from "@tmcw/togeojson";
 import { ToastService } from '../toast/toast.service';
-import * as osmtogeojsonModule from 'osmtogeojson';
 import { GeoJsonResult } from '../../types/geoJsonResult.type';
 import { GeoJsonNormalize } from '../../utils/geoJsonNormalize';
 
@@ -27,12 +26,22 @@ export class FileManagerService {
   }
 
   public sendFilesUploaded(files: Array<File>) {
+    if (!files?.length) {
+      this.toastService.errorToast('Sin archivos', 'Debe seleccionar al menos un archivo compatible.');
+      return;
+    }
+
     this.readAsText(files)
   }
 
   private readAsText(files: Array<File>) {
     files.forEach((file: File) => {
       const fileType = this.detectType(file)
+      if (!fileType) {
+        this.toastService.errorToast('Formato no soportado', `El archivo "${file.name}" no tiene un formato compatible.`);
+        return;
+      }
+
       const reader: FileReader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         const textResult = e.target?.result as string;
@@ -43,68 +52,64 @@ export class FileManagerService {
   }
 
   private readFile(fileType: string, content: string) {
+    let featureCollection: GeoJsonResult | null = null;
+
     switch (fileType) {
       case "kml":
-        this.setFeatureCollection(this.normalizeFeatureCollection(this.kmlHandler(content)) as GeoJsonResult)
+        featureCollection = this.kmlHandler(content);
         break;
       case "gpx":
-        this.setFeatureCollection(this.normalizeFeatureCollection(this.gpxHandler(content)) as GeoJsonResult)
+        featureCollection = this.gpxHandler(content);
         break;
       case "geojson":
-        this.setFeatureCollection(this.normalizeFeatureCollection(this.geoJsonHandler(content)) as GeoJsonResult)
+        featureCollection = this.geoJsonHandler(content);
         break;
-      case "xml":
-        //this.xmlHandler(content)
-        break;
-      case "dsv":
-        break;
-      case "xml":
-        break;
-      case "poly":
-        break;
+      default:
+        this.toastService.errorToast('Formato no soportado', 'Este formato todavía no tiene un importador implementado.');
+        return;
     }
+
+    const normalizedFeatureCollection = this.normalizeFeatureCollection(featureCollection);
+    if (!normalizedFeatureCollection) {
+      this.toastService.errorToast('Archivo inválido', 'No se pudo convertir el archivo a GeoJSON válido.');
+      return;
+    }
+
+    this.setFeatureCollection(normalizedFeatureCollection);
   }
 
-  private normalizeFeatureCollection(geoJson: GeoJsonResult){
+  private normalizeFeatureCollection(geoJson: GeoJsonResult | null): GeoJsonResult | null {
     const normalizer: GeoJsonNormalize = new GeoJsonNormalize;
-    return normalizer.normalize(geoJson);
+    return normalizer.normalize(geoJson) as GeoJsonResult | null;
   }
 
   private detectType(file: File): string {
     const filename: string = file.name ? file.name.toLowerCase() : '';
-    const fileExtension = (extension: string) => filename.indexOf(extension) !== -1;
+    const fileExtension = (extension: string) => filename.endsWith(extension);
 
     if (file.type === 'application/vnd.google-earth.kml+xml' || fileExtension('.kml')) return 'kml';
     if (fileExtension('.gpx')) return 'gpx';
     if (fileExtension('.geojson') || fileExtension('.json') || fileExtension('.topojson')) return 'geojson';
-    if (file.type === 'text/csv' || fileExtension('.csv') || fileExtension('.tsv') || fileExtension('.dsv')) return 'dsv'
-    if (fileExtension('.xml') || fileExtension('.osm')) return 'xml';
-    if (fileExtension('.poly')) return 'poly';
 
     return '';
   }
 
 
-  private kmlHandler(content: string): GeoJsonResult {
-    const kmlDom: Document = this.toDom(content)
-    if (!kmlDom) this.toastService.errorToast('Invalido', 'Archivo KML inválido: XML no válido');
+  private kmlHandler(content: string): GeoJsonResult | null {
+    const kmlDom = this.toDom(content)
+    if (!kmlDom) return null;
     if (kmlDom.getElementsByTagName('NetworkLink').length) this.toastService.warningToast("¡Advertencia!", "El archivo KML que subiste incluía NetworkLinks: es posible que parte del contenido no se muestre. Exporte y cargue KML sin NetworkLinks para obtener un rendimiento óptimo");
     return toGeoJson.kml(kmlDom)
   }
 
-  private xmlHandler(content: string) {
-    const xmlDom: Document = this.toDom(content);
-    if (!xmlDom) this.toastService.errorToast('Error', 'Archivo XML invalido');
-    console.log(xmlDom)
-    //const result = osmtogeojson.toGeojson(xmlDom);
-    //console.log("Resultados", result)
+  private gpxHandler(content: string): GeoJsonResult | null {
+    const gpxDom = this.toDom(content);
+    if (!gpxDom) return null;
+
+    return toGeoJson.gpx(gpxDom);
   }
 
-  private gpxHandler(content: string): GeoJsonResult {
-    return toGeoJson.gpx(this.toDom(content));
-  }
-
-  private geoJsonHandler(content: string) {
+  private geoJsonHandler(content: string): GeoJsonResult | null {
     try {
       const geoJsonResult = JSON.parse(content);
       if (geoJsonResult && geoJsonResult.type === 'Topology' && geoJsonResult) {
@@ -125,11 +130,17 @@ export class FileManagerService {
       }
     } catch (error) {
       this.toastService.errorToast("Error", "Archivo JSON inválido");
+      return null;
     }
   }
 
-  private toDom(e: any): Document {
-    return new DOMParser().parseFromString(e, 'text/xml')
+  private toDom(e: string): Document | null {
+    const xmlDom = new DOMParser().parseFromString(e, 'text/xml');
+    if (xmlDom.getElementsByTagName('parsererror').length > 0) {
+      return null;
+    }
+
+    return xmlDom;
   }
 
 }

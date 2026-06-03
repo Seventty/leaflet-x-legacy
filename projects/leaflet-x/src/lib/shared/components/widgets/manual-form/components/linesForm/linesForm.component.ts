@@ -37,10 +37,11 @@ export class LinesFormComponent implements OnInit {
 
   deleteLine(index: number) {
     let message = `¿Quieres eliminar la "línea ${index + 1}"?`;
+    const verticesLength = this.formArrayLine.controls[index].controls.length;
 
     // Verificar si existen vértices
-    if (this.formArrayLine.controls[index].controls.lenght > 0) {
-      message = `¿Quieres eliminar la línea "${index}" con sus ${this.formArrayLine.controls[index].controls.lenght} vértices?`;
+    if (verticesLength > 0) {
+      message = `¿Quieres eliminar la línea "${index + 1}" con sus ${verticesLength} vértices?`;
     }
 
     Swal.fire({
@@ -54,7 +55,7 @@ export class LinesFormComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         // Eliminar la línea
-        this, this.formService.removeLineStringAt(index);
+        this.formService.removeLineStringAt(index);
         Swal.fire(
           '¡Eliminado!',
           'La línea ha sido eliminada correctamente.',

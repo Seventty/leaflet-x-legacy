@@ -35,7 +35,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
   //@Output() onFileAdded: EventEmitter<any> = new EventEmitter()
   multiple: boolean = false
-  uploadedFiles!: Array<File>
+  uploadedFiles: Array<File> = []
   private onTouched: any = () => { }
   private onChanged: any = () => { }
 
@@ -56,22 +56,21 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
     this.uploader.onWhenAddingFileFailed = (fileItem: any, filter: any) => {
       if (filter.name == "mimeType")
-        console.log(`Uno o varios de los archivos que se están tratando de cargar no son permitidos,
-        Estos son los formatos permitidos: ${this.fileType.map(x => x)}`, 'Error')
+        this.toastService.errorToast("Formato no soportado", `Solo se permiten archivos: ${this.fileType.join(', ')}`)
 
       if (filter.name == "queueLimit")
-      this.toastService.errorToast("Limite de archivos", `Solo se permiten ${this.fileLimit} archivo${this.fileLimit > 1 ? 's' : ''}`)
+        this.toastService.errorToast("Limite de archivos", `Solo se permiten ${this.fileLimit} archivo${this.fileLimit > 1 ? 's' : ''}`)
 
       if (filter.name == "fileSize")
-      this.toastService.errorToast("Limite de tamaño", `El tamaño máximo por archivo es de ${this.maxFileSize}MB. Si necesita más espacio, escribirle al equipo de TI.`)
+        this.toastService.errorToast("Limite de tamaño", `El tamaño máximo por archivo es de ${this.maxFileSize}MB. Si necesita más espacio, escribirle al equipo de TI.`)
     }
 
     this.uploader.onAfterAddingFile = (item: any) => {
-      const fileName = item._file.name.split(".").pop();
+      const fileName = item._file.name.split(".").pop()?.toLowerCase();
       item.remove();
 
       if (this.uploader) {
-        if (environment.allowedMapFileTypes.includes(fileName || '')) {
+        if (this.fileType.includes(fileName || '')) {
           if (this.uploader.queue.filter((f: any) => f._file.name == item._file.name).length == 0) {
             this.uploader.queue.push(item);
           } else {
@@ -113,7 +112,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
 
   //control value accessor
   writeValue(value: any): void {
-    this.uploadedFiles = value ?? null
+    this.uploadedFiles = value ?? []
   }
   registerOnChange(fn: any): void {
     this.onChanged = fn
@@ -126,6 +125,11 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
   }
 
   public sendFiles(){
+    if (!this.uploadedFiles?.length) {
+      this.toastService.errorToast("Sin archivos", "Debe seleccionar al menos un archivo para importar.");
+      return;
+    }
+
     this.fileManager.sendFilesUploaded(this.uploadedFiles)
     this.modalReference?.close()
   }

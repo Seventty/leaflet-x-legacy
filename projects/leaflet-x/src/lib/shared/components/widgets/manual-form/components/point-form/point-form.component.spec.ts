@@ -2,6 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { PointFormComponent } from './point-form.component';
 
@@ -11,7 +12,8 @@ describe('PointFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PointFormComponent ]
+      declarations: [ PointFormComponent ],
+      imports: [ReactiveFormsModule],
     })
     .compileComponents();
   }));

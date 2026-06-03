@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { saveAs } from 'file-saver';
 import * as topojson from "topojson-server"
-import * as geojsondsv from "geojson2dsv"
 import * as wellknown from "wellknown";
+import * as geojsondsvModule from "geojson2dsv";
+
+const geojsondsv = ((geojsondsvModule as any).default || geojsondsvModule) as (geojson: any) => string;
 
 @Component({
   selector: 'UIFileExport',
@@ -21,13 +23,17 @@ export class FileExportComponent implements OnInit {
   }
 
   private downloadTopo = () => {
-    const topoContent = topojson.topology(
+    const topoContent = this.buildTopoJson();
+    saveAs(new Blob([topoContent], { type: 'application/json;charset=utf-8' }), 'mapa.topojson');
+  }
+
+  private buildTopoJson(): string {
+    return JSON.stringify(topojson.topology(
       {
         collection: this.FeatureCollectionToExport
       },
       { 'property-transform': this.allProperties }
-    )
-    saveAs(new Blob([topoContent], { type: 'text/plain;charset=utf-8' }), 'mapa.topojson');
+    ));
   }
 
   private downloadDSV = () => {
